@@ -15,18 +15,13 @@ defmodule ExTalib.Prepare do
 
   defp prepare_input!(arg, is_opt, type) do
     type_ = if Enum.member?(price_types(), type), do: types(:double_array), else: type
+    IO.inspect(types(:double_array), label: "TYPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
+    IO.inspect(type_, label: "type_")
     case type_ do
       types(:integer) -> r({arg, types(:integer), is_opt})
       types(:double) -> r({arg, types(:double), is_opt})
       types(:ma_type) -> r({ma_types(arg), types(:integer), is_opt})
-
-      ##### DOES THIS EVER HAPPENS ?????? below #############
-      # types(:integer_array) when is_series(arg) -> r({Explorer.Series.cast(arg, {:s, 32}) |> Explorer.Series.to_binary, type, is_opt})
-      # types(:integer_array) when is_list(arg) -> r({Utils.list_of_floats_to_binary(arg), type, is_opt})
-      # types(:integer_array) when is_tensor(arg) -> r({Nx.as_type(arg, {:s, 32}) |> Nx.to_binary, type, is_opt})
-      ##### DOES THIS EVER HAPPENS ?????? above #############
       types(:double_array) when is_series(arg) -> r({Explorer.Series.cast(arg, {:f, 64}) |> Explorer.Series.to_binary, type, is_opt})
-      # types(:double_array) when is_list(arg) -> r({Utils.list_of_floats_to_binary(arg), type, is_opt})
       types(:double_array) when is_tensor(arg) -> r({Nx.as_type(arg, {:f, 64}) |> Nx.to_binary, type, is_opt})
     end
 
@@ -57,13 +52,7 @@ defmodule ExTalib.Prepare do
   # PREPARE OUTPUTS
   def prepare_output(arg, first_index, def, output_as) do
     out_type_from_def = elem(def, 1)
-    # IO.inspect(Explorer.Series.from_binary(arg, {:f, 64}))
-    # IO.inspect(arg)
-    # IO.inspect(first_index)
     prepare_output!(out_type_from_def, arg, output_as, first_index)
-
-
-
   end
 
   defp prepare_output!(arr_type, arg, output_as, first_index) do
@@ -80,26 +69,5 @@ defmodule ExTalib.Prepare do
 
     end
   end
-
-
-  # defp prepare_output!(arr_type, arg, output_as, first_index) when arr_type === types(:double_array) do
-  #   output_type = elem(output_as, 0)
-  #   case output_type do
-  #     :series -> Explorer.Series.from_binary(arg, {:f, 64}) |> Utils.pad_with_nans(first_index)
-  #       # Explorer.Series.from_binary(arg, {:f, 64}) |> Explorer.Series.cast(elem(output_as, 1))
-  #     :tensor -> if arg === "", do: Utils.handle_empty_tensor_output(first_index, :f64), else: Nx.from_binary(arg, :f64) |> Utils.pad_with_nans(first_index)
-
-  #     # :list -> Utils.binary_to_list_of_floats(arg, elem(output_as, 0))
-  #   end
-  # end
-
-  # defp prepare_output!(arr_type, arg, output_as, first_index) when arr_type === types(:integer_array) do
-  #   output_type = elem(output_as, 0)
-  #   case output_type do
-  #     :series -> Explorer.Series.from_binary(arg, {:s, 32}) |> Utils.pad_with_nans(first_index)
-  #     :tensor -> Nx.from_binary(arg, :s32)
-  #     # :list -> Utils.binary_to_list_of_ints(arg)
-  #   end
-  # end
 
 end

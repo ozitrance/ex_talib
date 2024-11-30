@@ -52,7 +52,7 @@ be found at <https://hexdocs.pm/ex_talib>. -->
 
 
 ## Functions List
-This package includes all the available functions from the official TALib library. For the full list check out [their website](https://ta-lib.org/functions/).
+This package includes all the available functions (161) from the official TALib library. For the full list check out [their website](https://ta-lib.org/functions/).
 
 ## Usage
 Each function can be used with either an `Explorer.DataFrame`, `Explorer.Series` or `Nx.Tensor`. If using a dataframe, the function expects come columns to exist (check the function documntation to find which ones or use `options` to use others).
@@ -64,6 +64,45 @@ The function will validate the inputs and will return either `{:ok, result}` on 
 `errors` is a list of `String` errors.
 `result` is either an `Explorer.DataFrame` (in case the input was a dataframe) or a `list` of [`Explorer.Series`] or [`Nx.Tensor`]s
 
+For example:
+```elixir
+iex(1)> df = Explorer.DataFrame.new(%{values: [1.0,2.0,3.0,4.0,5.0]})
+iex(2)> ExTalib.ema(df, 2)
+{:ok,
+ #Explorer.DataFrame<
+   Polars[5 x 2]
+   values f64 [1.0, 2.0, 3.0, 4.0, 5.0]
+   ema_2 f64 [NaN, 1.5, 2.5, 3.5, 4.5]
+ >}
+iex(3)> series = Explorer.Series.from_list([1.0,2.0,3.0,4.0,5.0])
+iex(4)> ExTalib.ema(series, 2)
+{:ok,
+ {#Explorer.Series<
+    Polars[5]
+    f64 [NaN, 1.5, 2.5, 3.5, 4.5]
+  >}}
+
+iex(5)> tensor = Nx.tensor([1.0,2.0,3.0,4.0,5.0])
+iex(6)> ExTalib.ema(tensor, 2)
+{:ok,
+ {#Nx.Tensor<
+    f64[5]
+    [NaN, 1.5, 2.5, 3.5, 4.5]
+  >}}
+
+# AND ERRORS:
+iex(7)> ExTalib.ema(tensor, -2)
+{:error,
+ ["Inputs for `time_period` exceeds minimum-maximum constraints. (Received: -2, Min: 2, Max: 100000)"]
+ }
+iex(8)> ExTalib.cdldoji(df)
+{:error,
+ ["Column `open` doesn't exist in dataframe.",
+  "Column `high` doesn't exist in dataframe.",
+  "Column `low` doesn't exist in dataframe.",
+  "Column `close` doesn't exist in dataframe."]
+  }
+```
 
 ## Options
 All functions has an `options` list as their last argument.
@@ -71,12 +110,15 @@ Currently the only valid options are: `in_columns` and `out_columns` and they ar
 
 For example, many functions accept your dataframe to have the `values`. If you want to use the `close` value instead, and don't want to duplicate or rename your columns, you can do things like this:
 ```elixir
-ExTalib.rsi(df, 14, [in_columns: ["close"]])
-
-ExTalib.correl(df, nil, 30, [in_columns: ["btc_close", "eth_close"], out_columns: ["btc_eth_correl"]])
-
-ExTalib.bbands(df, nil, 30, [in_columns: ["close"], out_columns: ["bbands_up", "bbands_mid", "bbands_low"]])
-
+ExTalib.rsi(df, 14, 
+  [in_columns: ["close"]]
+)
+ExTalib.correl(df, nil, 30, 
+  [in_columns: ["btc_close", "eth_close"], out_columns: ["btc_eth_correl"]]
+)
+ExTalib.bbands(df, nil, 30, 
+  [in_columns: ["close"], out_columns: ["bbands_up", "bbands_mid", "bbands_low"]]
+)
 ```
 
 The `in_columns` and `out_columns` will be used if they exist, using the input/output order. You can include some/all or none. In that case the defaults will be used.
@@ -108,8 +150,6 @@ df
   |> Explorer.DataFrame.put(:ema_50, ExTalib.ema!(df["close"], 50) |> elem(0))
   |> Explorer.DataFrame.put(:ema_75, ExTalib.ema!(df["close"], 75) |> elem(0))
   |> Explorer.DataFrame.tail
-
-
 ```
 
 And you'll receive something like this:

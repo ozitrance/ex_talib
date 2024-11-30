@@ -21,7 +21,7 @@ defmodule ExTalib.Prepare do
       types(:ma_type) -> r({ma_types(arg), types(:integer), is_opt})
       types(:double_array) when is_series(arg) -> r({Explorer.Series.cast(arg, {:f, 64}) |> Explorer.Series.to_binary, type, is_opt})
       types(:double_array) when is_tensor(arg) -> r({Nx.as_type(arg, {:f, 64}) |> Nx.to_binary, type, is_opt})
-      4 when is_tensor(arg) -> r({Nx.as_type(arg, {:f, 64}) |> Nx.to_binary, type, is_opt})
+      # 4 when is_tensor(arg) -> r({Nx.as_type(arg, {:f, 64}) |> Nx.to_binary, type, is_opt})
     end
 
   end

@@ -28,13 +28,20 @@ brew install ta-lib
 
 ## Installation
 
+You must have either Nx or Explorer to use this library. It must be installed before or together with this library.
+If you installed this library first and later Nx or Explorer you might get errors. In this case clean up your dependencies library and just get them all again:
+```sh
+mix deps.clean --all
+mix deps.get
+```
+
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `talib_ex` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:talib_ex, "~> 0.1.0"}
+    {:ex_talib, "~> 0.1.0"}
   ]
 end
 ```

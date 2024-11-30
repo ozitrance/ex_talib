@@ -21,7 +21,6 @@ defmodule ExTalib.Prepare do
       types(:ma_type) -> r({ma_types(arg), types(:integer), is_opt})
       types(:double_array) when is_series(arg) -> r({Explorer.Series.cast(arg, {:f, 64}) |> Explorer.Series.to_binary, type, is_opt})
       types(:double_array) when is_tensor(arg) -> r({Nx.as_type(arg, {:f, 64}) |> Nx.to_binary, type, is_opt})
-      # 4 when is_tensor(arg) -> r({Nx.as_type(arg, {:f, 64}) |> Nx.to_binary, type, is_opt})
     end
 
   end
@@ -42,7 +41,6 @@ defmodule ExTalib.Prepare do
           false -> {prices, [input | others]}
         end
       end)
-    # errors = Enum.reverse(errors) |> Enum.filter(fn e -> !is_nil(e) end)
     if price_inputs === zero_bin_tuple, do: {Enum.reverse(inputs), errors}, else: {Enum.reverse([{price_inputs, types(:prices), 0} | Enum.reverse(other_inputs)]), errors}
   end
 
@@ -56,12 +54,10 @@ defmodule ExTalib.Prepare do
 
   defp prepare_output!(arr_type, arg, output_as, first_index) do
     output_type = elem(output_as, 0)
-    IO.inspect(arr_type, label: "arr_type")
     case output_type do
       :series ->
         type = if arr_type === types(:double_array), do: {:f, 64}, else: {:s, 32}
         Explorer.Series.from_binary(arg, type) |> Utils.pad_with_nans(first_index)
-        # Explorer.Series.from_binary(arg, {:f, 64}) |> Explorer.Series.cast(elem(output_as, 1))
       :tensor ->
         type = if arr_type === types(:double_array), do: :f64, else: :s32
         if arg === "", do: Utils.handle_empty_tensor_output(first_index), else: Nx.from_binary(arg, type) |> Utils.pad_with_nans(first_index)

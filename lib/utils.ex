@@ -5,10 +5,8 @@ defmodule ExTalib.Utils do
   alias ExTalib.Errors
   def extract_columns(input_args, input_defs, options, validate_inputs) do
     {df, input_args} = List.pop_at(input_args, 0)
-    IO.inspect(input_defs)
     {inputs, _col_names, errors, _input_args} =
       Enum.reduce(input_defs, {[], options.in_columns, [], input_args}, fn definition, {inputs, in_col_names, errors, input_args} ->
-        IO.inspect(definition)
         {{input, in_col_names, errors}, input_args} =
           case Enum.member?([types(:double_array) | price_types()], elem(definition, 1)) do
             true -> if validate_inputs, do: {get_column(df, definition, in_col_names, errors), input_args}, else: {get_column!(df, definition, in_col_names, errors), input_args}
@@ -42,7 +40,6 @@ defmodule ExTalib.Utils do
   def get_prefix(input_args) do
     input_args
      |> Enum.reduce("", fn input, acc ->
-      IO.inspect(input)
       case is_number(input) do
         true -> acc <> "_#{input}"
         false -> acc

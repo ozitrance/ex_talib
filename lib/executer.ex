@@ -24,14 +24,10 @@ defmodule ExTalib.Executer do
     [options | input_args] = args
     options = merge_options(options)
     {input_args, errors, df} = if df_input, do: extract_columns(input_args, input_defs, options, validate_inputs), else: {input_args, [], nil}
-    IO.inspect(input_args)
-    IO.inspect(df)
-    # IO.inspect(df_input)
     {inputs, errors} = case Enum.empty?(errors) do
       true -> prepare_inputs(input_args, input_defs, validate_inputs)
       false -> {nil, errors}
     end
-    IO.inspect(inputs)
 
     case Enum.empty?(errors) do
       false -> {:error, errors |> List.flatten}
@@ -70,9 +66,6 @@ defmodule ExTalib.Executer do
 
 
   defp prepare_outputs({outputs, first_index}, outputs_defs, input_args, options, df) do
-    # orig_len = get_original_length(List.first(input_args))
-    IO.inspect(outputs_defs)
-    # output_as = if df_input, do: {:dataframe}, else: get_arg_type(List.first(input_args))
     case is_nil(df) do
       true ->
         Enum.zip_reduce(outputs, outputs_defs, [], fn output, definition, acc ->

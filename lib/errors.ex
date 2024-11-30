@@ -18,11 +18,9 @@ defmodule ExTalib.Errors do
           "Input for `#{name}` type does not match type from defintion. (Received: #{arg}, Expected one of: [:sma, :ema, :wma, :dema, :tema, :trima, :kama, :mama, :t3])"
         else
           def_type = elem(def, 1)
-          # IO.inspect(arg_type)
           case elem(arg_type, 0) do
             :tensor -> "Input for `#{name}` type does not match type from defintion. (Received tensor of: #{type_as_string(elem(arg_type, 1))}, Expected: #{types_atoms()[def_type]})"
             :series -> "Input for `#{name}` type does not match type from defintion. (Received: #{type_as_string(elem(arg_type, 1))}, Expected: #{types_atoms()[def_type]})"
-            # :list -> "Input for `#{name}` type does not match type from defintion. (All list elements must contain same type, Expected: #{types_atoms()[def_type]})"
             _ -> "Input for `#{name}` type does not match type from defintion. (Received: #{elem(arg_type, 0)}, Expected: #{types_atoms()[def_type]})"
           end
         end
@@ -33,16 +31,5 @@ defmodule ExTalib.Errors do
       _ -> "Unknown Error"
     end
   end
-
-  # defp get_arg_type(arg) when is_series(arg), do:
-  # # defp get_arg_type(arg) when is_series(arg), do: apply(Explorer.Series, :dtype, [arg])
-  # defp get_arg_type(arg) when is_integer(arg), do: :integer
-  # defp get_arg_type(arg) when is_float(arg), do: :double
-  # defp get_arg_type(arg) when is_atom(arg), do: :ma_type
-  # enum validation do
-  #   match_type "Input for `` type does not match type from defintion. (Received: , Expected: )"
-  #   no_nulls "Inputs cannot contain any nil values."
-  #   min_max "Inputs exceeds minimum-maximum constraints."
-  # end
 
 end

@@ -134,18 +134,12 @@ defmodule TestHelper do
     Enum.zip_reduce(input_defs ++ [nil], inputs, {Explorer.DataFrame.new([]), []}, fn def, input, {df, out} ->
       case is_series(input) do
         true ->
-          IO.inspect("hello")
-          IO.inspect(def)
-          IO.inspect(input)
           {Explorer.DataFrame.put(df, elem(def, 0), input), [nil | out]}
         false -> {df, [input | out]}
       end
     end)
       |> then(fn {df, outputs} -> {df, Enum.reverse(outputs)} end)
       |> then(fn {df, final} ->
-        IO.inspect("final")
-        IO.inspect(final)
-        IO.inspect(df)
         [_first | rest] = final
         [df | rest]
       end)

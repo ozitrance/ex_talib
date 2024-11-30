@@ -40,8 +40,11 @@ The package can be installed by adding `ex_talib` to your list of dependencies i
 ```elixir
 def deps do
   [
-    <!-- {:ex_talib, "~> 0.1.0"} -->
-    {:ex_talib,, git: "https://github.com/ozitrance/ex_talib"}
+    {:ex_talib, git: "https://github.com/ozitrance/ex_talib"},
+    # AND
+    # {:explorer, "~> 0.10.0"},
+    # OR
+    # {:nx, "~> 0.9.2"},
   ]
 end
 ```

@@ -1,3 +1,3 @@
 [
-  {"lib/ex_talib.ex", :no_behaviours, :no_unknown },
+  {"lib/ex_talib.ex", :no_missing_calls },
 ]

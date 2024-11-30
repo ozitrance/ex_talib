@@ -1,7 +1,7 @@
 # ExTalib
 Nif Wrapper Implementation for TA-LIB.
 
-It will use system installed TA-LIB so you must install that first.
+It will use system installed TA-LIB so you must install that first:
 
 ## Install TA-LIB (Ubuntu)
 

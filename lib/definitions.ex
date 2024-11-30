@@ -1,5 +1,5 @@
 defmodule ExTalib.Definitions do
-
+  @moduledoc false
   import ExTalib.Constants
 
   use Const
@@ -1753,7 +1753,7 @@ defmodule ExTalib.Definitions do
         {:second_period, types(:integer), optional(), 14, {1, 100000}},
         {:third_period, types(:integer), optional(), 28, {1, 100000}}
       ],
-      [{:ultsoc, types(:double_array), :line}],
+      [{:ultosc, types(:double_array), :line}],
       [],
       categories(:momentum_indicators)
     ],

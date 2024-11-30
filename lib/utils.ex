@@ -1,5 +1,5 @@
 defmodule ExTalib.Utils do
-
+  @moduledoc false
   import ExTalib.Macros
   import ExTalib.Constants
   alias ExTalib.Errors
@@ -87,7 +87,7 @@ defmodule ExTalib.Utils do
 
   def pad_with_nans(arg, first_index) when first_index == 0, do: arg
   def pad_with_nans(arg, first_index) when is_series(arg), do: list_of(:nan, first_index) |> Explorer.Series.from_list |> Explorer.Series.concat(arg)
-  def pad_with_nans(arg, first_index) when is_tensor(arg), do: list_of(:nan, first_index) |> Nx.tensor |> then(& Nx.concatenate([&1, arg]))
+  def pad_with_nans(arg, first_index) when is_tensor(arg), do: list_of(:nan, first_index) |> Nx.tensor(type: :f64) |> then(& Nx.concatenate([&1, arg]))
   # defp pad_with_nans(arg, first_index) when is_list(arg), do: Utils.list_of(:nan, first_index) |> Enum.concat(arg)
 
 end

@@ -36,3 +36,4 @@ ex_talib-*.tar
 /priv
 /.vscode
 /.elixir_ls
+/signatures.ex

@@ -1,5 +1,5 @@
 defmodule ExTalib.Executer do
-
+  @moduledoc false
   alias ExTalib.{Nif, Validations}
 
   # require ExTalib.Definitions
@@ -68,10 +68,16 @@ defmodule ExTalib.Executer do
   defp prepare_outputs({outputs, first_index}, outputs_defs, input_args, options, df) do
     case is_nil(df) do
       true ->
-        Enum.zip_reduce(outputs, outputs_defs, [], fn output, definition, acc ->
+        Enum.zip_reduce(Enum.reverse(outputs), outputs_defs, {}, fn output, definition, acc ->
           result = prepare_output(output, first_index, definition, get_arg_type(List.first(input_args)))
-         [result | acc]
+          Tuple.append(acc, result)
+        #  [result | acc]
         end)
+      # true ->
+      #   Enum.zip_reduce(outputs, outputs_defs, [], fn output, definition, acc ->
+      #     result = prepare_output(output, first_index, definition, get_arg_type(List.first(input_args)))
+      #    [result | acc]
+      #   end)
       false ->
         postfix = get_prefix(input_args)
         Enum.zip_reduce(Enum.reverse(outputs), outputs_defs, {df, options.out_columns}, fn output, definition, {df, out_col_names} ->

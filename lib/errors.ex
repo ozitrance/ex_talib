@@ -1,5 +1,5 @@
 defmodule ExTalib.Errors do
-
+  @moduledoc false
   import ExTalib.Constants
   import ExTalib.Utils
   def build_input_error(arg, def, error) do

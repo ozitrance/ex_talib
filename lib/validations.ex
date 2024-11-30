@@ -1,4 +1,5 @@
 defmodule ExTalib.Validations do
+  @moduledoc false
   alias ExTalib.Utils
   import ExTalib.Errors
   import ExTalib.Macros

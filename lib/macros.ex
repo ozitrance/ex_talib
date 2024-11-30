@@ -1,5 +1,5 @@
 defmodule ExTalib.Macros do
-
+  @moduledoc false
   # MODULES AVAILABLE?
   @explorer_available Code.ensure_loaded?(Explorer.DataFrame) and Code.ensure_loaded?(Explorer.Series)
   @nx_available Code.ensure_loaded?(Nx)

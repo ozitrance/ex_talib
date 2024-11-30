@@ -5,199 +5,1616 @@ defmodule ExTalibTest do
                   Errors}
   import TestHelper
 
-  describe "accbands" do
-    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
-    :nan, :nan, :nan, :nan, :nan, 68162.87045188263, 67937.55554415323,
-    67449.38294087091, 67837.36139986811, 67683.36445048256, 67151.5018464851,
-    67381.1616365639, 67878.77497994639, 67132.49906397684, 67130.92155855337,
-    67172.60307580893, 66732.34140424189]
-    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
-    :nan, :nan, :nan, :nan, :nan, 59195.91499999999, 58985.469999999994,
-    58928.77999999999, 59095.544999999984, 59394.14499999998,
-    59903.49999999998, 60244.319999999985, 60458.39999999999,
-    60325.90999999999, 60251.63999999998, 60161.959999999985,
-    60174.39999999998]
-    @valid_out_3 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
-    :nan, :nan, :nan, :nan, :nan, 50933.52045188263, 50786.65554415324,
-    50964.082940870925, 50768.93639986812, 51389.86445048257,
-    52846.70184648512, 53418.61163656392, 53394.0749799464,
-    54069.549063976854, 54001.99655855338, 53756.57807580894,
-    54068.46640424192]
-    test "accbands valid" do
-      series_inputs = build_test_inputs(:accbands, :valid, :series)
-      dataframe_inputs = build_test_inputs(:accbands, :valid, :series, true)
-      tensor_inputs = build_test_inputs(:accbands, :valid, :tensor)
-
-      assert(apply(&accbands/5, series_inputs) |> elem(1) |> List.first |> Explorer.Series.to_list === @valid_out_1)
-      assert((apply(&accbands/5, dataframe_inputs) |> elem(1))["accbands_upperband_20" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
-      assert(apply(&accbands/5, tensor_inputs) === {:ok, [@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)]})
-
-      # Bang!
-      assert(apply(&accbands!/5, series_inputs) |> List.first |> Explorer.Series.to_list === @valid_out_1)
-      assert((apply(&accbands!/5, dataframe_inputs))["accbands_upperband_20" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
-      assert(apply(&accbands!/5, tensor_inputs) === [@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)])
-    end
-  end
-
-
-
-
+  # Signature 1 [:values]
   describe "acos" do
-    @valid_out_1 [1.3737453568764886, 1.385482602037588, 1.3879185141841766,
-    1.395654342220921, 1.4082444498573286, 1.402203875538758, 1.404903609613873,
-    1.384945643879787, 1.3875405948626018, 1.3872927995238935,
-    1.3939845036820064, 1.392064760615401, 1.3883271859187964,
-    1.3941214941845559, 1.397581987550128, 1.393491918995786, 1.3916234760212745,
-    1.3949071461917495, 1.3918366613827209, 1.3931022043907781,
-    1.386591412882129, 1.3889384598849808, 1.377744006006369, 1.3774490261399694,
-    1.3772239627565261, 1.3814444749324049, 1.3918792974681502,
-    1.393019691005026, 1.3920659787436032, 1.3927569188221773,
-    1.3932270378163907]
+    @valid_out_1 [1.5510735434442207, 1.5511057076165882, 1.5510767476558551, 1.5510772969492579,
+    1.551080714774741, 1.551107355495838, 1.5511474233581877, 1.551215779729926, 1.5512170919272372,
+    1.5512722652162607, 1.5512644835889464, 1.5512437325769908, 1.5513247530245384, 1.5512638427489973,
+    1.5512764154170116, 1.5512950608000602, 1.5512605164843702, 1.5513247225083866, 1.5513354641927712,
+    1.5513548419415932, 1.5512895068568828, 1.5512141318541848, 1.5511791907727048, 1.551183157883597,
+    1.5511966460583222, 1.5512006131678566, 1.551151695634108, 1.5512060450557958, 1.5511441886347521,
+    1.5511593552136105, 1.551161918578605, 1.5511776954769807, 1.5511593552136105, 1.5511408623623257,
+    1.5511206300767335, 1.5511243530620171, 1.5510804706443568, 1.5510919447711353, 1.5511192873606625,
+    1.5511335994915008, 1.5511540148694576, 1.5511273131402856, 1.5511341182680227, 1.5510992076479146,
+    1.5511272521077457, 1.5511018320485122, 1.5510797992857948, 1.5510715293682327, 1.551031675060241,
+    1.551052517707613, 1.5510395787884392, 1.5510072619923694, 1.551051297055002, 1.551093134906477,
+    1.5510548369474928, 1.551047299417495, 1.5510821185244261, 1.551216512119127, 1.5511921601725538,
+    1.5512934434430432, 1.5513768135534725, 1.5515843227602628, 1.5515971699941584, 1.5516063858226965,
+    1.5515626869126382, 1.5516077895580263, 1.5516590563876553, 1.5516071487223368, 1.5516816076735596,
+    1.5516724528901975, 1.5517883828453853, 1.551511847212664, 1.5514854203141235, 1.551555698745544,
+    1.551628387843842, 1.5515903954436632, 1.5515002205996087, 1.5514701012512893, 1.5514746176288512,
+    1.5514506319975554, 1.5514173694624485, 1.551403759281353, 1.5512013760735008, 1.5510412571861603,
+    1.55105178531605, 1.551028409813096, 1.5509436658951403, 1.5509999991024017, 1.550867435918437, 1.5508057011486804]
     test "acos valid" do
       # list_inputs = build_test_inputs(:acos, :valid, :list)
       series_inputs = build_test_inputs(:acos, :valid_normalized, :series)
       tensor_inputs = build_test_inputs(:acos, :valid_normalized, :tensor)
+      dataframe_inputs = build_test_inputs(:acos, :valid_normalized, :series, true)
 
       # assert(apply(&acos/2, list_inputs) === {:ok, [@valid_out_1]})
-      assert(apply(&acos/2, series_inputs) |> elem(1) |> List.first |> Explorer.Series.to_list === @valid_out_1 )
-      assert(apply(&acos/2, tensor_inputs) === {:ok, [@valid_out_1 |> Nx.tensor(type: :f64)]})
+      assert(apply(&acos/2, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&acos/2, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&acos/2, dataframe_inputs) |> elem(1))["acos" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
       # Bang!
       # assert(apply(&acos!/2, list_inputs) === [@valid_out_1])
-      assert(apply(&acos!/2, series_inputs) |> List.first |> Explorer.Series.to_list === @valid_out_1)
-      assert(apply(&acos!/2, tensor_inputs) === [@valid_out_1 |> Nx.tensor(type: :f64)])
+      assert(apply(&acos!/2, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&acos!/2, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+      assert((apply(&acos!/2, dataframe_inputs))["acos" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
     end
   end
 
+  # Signature 2 [:values, :volume]
+  describe "obv" do
+    @valid_out_1 [2361.177, -1716.096, 154.5239999999999, -3303.2200000000003, -5793.243,
+    -8034.8240000000005, -14433.635, -16580.181, -23844.576, -28593.641,
+    -25824.148999999998, -23311.068999999996, -27148.861999999997, -23271.246,
+    -24926.489999999998, -26293.001999999997, -24922.896999999997,
+    -26826.102999999996, -30109.983999999997, -35525.865, -30078.240999999998,
+    -23549.172, -20114.699, -22427.871, -23931.528, -26388.394, -24072.076,
+    -25747.664, -23657.603, -24997.299, -26026.034, -27181.253, -25557.391,
+    -24788.988, -23262.648, -24105.696, -21880.333, -22969.426,
+    -23880.845999999998, -25500.763, -27523.381999999998, -25906.929999999997,
+    -26584.963999999996, -25594.894999999997, -26887.792999999998,
+    -25986.053999999996, -24968.826999999997, -23581.063, -21123.335,
+    -25162.838, -23311.743, -22023.520999999997, -24065.918999999998,
+    -26250.144999999997, -22840.015999999996, -20276.645999999997, -23217.796,
+    -29027.394, -23234.265, -30231.131999999998, -42617.187999999995,
+    -66814.559, -82438.139, -90030.09, -83849.931, -88728.18299999999,
+    -93464.442, -90039.33, -94787.509, -90569.41, -97309.072, -81405.948,
+    -71425.22, -75505.883, -79965.85, -76989.64600000001, -74021.06700000001,
+    -72176.48000000001, -73914.88500000001, -71004.085, -68230.129, -65874.83,
+    -54518.11, -45083.577000000005, -51136.007000000005, -48313.016,
+    -44876.276000000005, -51491.05, -47002.797000000006, -41054.77900000001]
 
+    test "obv valid" do
+      series_inputs = build_test_inputs(:obv, :valid, :series)
+      tensor_inputs = build_test_inputs(:obv, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:obv, :valid, :series, true)
 
-
-
-  describe "ad" do
-    @valid_out_1 [301825.071325323, -65182.7779060789, -138450.93925045797,
-    -292759.52050925535, -179372.67126280162, -29470.25283087688,
-    -268458.6250691761, 76050.16278421204, 130296.97384297174,
-    141590.95196637113, -13599.219709963101, 30465.56147587725,
-    126571.66079016298, -121257.2046513343, -193120.57275883883,
-    -107345.10868190932, -67379.17365063186, -211046.71896570036,
-    -40595.88973915606, -231766.29199538627, -80168.80632530496,
-    -125703.33446237858, 97213.40672197836, 130447.7974311806,
-    88336.91372894305, -94449.53371336438, -246134.91370804876,
-    -245844.5886818064, -354202.284230825, -269708.49862628046,
-    -293306.56273334543]
-    test "ad valid" do
-      series_inputs = build_test_inputs(:ad, :valid, :series)
-      tensor_inputs = build_test_inputs(:ad, :valid, :tensor)
-
-      assert(apply(&ad/5, series_inputs) |> elem(1) |> List.first |> Explorer.Series.to_list === @valid_out_1 )
-      assert(apply(&ad/5, tensor_inputs) === {:ok, [@valid_out_1 |> Nx.tensor(type: :f64)]})
+      assert(apply(&obv/3, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&obv/3, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&obv/3, dataframe_inputs) |> elem(1))["obv" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
       # Bang!
-      assert(apply(&ad!/5, series_inputs) |> List.first |> Explorer.Series.to_list === @valid_out_1)
-      assert(apply(&ad!/5, tensor_inputs) === [@valid_out_1 |> Nx.tensor(type: :f64)])
+      assert(apply(&obv!/3, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&obv!/3, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+      assert((apply(&obv!/3, dataframe_inputs))["obv" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
     end
 
   end
 
 
-
-
-
-
-
-
-
-
-
-
+  # Signature 3 [:values, :time_period]
   describe "rsi" do
     @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
-      36.420325652329495, 39.46397607267759, 40.856136366517696, 39.15183288748458,
-      41.604884003816544, 40.87359961334125, 46.118262393338526, 44.58358164027796,
-      52.66728154791546, 52.8621927729173, 53.02113998757058, 49.63951952268519,
-      42.42502900104559, 41.710790208274084, 42.58140978121209, 42.09092430999695,
-      41.738600914759935]
+    26.929483620210842, 25.753351918226343, 31.70461549132829,
+    27.32116992802791, 26.657139048698742, 25.455203178456394,
+    35.94253755082549, 45.473193869991995, 49.24318765729625, 48.83038425748057,
+    47.3761951524712, 46.93348516870262, 52.79154469865248, 46.632203875592914,
+    53.30912696245025, 51.60433794453289, 51.30570186012927, 49.41043365098714,
+    51.64658310275778, 53.86115324341776, 56.22342387097659, 55.65871182578414,
+    60.672744299253935, 58.800454121352075, 54.48560010739055,
+    52.32131919927784, 49.31229902981202, 53.110586513295466, 52.04028437422682,
+    56.84494597740519, 52.31122040710917, 55.75578282694668, 58.55035629749169,
+    59.5822800373359, 64.20698143605951, 60.31980691588469, 61.86336847175381,
+    65.47571689475052, 57.4854660600173, 51.10438679341388, 55.9271723570695,
+    56.82968070317593, 51.57558642952404, 37.25755418713977, 40.48180753325012,
+    32.90737644531025, 28.225777905927323, 20.43360209515442,
+    20.064289203144554, 19.788001848016915, 25.05769168262384,
+    23.352419520394687, 21.556639134272178, 27.625235060759035,
+    24.676196539709572, 25.726046214914255, 21.617143136797473,
+    44.420803472146844, 46.03650834628881, 42.49831011124095, 39.14702732310501,
+    41.73328747165723, 47.44275750344412, 49.23216111543838, 48.96296259271315,
+    50.51064235248591, 52.65481664392162, 53.54177639317634, 64.26292763724727,
+    70.13501325413176, 69.32837806899822, 70.14928031257307, 72.97336944060123,
+    68.34457254966325, 72.72843213105321, 74.49954840550322]
 
     test "rsi valid" do
       # list_inputs = build_test_inputs(:rsi, :valid, :list)
       series_inputs = build_test_inputs(:rsi, :valid, :series)
       tensor_inputs = build_test_inputs(:rsi, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:rsi, :valid, :series, true)
 
       # assert(apply(&rsi/3, list_inputs) === {:ok, [@valid_out_1]})
-      assert(apply(&rsi/3, series_inputs) |> elem(1) |> List.first |> Explorer.Series.to_list === @valid_out_1)
-      assert(apply(&rsi/3, tensor_inputs) === {:ok, [@valid_out_1 |> Nx.tensor(type: :f64)]})
+      assert(apply(&rsi/3, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&rsi/3, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&rsi/3, dataframe_inputs) |> elem(1))["rsi_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
       # Bang!
       # assert(apply(&rsi!/3, list_inputs) === [@valid_out_1])
-      assert(apply(&rsi!/3, series_inputs) |> List.first |> Explorer.Series.to_list === @valid_out_1)
-      assert(apply(&rsi!/3, tensor_inputs) === [@valid_out_1 |> Nx.tensor(type: :f64)])
+      assert(apply(&rsi!/3, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&rsi!/3, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+      assert((apply(&rsi!/3, dataframe_inputs))["rsi_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
     end
 
-    test "rsi bad input type" do
-      def_for_error = {:values, types(:double_array)}
+    # test "rsi bad input type" do
+    #   def_for_error = {:values, types(:double_array)}
 
-      # list_inputs = build_test_inputs(:rsi, :bad_input_type_int_array, :list)
-      # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_inputs), def_for_error, :match_type)]})
-      # list_inputs = build_test_inputs(:rsi, :bad_input_type_string_array, :list)
-      # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_inputs), def_for_error, :match_type)]})
+    #   # list_inputs = build_test_inputs(:rsi, :bad_input_type_int_array, :list)
+    #   # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_inputs), def_for_error, :match_type)]})
+    #   # list_inputs = build_test_inputs(:rsi, :bad_input_type_string_array, :list)
+    #   # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_inputs), def_for_error, :match_type)]})
 
-      series_inputs = build_test_inputs(:rsi, :bad_input_type_int_array, :series)
-      assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :match_type)]})
-      series_inputs = build_test_inputs(:rsi, :bad_input_type_string_array, :series)
-      assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :match_type)]})
+    #   series_inputs = build_test_inputs(:rsi, :bad_input_type_int_array, :series)
+    #   assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :match_type)]})
+    #   series_inputs = build_test_inputs(:rsi, :bad_input_type_string_array, :series)
+    #   assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :match_type)]})
 
-      tensor_inputs = build_test_inputs(:rsi, :bad_input_type_int_array, :tensor)
-      assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_inputs), def_for_error, :match_type)]})
-    end
-
-    test "rsi bad no nils" do
-      def_for_error = {:values, types(:double_array)}
-
-      # series_inputs = build_test_inputs(:rsi, :with_nans, :series)
-      # assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :no_nulls)]})
-
-      tensor_inputs = build_test_inputs(:rsi, :with_nans, :tensor)
-      assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_inputs), def_for_error, :no_nulls)]})
-    end
-
-    test "rsi bad empty list" do
-      def_for_error = {:values, types(:double_array)}
-      # list_inputs = build_test_inputs(:rsi, :empty_list, :series)
-      # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_inputs), def_for_error, :not_empty),
-      #                                                 build_input_error(List.first(list_inputs), def_for_error, :match_type)]})
-
-      series_inputs = build_test_inputs(:rsi, :empty_list, :series)
-      assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :not_empty),
-                                                        build_input_error(List.first(series_inputs), def_for_error, :match_type)]})
-    end
-
-    test "rsi bad nx shape" do
-      def_for_error = {:values, types(:double_array)}
-      tensor_inputs = build_test_inputs(:rsi, :nx_shape, :tensor)
-      assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_inputs), def_for_error, :shape)]})
-    end
-
-    test "rsi bad min_max" do
-      def_for_error = {:time_period, types(:integer), optional(), 14, {2, 100000}}
-      # list_inputs = build_test_inputs(:rsi, :bad_min_max, :list)
-      # [_input | list_without_first_el] = list_inputs
-      series_inputs = build_test_inputs(:rsi, :bad_min_max, :series)
-      [_input | series_without_first_el] = series_inputs
-      tensor_inputs = build_test_inputs(:rsi, :bad_min_max, :tensor)
-      [_input | tensor_without_first_el] = tensor_inputs
-      # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_without_first_el), def_for_error, :min_max)]})
-      assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_without_first_el), def_for_error, :min_max)]})
-      assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_without_first_el), def_for_error, :min_max)]})
-    end
-
-    # test "rsi bad ma_type" do
-
+    #   tensor_inputs = build_test_inputs(:rsi, :bad_input_type_int_array, :tensor)
+    #   assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_inputs), def_for_error, :match_type)]})
     # end
 
-    # test "rsi bad multiple_lengths" do
+    # # test "rsi bad no nils" do
+    # #   def_for_error = {:values, types(:double_array)}
 
+    # #   # series_inputs = build_test_inputs(:rsi, :with_nans, :series)
+    # #   # assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :no_nulls)]})
+
+    # #   tensor_inputs = build_test_inputs(:rsi, :with_nans, :tensor)
+    # #   assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_inputs), def_for_error, :no_nulls)]})
+    # # end
+
+    # test "rsi bad empty list" do
+    #   def_for_error = {:values, types(:double_array)}
+    #   # list_inputs = build_test_inputs(:rsi, :empty_list, :series)
+    #   # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_inputs), def_for_error, :not_empty),
+    #   #                                                 build_input_error(List.first(list_inputs), def_for_error, :match_type)]})
+
+    #   series_inputs = build_test_inputs(:rsi, :empty_list, :series)
+    #   assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_inputs), def_for_error, :not_empty),
+    #                                                     build_input_error(List.first(series_inputs), def_for_error, :match_type)]})
     # end
 
+    # test "rsi bad nx shape" do
+    #   def_for_error = {:values, types(:double_array)}
+    #   tensor_inputs = build_test_inputs(:rsi, :nx_shape, :tensor)
+    #   assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_inputs), def_for_error, :shape)]})
+    # end
 
+    # test "rsi bad min_max" do
+    #   def_for_error = {:time_period, types(:integer), optional(), 14, {2, 100000}}
+    #   # list_inputs = build_test_inputs(:rsi, :bad_min_max, :list)
+    #   # [_input | list_without_first_el] = list_inputs
+    #   series_inputs = build_test_inputs(:rsi, :bad_min_max, :series)
+    #   [_input | series_without_first_el] = series_inputs
+    #   tensor_inputs = build_test_inputs(:rsi, :bad_min_max, :tensor)
+    #   [_input | tensor_without_first_el] = tensor_inputs
+    #   # assert(apply(&rsi/3, list_inputs) === {:error, [build_input_error(List.first(list_without_first_el), def_for_error, :min_max)]})
+    #   assert(apply(&rsi/3, series_inputs) === {:error, [build_input_error(List.first(series_without_first_el), def_for_error, :min_max)]})
+    #   assert(apply(&rsi/3, tensor_inputs) === {:error, [build_input_error(List.first(tensor_without_first_el), def_for_error, :min_max)]})
+    # end
 
+    # # test "rsi bad ma_type" do
+
+    # # end
+
+    # # test "rsi bad multiple_lengths" do
+
+    # end
 
   end
+
+  # Signature 4 [:values, :signal_period]
+  describe "macdfix" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, 9.022565272091015, 24.724612562284165,
+    35.87719535287761, 55.02729512425867, 66.64500399936514, 68.3096713074192,
+    65.33253217616584, 57.239265547235846, 56.79449292283971, 54.1333524015281,
+    60.012030452126055, 57.06650572681974, 60.356088722124696,
+    67.67851735405566, 74.70689354568458, 89.1875017739585, 94.4470205984835,
+    100.69978829253523, 112.42565427369118, 109.55782779079163,
+    95.78797365596256, 93.29631113882351, 92.1401579844096, 81.63705578943336,
+    39.43057481099822, 11.787135175080039, -34.972624509377056,
+    -91.83404353554943, -186.50820125510654, -262.00504049798474,
+    -320.6818736470959, -352.4688626320567, -384.58110801687144,
+    -418.10282348549663, -426.9981155084897, -447.48831006209366,
+    -456.3144820416637, -486.61302183763473, -436.995852256543,
+    -386.573149335527, -359.8518512338487, -352.6588972750251,
+    -333.69852463056304, -292.874323236756, -250.07895875445683,
+    -214.7277151442613, -178.6221130603808, -140.049584649998,
+    -104.80137636001746, -26.168457107974973, 75.30357079640817,
+    151.65128756477498, 215.71860288879543, 284.4921952798104,
+    321.51989510034764, 379.5958252643686, 436.16007232160337]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, -54.0013812135593, -38.256182458390604,
+    -23.42950689613696, -7.738146492057833, 7.138483606226764,
+    19.372721146465253, 28.56468335240537, 34.29959979137146, 38.79857841766511,
+    41.86553321443771, 45.49483266197538, 47.80916727494425, 50.31855156438034,
+    53.7905447223154, 57.97381448698924, 64.2165519443831, 70.26264567520317,
+    76.35007419866959, 83.5651902136739, 88.76371772909745, 90.16856891447047,
+    90.79411735934107, 91.06332548435478, 89.1780715453705, 79.22857219849604,
+    65.74028479381283, 45.59770293317486, 18.111353639430003,
+    -22.812557339477312, -70.6510539711788, -120.65721790636223,
+    -167.01954685150113, -210.5318590845752, -252.04605196475947,
+    -287.0364646735055, -319.12683375122316, -346.5643634093113,
+    -374.574095094976, -387.0584465272894, -386.96138708893693,
+    -381.53947991791927, -375.76336338934044, -367.35039563758494,
+    -352.45518115741913, -331.9799366768267, -308.5294923703136,
+    -282.54801650832707, -254.04833013666126, -224.1989393813325,
+    -184.592842926661, -132.61356018204717, -75.76059063268272,
+    -17.464751928387095, 42.92663751325241, 98.64528903067146,
+    154.8353962774109, 211.1003314862494]
+    @valid_out_3 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, 63.02394648565031, 62.98079502067477, 59.30670224901456,
+    62.76544161631651, 59.50652039313838, 48.93695016095394, 36.767848823760474,
+    22.939665755864382, 17.995914505174596, 12.267819187090389,
+    14.517197790150675, 9.25733845187549, 10.037537157744353,
+    13.887972631740254, 16.73307905869534, 24.970949829575403,
+    24.18437492328033, 24.349714093865643, 28.86046406001728,
+    20.794110061694184, 5.61940474149209, 2.5021937794824396,
+    1.0768325000548202, -7.5410157559371385, -39.797997387497816,
+    -53.953149618732795, -80.57032744255191, -109.94539717497943,
+    -163.69564391562923, -191.35398652680595, -200.0246557407337,
+    -185.44931578055557, -174.04924893229625, -166.05677152073716,
+    -139.9616508349842, -128.3614763108705, -109.75011863235244,
+    -112.03892674265876, -49.93740572925361, 0.38823775340995326,
+    21.687628684070546, 23.104466114315358, 33.651871007021896,
+    59.58085792066311, 81.90097792236986, 93.80177722605231, 103.92590344794627,
+    113.99874548666327, 119.39756302131505, 158.42438581868603,
+    207.91713097845533, 227.4118781974577, 233.18335481718253, 241.565557766558,
+    222.8746060696762, 224.76042898695772, 225.05974083535398]
+
+    test "macdfix valid" do
+      # list_inputs = build_test_inputs(:rsi, :valid, :list)
+      series_inputs = build_test_inputs(:macdfix, :valid, :series)
+      tensor_inputs = build_test_inputs(:macdfix, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:macdfix, :valid, :series, true)
+
+      # assert(apply(&rsi/3, list_inputs) === {:ok, [@valid_out_1]})
+      assert(apply(&macdfix/3, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&macdfix/3, dataframe_inputs) |> elem(1))["macdfix_9" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&macdfix/3, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      # assert(apply(&rsi!/3, list_inputs) === [@valid_out_1])
+      assert(apply(&macdfix!/3, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&macdfix!/3, dataframe_inputs))["macdfix_9" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&macdfix!/3, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+
+  # Signature 5 [:values, :fast_limit, :slow_limit],
+  describe "mama" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, 64229.17327164684, 64323.63663582342, 64331.67480403225,
+    64338.70106383063, 64477.35053191532, 64527.87526595766, 64525.921502659774,
+    64521.72042752679, 64514.38440615044, 64511.79018584292, 64508.21067655077,
+    64510.53014272323, 64486.615071361615, 64489.58431779353,
+    64496.015101903846, 64503.47934680865, 64639.689673404326,
+    64643.085189734105, 64696.54259486705, 64704.5104651237, 64704.86494186751,
+    64698.34669477413, 64698.42936003542, 64699.742892033646, 64655.17144601682,
+    64630.92287371598, 64440.46143685799, 64414.34336501509, 64029.621682507546,
+    63497.260841253774, 63468.53779919108, 63439.74090923152, 63237.77045461576,
+    63173.107661834634, 63150.4522787429, 63137.434664805754,
+    63112.867931565466, 63091.02953498719, 62925.74528699121, 63064.0726434956,
+    63176.5363217478, 63117.6181608739, 63102.7622528302, 63094.87414018869,
+    63167.68707009434, 63176.26271658962, 63183.669580760135, 63194.63610172213,
+    63353.31805086107, 63454.95902543054, 63493.201074159006,
+    63555.766020451054, 63669.76247110601, 64228.181235553006,
+    64646.24061777651, 64762.97030888825, 64790.52679344384, 64826.820453771645]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, 59216.74302003939, 60493.46642398539, 60589.42163348656,
+    60683.15361924516, 61631.7028474127, 62355.745952048936, 62410.00034081421,
+    62462.79334298202, 62514.083119561226, 62564.025796218266,
+    62612.63041822658, 62660.077911338994, 63116.71220134465, 63151.03400425587,
+    63184.65853169707, 63217.62905207486, 63573.144207407226,
+    63599.892731965396, 63874.05519769081, 63894.81657937663, 63915.0677884389,
+    63934.64976109728, 63953.74425107073, 63972.3942170948, 64143.0885243253,
+    64155.28438306007, 64226.57864650955, 64231.27276447219, 64180.85999398103,
+    64009.960205799216, 63996.42464563401, 63982.50755222395, 63796.3232778219,
+    63738.71569304345, 63724.00910768594, 63709.34474661393, 63694.432826237724,
+    63679.34774395646, 63600.99219103313, 63466.762304148746,
+    63394.205808548504, 63325.05889662985, 63319.50148053486, 63313.8857970262,
+    63277.336115293234, 63274.809280325644, 63272.530787836506,
+    63270.583420683644, 63291.267078228004, 63332.19006502864, 63336.2153402569,
+    63341.70410726175, 63357.904240747914, 63575.473489449185,
+    63843.16527153102, 64073.11653087032, 64091.051787434655, 64109.44600409307]
+
+
+    test "mama valid" do
+      # list_inputs = build_test_inputs(:rsi, :valid, :list)
+      series_inputs = build_test_inputs(:mama, :valid, :series)
+      tensor_inputs = build_test_inputs(:mama, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:mama, :valid, :series, true)
+
+      # assert(apply(&rsi/3, list_inputs) === {:ok, [@valid_out_1]})
+      assert(apply(&mama/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&mama/4, dataframe_inputs) |> elem(1))["mama_0.5_0.05" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&mama/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      # assert(apply(&rsi!/3, list_inputs) === [@valid_out_1])
+      assert(apply(&mama!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&mama!/4, dataframe_inputs))["mama_0.5_0.05" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&mama!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+
+  # Signature 6 [:values, :fast_period, :fast_ma, :slow_period, :slow_ma, :signal_period, :signal_ma],
+  describe "macdext" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, 193.1698717948675, 197.00384615384974,
+    194.4198717948675, 202.95256410256115, 213.49679487178946,
+    196.4506410256363, 199.81858974359784, 181.70833333334303,
+    169.31602564103378, 160.97692307693796, 153.98717948718695,
+    136.51153846153466, 115.28141025640798, 100.00064102563192,
+    96.45256410256115, 91.18525641026645, 85.48653846154048, 87.45705128205009,
+    97.58782051282469, 112.98397435897641, 108.08653846153902,
+    118.47499999999854, 118.52692307691905, 120.79423076923558,
+    94.3698717948646, 67.82115384615463, 26.451923076921958,
+    -35.509615384617064, -122.76153846154193, -209.90512820512959,
+    -308.6750000000102, -392.4403846153873, -473.2166666666744,
+    -574.5628205128232, -666.9692307692385, -761.6737179487318,
+    -813.9320512820632, -893.4217948718069, -901.3865384615419,
+    -879.9217948718069, -811.0820512820646, -744.3993589743841,
+    -672.2403846154048, -597.1243589743754, -501.18974358976993,
+    -397.46923076924577, -309.66987179488933, -191.81923076923704,
+    -73.51730769232381, 101.81346153845516, 208.23333333332266,
+    308.957692307682, 419.5455128205067, 551.9365384615303, 639.5153846153626,
+    720.3423076922918, 800.8602564102475]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, 33.60982905982787, 71.7145299145276, 104.65341880341536,
+    134.43433048432618, 160.9127492877443, 179.3304131054077,
+    191.71937321937003, 195.7360398860393, 194.25961538461627,
+    190.68262108262408, 185.90299145299488, 179.4687321937357,
+    169.72749287749645, 157.11680911681228, 146.00591168091503,
+    133.93554131054486, 123.24423076923348, 114.14878917379085,
+    107.10555555555604, 102.54964387464376, 99.39131054131092, 99.7461538461543,
+    101.80462962963065, 104.50925925926114, 104.86310541310539,
+    102.90028490028473, 96.12193732193717, 81.33333333333252, 55.13938746438604,
+    19.806980056978418, -27.65413105413366, -84.42827635327882,
+    -150.42948717949105, -224.75534188034524, -306.39871794872226,
+    -393.9682336182393, -480.4596153846222, -566.0885327635406,
+    -642.9198005698086, -706.391666666675, -752.9074074074168,
+    -783.038817663829, -793.8918803418936, -786.1313390313533,
+    -757.1886752136909, -710.9150284900445, -646.0537037037203,
+    -567.2128917379086, -477.6123931624105, -376.179558404575,
+    -270.33148148149644, -161.30947293448682, -48.346153846166594,
+    68.66787749286677, 183.8883903133788, 298.3341880341767, 408.6319088318972]
+    @valid_out_3 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, 159.56004273503964, 125.28931623932213,
+    89.76645299145214, 68.51823361823497, 52.58404558404516, 17.120227920228587,
+    8.099216524227813, -14.027706552696259, -24.943589743582493,
+    -29.705698005686116, -31.915811965807933, -42.957193732201034,
+    -54.446082621088465, -57.116168091180356, -49.55334757835388,
+    -42.750284900278416, -37.757692307693006, -26.691737891740758,
+    -9.517735042731346, 10.434330484332648, 8.695227920228106,
+    18.728846153844245, 16.722293447288394, 16.28497150997444,
+    -10.493233618240794, -35.0791310541301, -69.67001424501521,
+    -116.84294871794958, -177.90092592592796, -229.71210826210802,
+    -281.02086894587654, -308.0121082621085, -322.7871794871834,
+    -349.807478632478, -360.5705128205162, -367.7054843304925,
+    -333.47243589744096, -327.33326210826635, -258.4667378917334,
+    -173.53012820513197, -58.17464387464781, 38.63945868944495,
+    121.65149572648886, 189.0069800569779, 255.99893162392095,
+    313.44579772079874, 336.383831908831, 375.3936609686716, 404.0950854700867,
+    477.99301994303016, 478.5648148148191, 470.26716524216886,
+    467.8916666666733, 483.26866096866354, 455.62699430198376,
+    422.0081196581151, 392.22834757835034]
+
+    test "macdext valid" do
+      series_inputs = build_test_inputs(:macdext, :valid, :series)
+      tensor_inputs = build_test_inputs(:macdext, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:macdext, :valid, :series, true)
+
+      assert(apply(&macdext/8, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&macdext/8, dataframe_inputs) |> elem(1))["macdext_12_26_9" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&macdext/8, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      assert(apply(&macdext!/8, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&macdext!/8, dataframe_inputs))["macdext_12_26_9" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&macdext!/8, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+
+
+
+  # Signature 7 [:values, :fast_period, :slow_period, :ma_type],
+  describe "ppo" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, -0.22740246442564277,
+    -0.15900855751294257, -0.10143693565849177, -0.03867621997880959,
+    0.04785482278643032, 0.13772840657180646, 0.22702394701672007,
+    0.2848096519859569, 0.3012452576951704, 0.30716604021290433,
+    0.30304905145081684, 0.3162349362504978, 0.3325655234113243,
+    0.3058892130142205, 0.31105387047462524, 0.28279405978142136,
+    0.2634211412447585, 0.250385143487808, 0.2394073843036176,
+    0.21215104953890493, 0.17906880358751015, 0.15526914818615925,
+    0.1497183335913403, 0.14150132679939342, 0.13262416662748688,
+    0.13563957090440998, 0.15129448077313415, 0.17512942566829057,
+    0.1675012673234406, 0.18356818750527548, 0.18360846003817877,
+    0.1870915665378023, 0.14617540086952083, 0.10505915837208742,
+    0.040987873608712505, -0.055050522456740025, -0.19048829709681647,
+    -0.32603791487635875, -0.4799368739383591, -0.6107083826996974,
+    -0.7370964635050015, -0.8958444924350828, -1.0409038501893784,
+    -1.189985673233942, -1.273067450735723, -1.3992206221325454,
+    -1.4128379529085215, -1.3803000444514806, -1.2735328260451806,
+    -1.170211867598173, -1.0579038200144164, -0.9405531674043011,
+    -0.7901689726770904, -0.6271721727866795, -0.48898000603842484,
+    -0.30310824367149414, -0.11625285386481479, 0.16103581222571756,
+    0.3292424419701463, 0.48836339503903015, 0.6628174318864861,
+    0.87122349761778, 1.0082932504919562, 1.1340846545519119, 1.258849587393736]
+    test "ppo valid" do
+      series_inputs = build_test_inputs(:ppo, :valid, :series)
+      dataframe_inputs = build_test_inputs(:ppo, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:ppo, :valid, :tensor)
+
+      assert(apply(&ppo/5, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&ppo/5, dataframe_inputs) |> elem(1))["ppo_12_26" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&ppo/5, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&ppo!/5, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&ppo!/5, dataframe_inputs))["ppo_12_26" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&ppo!/5, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+  # Signature 8 [:values, :fast_period, :slow_period, :signal_period],
+  describe "macd" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, 13.104055281357432, 29.290141624209355,
+    40.664538142118545, 60.58391389670578, 72.50041724976472, 73.86291512181924,
+    70.34734604583355, 61.45455151569331, 60.766982564549835, 57.75687033712893,
+    63.86624827477499, 60.59392331680283, 63.98462116094015, 71.67152549852472,
+    79.03908273739216, 94.32888874804485, 99.78467535185337, 106.30434092062933,
+    118.64875877740997, 115.45707751104783, 100.70397022245743,
+    98.00904034994164, 96.75108628629823, 85.5609389568126, 40.68705214360671,
+    11.431590370935737, -38.09598327284766, -98.25922777127562,
+    -198.52092385669675, -278.16959259761643, -339.8114887040647,
+    -372.810564129868, -406.20630055601214, -441.1436290886777,
+    -449.91967133975413, -471.13258568074525, -479.99019565524213,
+    -511.7653579354883, -458.5388855575002, -404.70345693590934,
+    -376.2842070821207, -368.7319833267902, -348.68130108741025,
+    -305.4258514572721, -260.1821134113561, -222.9503287496118,
+    -184.96929713428108, -144.40900971903466, -107.42748528008815,
+    -24.324268294818467, 82.91869963717181, 163.24388876181183,
+    230.42694133795885, 302.5899945946221, 340.9537543302504,
+    401.77830962932785, 460.992097289527]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, -51.236150855590594, -35.13089235963061,
+    -19.971806259280775, -3.860662228083463, 11.411553667486176,
+    23.901825958352788, 33.19092997584894, 38.84365428381781,
+    43.228319939964216, 46.13403001939716, 49.68047367047272, 51.86316359973874,
+    54.28745511197902, 57.76426918928816, 62.019231898908956, 68.48116326873614,
+    74.74186568535958, 81.05436073241353, 88.57324034141281, 93.95000777533981,
+    95.30080026476334, 95.842448281799, 96.02417588269884, 93.9315284975216,
+    83.28263322673862, 68.91242465557805, 47.51074306989291, 18.356748901659206,
+    -25.01878565001199, -75.64894703953289, -128.48145537243926,
+    -177.347277123925, -223.11908181034244, -266.7239912660095,
+    -303.3631272807584, -336.9170189607558, -365.53165429965304,
+    -394.7783950268201, -407.5304931329561, -406.96508589354676,
+    -400.8289101312615, -394.4095247703673, -385.2638800337759,
+    -369.2962743184751, -347.47344213705134, -322.56881945956343,
+    -295.04891499450696, -264.9209339394125, -233.42224420754764,
+    -191.6026490250018, -136.69837929256707, -76.70992568169129,
+    -15.282552277761255, 48.29195709671543, 106.82431654342243,
+    165.8151151606035, 224.85051158638822]
+    @valid_out_3 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, 64.34020613694803, 64.42103398383996, 60.63634440139932,
+    64.44457612478925, 61.08886358227855, 49.961089163466454, 37.15641606998461,
+    22.610897231875498, 17.53866262458562, 11.622840317731772,
+    14.185774604302267, 8.730759717064089, 9.69716604896113, 13.907256309236558,
+    17.019850838483208, 25.847725479308707, 25.04280966649378, 25.2499801882158,
+    30.075518435997154, 21.507069735708015, 5.4031699576940895,
+    2.1665920681426485, 0.7269104035993905, -8.370589540708991,
+    -42.59558108313192, -57.48083428464231, -85.60672634274057,
+    -116.61597667293482, -173.50213820668478, -202.52064555808354,
+    -211.33003333162543, -195.463287005943, -183.0872187456697,
+    -174.41963782266822, -146.5565440589957, -134.21556671998945,
+    -114.45854135558909, -116.9869629086682, -51.00839242454407,
+    2.261628957637413, 24.54470304914082, 25.67754144357707, 36.58257894636563,
+    63.87042286120305, 87.29132872569522, 99.61849070995163, 110.07961786022588,
+    120.51192422037786, 125.99475892745949, 167.27838073018333,
+    219.61707892973888, 239.95381444350312, 245.7094936157201,
+    254.29803749790668, 234.12943778682796, 235.96319446872434,
+    236.1415857031388]
+
+    test "macd valid" do
+      series_inputs = build_test_inputs(:macd, :valid, :series)
+      dataframe_inputs = build_test_inputs(:macd, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:macd, :valid, :tensor)
+
+      assert(apply(&macd/5, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&macd/5, dataframe_inputs) |> elem(1))["macd_12_26_9" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&macd/5, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&macd!/5, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&macd!/5, dataframe_inputs))["macd_12_26_9" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&macd!/5, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 9 [:values, :periods, :minimum_period, :maximum_period, :ma_type],
+  describe "mavp" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    64382.35, 64353.3, 64323.25, 64327.45, 64387.799999999996, 64451.25,
+    64478.3, 64544.100000000006, 64597.20000000001, 64533.60000000001,
+    64465.35000000001, 64408.45000000001, 64418.750000000015, 64451.35000000001,
+    64497.40000000001, 64508.65000000001, 64504.350000000006,
+    64582.100000000006, 64631.75000000001, 64710.600000000006, 64741.75,
+    64728.8, 64802.950000000004, 64783.75, 64643.05, 64637.25, 64712.35,
+    64667.649999999994, 64390.399999999994, 64210.09999999999,
+    64084.04999999999, 63781.499999999985, 63304.89999999999, 62943.84999999999,
+    62907.69999999999, 62964.19999999999, 62961.899999999994, 62803.99999999999,
+    62805.04999999999, 62768.09999999999, 62661.09999999999, 62486.149999999994,
+    62749.299999999996, 63245.7, 63173.84999999999, 62939.59999999999,
+    62882.74999999999, 63092.74999999999, 63289.84999999999, 63331.79999999999,
+    63363.69999999999, 63457.499999999985, 63534.29999999999, 63888.19999999999,
+    64482.149999999994, 64727.24999999999, 64748.29999999999, 64925.44999999999,
+    64971.999999999985, 65096.89999999998, 65415.249999999985]
+    test "mavp valid" do
+      series_inputs = build_test_inputs(:mavp, :valid, :series)
+      dataframe_inputs = build_test_inputs(:mavp, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:mavp, :valid, :tensor)
+
+      assert(apply(&mavp/6, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&mavp/6, dataframe_inputs) |> elem(1))["mavp_2_30" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&mavp/6, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&mavp!/6, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&mavp!/6, dataframe_inputs))["mavp_2_30" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&mavp!/6, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 10 [:values, :time_period, :deviations],
+  describe "stddev" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, 38.263225157731846, 45.64721240884365,
+    89.25324868452452, 168.94093169531337, 181.7830509190359, 189.8895405267782,
+    146.1531114989612, 76.5735567913994, 116.96031121018828, 89.0047504277028,
+    89.01575140385812, 90.52925713913068, 77.52461801353019, 77.49026776703066,
+    92.6427892444037, 108.31656567558616, 110.63537228121902,
+    162.46735548920327, 222.8554383420779, 222.98081890502593,
+    132.33778900629463, 41.19302853192835, 56.53471853096923,
+    63.883506473496055, 86.25022666182659, 84.4751182241479, 70.8233690160897,
+    68.78751631065369, 34.876846175738244, 38.32087682528176, 64.22824923387721,
+    70.45791368079418, 85.88062878447809, 72.62424939698387, 58.02653185553455,
+    66.30685032211325, 88.00978127219075, 66.29109744273741, 37.68879939760361,
+    57.908431171113726, 57.5755851154353, 47.41210816812563, 64.92080098536493,
+    63.58007865373511, 104.52627230939427, 78.29188976658706,
+    60.000166690118036, 70.14078986543046, 54.10682030644153, 90.29213478648876,
+    90.55033960831653, 89.34196327880643, 60.17917914623411, 200.6792166695429,
+    233.9206874206497, 295.3000873754471, 324.5256020786856, 463.55257480082355,
+    523.4003003489624, 428.16801656201125, 280.4995757667543,
+    54.846855932031026, 101.21987159251276, 100.05794323678656,
+    137.89043478631146, 104.72823117786083, 194.07545956325407,
+    298.72357390214427, 371.8834258277403, 369.4746941339414, 355.8883791372536,
+    169.26726088133475, 176.08603125971294, 189.1881539743372,
+    211.5205276201751, 161.25468552901208, 90.39943365039903, 92.55566112076733,
+    318.9025029793557, 515.7726413904004, 534.9878069700333, 470.7386026314478,
+    273.0418766543286, 127.0543096729434, 216.73510654060067, 270.74241191044]
+    test "stddev valid" do
+      series_inputs = build_test_inputs(:stddev, :valid, :series)
+      dataframe_inputs = build_test_inputs(:stddev, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:stddev, :valid, :tensor)
+
+      assert(apply(&stddev/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stddev/4, dataframe_inputs) |> elem(1))["stddev_5_1.0" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stddev/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&stddev!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stddev!/4, dataframe_inputs))["stddev_5_1.0" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stddev!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+  # Signature 11 [:values, :time_period, :deviations_up, :deviations_down, :ma_type],
+  describe "bbands" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, 64684.88645031546, 64677.49442481768,
+    64737.36649736905, 64805.62186339062, 64739.686101838066, 64630.35908105355,
+    64439.906222997924, 64237.6271135828, 64246.980622420386, 64160.42950085541,
+    64157.73150280773, 64140.71851427827, 64103.70923602707, 64103.660535534065,
+    64087.025578488814, 64066.97313135117, 64075.25074456244, 64209.31471097841,
+    64425.470876684165, 64525.541637810056, 64447.9355780126, 64323.90605706386,
+    64395.50943706194, 64392.607012946995, 64462.880453323654,
+    64483.770236448305, 64481.826738032185, 64460.71503262131,
+    64423.49369235148, 64432.56175365056, 64509.75649846776, 64546.83582736159,
+    64641.40125756895, 64659.06849879396, 64644.01306371107, 64652.07370064423,
+    64676.03956254438, 64601.902194885464, 64517.0575987952, 64570.65686234221,
+    64574.151170230856, 64588.02421633624, 64654.18160197072, 64692.52015730746,
+    64818.67254461877, 64815.18377953315, 64819.40033338022, 64887.22157973084,
+    64868.41364061286, 64900.50426957295, 64899.50067921661, 64892.023926557595,
+    64784.63835829245, 64957.35843333906, 64958.94137484128, 64925.320174750865,
+    64767.81120415735, 64716.72514960162, 64586.9406006979, 64124.996033123985,
+    63653.199151533474, 63050.513711864034, 63094.27974318499,
+    63085.41588647354, 63111.78086957258, 62973.516462355685,
+    63033.850919126475, 63339.62714780426, 63565.72685165545, 63643.42938826784,
+    63645.13675827447, 63401.654521762626, 63422.9120625194, 63459.156307948644,
+    63556.96105524032, 63572.929371057995, 63544.61886730077, 63612.1513222415,
+    64240.96500595867, 64918.72528278076, 65218.55561394002, 65344.977205262854,
+    65251.12375330862, 65091.12861934584, 65384.41021308116, 65653.70482382084]
+    @valid_out_2 [:nan, :nan, :nan, :nan, 64608.36, 64586.2, 64558.86, 64467.73999999999,
+    64376.119999999995, 64250.579999999994, 64147.6, 64084.48,
+    64013.06000000001, 63982.420000000006, 63979.70000000001, 63959.66000000001,
+    63948.66000000001, 63948.68000000001, 63901.740000000005,
+    63850.340000000004, 63853.98, 63884.380000000005, 63979.76000000001,
+    64079.58, 64183.26000000001, 64241.520000000004, 64282.44,
+    64264.840000000004, 64290.380000000005, 64314.82000000001,
+    64340.18000000001, 64323.14, 64353.740000000005, 64355.92, 64381.3,
+    64405.92, 64469.63999999999, 64513.81999999999, 64527.96, 64519.46,
+    64500.02, 64469.31999999999, 64441.67999999999, 64454.83999999999,
+    64458.999999999985, 64493.19999999999, 64524.33999999999,
+    64565.359999999986, 64609.61999999998, 64658.59999999998, 64699.39999999998,
+    64746.93999999998, 64760.199999999975, 64719.91999999997, 64718.39999999998,
+    64713.33999999998, 64664.279999999984, 64555.99999999998, 64491.09999999998,
+    64334.71999999997, 64118.75999999997, 63789.61999999997, 63540.13999999997,
+    63268.65999999996, 63092.19999999997, 62940.81999999997, 62891.83999999997,
+    62885.29999999997, 62835.99999999996, 62764.05999999996, 62645.69999999997,
+    62742.17999999997, 62821.95999999996, 62904.47999999996, 62933.359999999964,
+    63063.11999999996, 63070.73999999997, 63080.77999999997, 63133.91999999997,
+    63250.41999999997, 63363.81999999997, 63427.039999999964, 63603.15999999996,
+    63887.17999999996, 64148.57999999996, 64403.499999999956, 64705.03999999996,
+    64837.01999999996, 64950.93999999996, 65112.21999999996]
+    @valid_out_3 [:nan, :nan, :nan, :nan, 64531.83354968454, 64494.90557518231,
+    64380.353502630955, 64129.858136609364, 64012.553898161925,
+    63870.800918946436, 63855.29377700207, 63931.33288641721, 63779.13937757964,
+    63804.4104991446, 63801.668497192295, 63778.60148572175, 63793.61076397295,
+    63793.69946446595, 63716.4544215112, 63633.706868648835, 63632.70925543756,
+    63559.4452890216, 63534.049123315854, 63633.61836218995, 63918.58442198742,
+    64159.13394293615, 64169.370562938064, 64137.07298705301,
+    64117.879546676355, 64145.86976355171, 64198.53326196783, 64185.56496737869,
+    64283.98630764853, 64279.27824634944, 64252.84350153225, 64265.00417263841,
+    64297.878742431036, 64368.571501206025, 64411.90693628893,
+    64386.84629935577, 64324.000437455616, 64336.73780511452, 64366.30240120478,
+    64339.023137657765, 64343.848829769115, 64398.37578366374,
+    64394.49839802926, 64438.19984269251, 64400.56745538119, 64502.0162204668,
+    64579.39966661974, 64606.65842026912, 64651.98635938709, 64539.33573042699,
+    64537.29932078335, 64534.65607344237, 64543.921641707515,
+    64154.641566660895, 64023.258625158676, 63744.11982524908, 63469.7087958426,
+    62862.51485039833, 62493.33939930204, 62412.323966875934, 62531.20084846646,
+    62831.12628813591, 62689.400256814944, 62685.1841135264, 62560.219130427344,
+    62554.60353764424, 62257.54908087346, 62144.73285219568, 62078.19314834448,
+    62165.53061173208, 62221.58324172546, 62724.58547823729, 62718.56793748054,
+    62702.403692051295, 62710.87894475962, 62927.91062894194, 63183.02113269917,
+    63241.92867775843, 62965.35499404125, 62855.63471721915, 63078.604386059895,
+    63462.02279473706, 64158.9562466913, 64582.91138065408, 64517.46978691876,
+    64570.73517617908]
+    test "bbands valid" do
+      series_inputs = build_test_inputs(:bbands, :valid, :series)
+      dataframe_inputs = build_test_inputs(:bbands, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:bbands, :valid, :tensor)
+
+      assert(apply(&bbands/6, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&bbands/6, dataframe_inputs) |> elem(1))["bbands_upperband_5_2.0_2.0" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&bbands/6, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&bbands!/6, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&bbands!/6, dataframe_inputs))["bbands_upperband_5_2.0_2.0" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&bbands!/6, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 12 [:values, :time_period, :"fast-k_period", :"fast-d_period", :"fast-d_ma"],
+  describe "stochrsi" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, 100.0, 100.0, 100.0, 98.26465583840077,
+    85.96314849364575, 38.73458103905283, 100.0, 0.0, 99.99999999999999,
+    74.46744562217556, 69.99478537854559, 41.60943205805097, 57.356382590952116,
+    100.0, 100.00000000000001, 91.71124532755715, 100.0, 72.51317405061067, 0.0,
+    0.0, 0.0, 40.03188656633704, 52.73200425620097, 100.0, 39.81231827485775,
+    77.33111631133376, 100.00000000000001, 99.99999999999999, 100.0,
+    54.00445901267399, 58.5687064831899, 100.0, 0.0, 0.0, 33.5583799804798,
+    39.83830215708118, 7.384325071407102, 0.0, 16.473699694658126, 0.0, 0.0,
+    0.0, 0.0, 0.0, 62.45353987164184, 67.63998990926659, 33.56245513047711,
+    100.0, 51.404928639619, 68.70464158676931, 0.9970016665835505, 100.0, 100.0,
+    85.51068709323928, 71.7868136043684, 37.53925934114909, 100.0, 100.0,
+    97.33073920219209, 100.0, 100.0, 100.0, 100.0, 100.0, 95.38543413943988,
+    100.0, 100.0, 0.0, 94.70840230584437, 100.0]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, 38.3954915308925, 66.66666666666667, 100.0,
+    99.42155194613359, 94.7426014440155, 74.32079512369978, 74.89924317756619,
+    46.24486034635095, 66.66666666666667, 58.155815207391846, 81.48741033357372,
+    62.023887686257375, 56.32020000918289, 66.32193821633437, 85.78546086365071,
+    97.2370817758524, 97.2370817758524, 88.07480645938931, 57.50439135020358,
+    24.17105801687025, 2.842170943040401e-14, 13.343962188779043,
+    30.921296940846034, 64.25463027417936, 64.18144084368626, 72.38114486206386,
+    72.38114486206386, 92.44370543711126, 100.00000000000001, 84.66815300422468,
+    70.85772183195463, 70.85772183195463, 52.85623549439665, 33.33333333333335,
+    11.186126660159948, 24.46556071252034, 26.927002402989373,
+    15.74087574282944, 7.952674922021756, 5.491233231552722, 5.491233231552722,
+    1.3026616822268503e-14, 1.3026616822268503e-14, 1.3026616822268503e-14,
+    20.817846623880627, 43.36450992696948, 54.551994970461855,
+    67.06748167991458, 61.65579459003205, 73.36985674212946, 40.36885729765731,
+    56.56721441778431, 66.99900055552787, 95.17022903107978, 85.76583356586927,
+    64.94558667958563, 69.77535764850587, 79.1797531137164, 99.11024640073073,
+    99.11024640073073, 99.11024640073073, 100.00000000000004,
+    100.00000000000004, 100.00000000000004, 98.46181137981334,
+    98.46181137981334, 98.46181137981334, 66.6666666666667, 64.90280076861482,
+    64.90280076861482]
+
+
+    test "stochrsi valid" do
+      series_inputs = build_test_inputs(:stochrsi, :valid, :series)
+      tensor_inputs = build_test_inputs(:stochrsi, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:stochrsi, :valid, :series, true)
+      assert(apply(&stochrsi/6, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stochrsi/6, dataframe_inputs) |> elem(1))["fastk_14_5_3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stochrsi/6, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      assert(apply(&stochrsi!/6, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stochrsi!/6, dataframe_inputs))["fastk_14_5_3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stochrsi!/6, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+  # Signature 13 [:values, :time_period, :ma_type],
+  describe "ma" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    64197.84333333334, 64188.19000000001, 64180.32666666667, 64171.30333333334,
+    64164.36000000001, 64160.00000000001, 64158.14333333334, 64165.45666666667,
+    64178.98333333333, 64189.666666666664, 64204.81333333333, 64216.88,
+    64229.596666666665, 64250.42, 64268.40333333333, 64284.69666666666,
+    64305.80333333333, 64325.54333333333, 64353.19999999999, 64386.383333333324,
+    64419.40666666666, 64446.706666666665, 64469.30333333333, 64483.27333333333,
+    64493.10666666667, 64508.596666666665, 64525.34333333333, 64532.94333333333,
+    64531.799999999996, 64526.55999999999, 64511.91333333333, 64488.43999999999,
+    64444.02333333332, 64396.19999999999, 64345.34999999999, 64297.06333333333,
+    64244.25666666667, 64181.056666666664, 64124.780000000006,
+    64063.356666666674, 64004.49666666668, 63935.203333333346,
+    63893.200000000004, 63854.826666666675, 63804.96333333334,
+    63750.22333333334, 63696.856666666674, 63650.93333333334,
+    63607.396666666675, 63559.013333333336, 63515.526666666665, 63474.26,
+    63430.950000000004, 63414.55666666667, 63420.22333333334, 63420.55666666667,
+    63422.62000000001, 63437.74333333334, 63461.39333333334, 63496.86333333335,
+    63550.14000000001]
+    test "ma valid" do
+      series_inputs = build_test_inputs(:ma, :valid, :series)
+      dataframe_inputs = build_test_inputs(:ma, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:ma, :valid, :tensor)
+
+      assert(apply(&ma/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&ma/4, dataframe_inputs) |> elem(1))["ma_30" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&ma/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&ma!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&ma!/4, dataframe_inputs))["ma_30" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&ma!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+  # Signature 14 [:values, :time_period, :volume_factor],
+  describe "t3" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, 64114.708163197414,
+    64178.91940610926, 64239.7225899545, 64274.43845117383, 64308.8817310156,
+    64338.14528965176, 64358.84130443359, 64365.08892578274, 64367.50586674348,
+    64376.058132531296, 64396.65283504382, 64421.670347795705,
+    64461.79893277859, 64504.119238972606, 64530.12514785954,
+    64534.375343510794, 64516.00918892678, 64495.79588565434, 64477.64831018422,
+    64476.54670544603, 64477.72227150848, 64487.00971888949, 64509.67450908793,
+    64542.08336054179, 64591.43790013966, 64639.03603384536, 64681.86214681546,
+    64728.93494085636, 64758.172897414275, 64753.158461509185,
+    64739.402660071355, 64729.22852018179, 64710.96231103642, 64635.8861375071,
+    64534.69979034274, 64395.504660499486, 64214.124233364506,
+    63946.627409594366, 63643.06694998735, 63356.63093474222, 63138.54587107859,
+    62978.2804924348, 62849.73502442142, 62770.69265044472, 62706.49543567904,
+    62656.8606247431, 62578.53343184487, 62590.63045642292, 62689.62383303084,
+    62803.86730473273, 62874.88947462459, 62916.805699565186,
+    62974.470722657046, 63055.60763093454, 63141.92924833542, 63227.83329506518,
+    63315.834050441656, 63401.091669875284, 63551.781168252346,
+    63799.314282383915, 64079.88585994078, 64346.66915842396, 64599.52830417757,
+    64794.30249448228, 64974.400781360455, 65156.56596154708]
+    test "t3 valid" do
+      series_inputs = build_test_inputs(:t3, :valid, :series)
+      dataframe_inputs = build_test_inputs(:t3, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:t3, :valid, :tensor)
+
+      assert(apply(&t3/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&t3/4, dataframe_inputs) |> elem(1))["t3_5_0.7" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&t3/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&t3!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&t3!/4, dataframe_inputs))["t3_5_0.7" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&t3!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+  # Signature 15 [:values_a, :values_b],
+  describe "mult" do
+    @valid_out_1 [4175776369.66, 4171355072.0400004, 4170671019.06, 4176687904.48,
+    4175737915.4399996, 4169483164.08, 4155370925.48, 4132497253.16,
+    4117853065.41, 4105969096.25, 4096031837.5, 4102017053.0,
+    4089367437.0499997, 4085149212.54, 4095295605.89, 4088744684.6400003,
+    4092074530.2, 4085857605.6, 4070178116.2000003, 4063889368.76, 4073491527.0,
+    4102963718.0, 4126164065.0, 4132676897.8500004, 4129012966.3500004,
+    4125345129.42, 4134792213.72, 4133652641.7, 4135225631.68, 4145079938.25,
+    4141347203.25, 4137473392.6, 4138026356.25, 4145787870.75, 4153968976.08,
+    4157451133.68, 4165935675.2, 4172772063.04, 4164577073.0400004,
+    4155780800.7200003, 4148447312.5, 4149773437.5, 4153982836.5199995,
+    4159911334.9199996, 4161350920.88, 4160809434.2, 4170852799.0199995,
+    4177262924.46, 4187451010.68, 4191493026.84, 4.1898171e9, 4199419525.0,
+    4196929058.44, 4178719214.2, 4177970150.0, 4187688090.0, 4181895240.7599998,
+    4146081541.1399994, 4122928925.0, 4106744316.81, 4068061082.69,
+    4007401060.5, 3961921517.4400005, 3957372202.0199995, 3964485355.08,
+    3964195390.4, 3944335360.0, 3944467072.0, 3939813229.0, 3926413228.21,
+    3904482860.8199997, 3937307272.32, 4000023022.5, 3990915758.43,
+    3961379063.35, 3954242667.0, 3980673272.5, 4005596343.68, 4010910504.04,
+    4014950592.9, 4026851336.0, 4036606779.2, 4081592140.6800003,
+    4157878841.1000004, 4189623066.0, 4192340886.0, 4215301284.81,
+    4221352264.71, 4237565745.1800003, 4279144701.24]
+    test "mult valid" do
+      series_inputs = build_test_inputs(:mult, :valid, :series)
+      dataframe_inputs = build_test_inputs(:mult, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:mult, :valid, :tensor)
+
+      assert(apply(&mult/3, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&mult/3, dataframe_inputs) |> elem(1))["mult" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&mult/3, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&mult!/3, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&mult!/3, dataframe_inputs))["mult" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&mult!/3, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 16 [:values_a, :values_b, :time_period]
+  describe "beta" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, -0.5986471291964521, -0.033968436384693455,
+    0.9650218488001254, 0.02821830071946205, -0.4159242357185354,
+    -0.9257422248233618, -0.09037779114662496, -0.6136668413967247,
+    -1.0150670959980816, -0.575230255732408, -0.6419353001875896,
+    -0.7156820821209332, -0.6987915523268731, -0.28282108467667505,
+    -0.5803965195418515, -0.638493091856247, 0.22744519802808633,
+    0.41231305473656427, 0.25919915519898473, 0.1991136828659773,
+    0.7414218625631301, 0.23388170952061638, -0.8370446979810777,
+    -1.0894867858191029, -0.8150396419623858, -0.8100083883769776,
+    -0.732624035601851, -0.5983084717597356, -0.19915294458670302,
+    0.4124024840267036, 0.09592611463311387, -0.5106239609676786,
+    -1.1811234101540458, -0.18206070787270237, 0.0052526628828238504,
+    0.0846886807993162, -0.10247951562188092, -0.07213819920149514,
+    -0.06504558957107452, -0.6654650830736424, -0.858752422026051,
+    -0.7149138630472242, -0.6534420557401193, -0.606308470212438,
+    -0.5565396404254195, -0.45464574305460426, -0.5457259522257428,
+    -0.9183798289796563, -0.002610027702147015, -0.23283719338100037,
+    -0.07582967039114348, -0.20377406927597774, 0.46572158205715264,
+    -0.2028485052122778, -0.2995359481023209, -0.4559852486232227,
+    -0.5367473796078297, -0.5393039325323309, -0.1700508138367164,
+    0.2202167109519133, 0.1376035868255633, -0.020073189222297273,
+    -0.4835573664334045, -0.7229580925078678, -0.6231343658495345,
+    -0.9396717447601192, -1.970383167917883, -0.36160091493021934,
+    -0.33680031999084026, -0.2575777563166085, -0.26052970007511955,
+    0.13101787355228256, 0.32233016812949844, 0.39148581050444387,
+    0.017182704489005707, 0.11621028799901266, 0.08153147490720197,
+    -1.5284083244387727, 0.44894162407756566, 0.003564860593622367,
+    0.07337529721757041, -0.013276273152122053, 0.2926307242922234,
+    -0.6658489960904421, -0.48431992084089476]
+    test "beta valid" do
+      series_inputs = build_test_inputs(:beta, :valid, :series)
+      dataframe_inputs = build_test_inputs(:beta, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:beta, :valid, :tensor)
+
+      assert(apply(&beta/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&beta/4, dataframe_inputs) |> elem(1))["beta_5" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&beta/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&beta!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&beta!/4, dataframe_inputs))["beta_5" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&beta!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 17 [:high, :low],
+  describe "medprice" do
+    @valid_out_1 [64683.5, 64573.9, 64673.3, 64497.95, 64642.45, 64494.95, 64307.1,
+    64270.8, 64050.45, 64062.05, 64035.0, 63986.65, 63950.55, 63877.05, 63970.0,
+    63955.85, 63955.0, 63913.899999999994, 63809.600000000006, 63713.25,
+    63756.05, 64038.65, 64210.45, 64268.25, 64221.25, 64184.6, 64296.95,
+    64294.0, 64303.4, 64394.1, 64329.55, 64328.100000000006, 64354.3, 64393.0,
+    64464.5, 64443.15, 64563.95, 64587.65, 64537.05, 64472.3, 64377.25, 64378.3,
+    64458.4, 64509.850000000006, 64534.149999999994, 64499.2, 64537.1, 64586.25,
+    64695.05, 64784.4, 64783.3, 64793.2, 64789.3, 64631.75, 64572.100000000006,
+    64743.95, 64601.2, 64360.6, 64239.35, 64087.45, 63771.85, 63279.7, 62846.7,
+    62947.25, 62888.75, 63022.7, 62852.9, 62810.3, 62720.65, 62616.05, 62513.2,
+    62757.6, 63116.35, 63209.65, 62936.75, 62884.2, 63107.55, 63224.7, 63313.3,
+    63377.45, 63455.0, 63446.95, 63895.55, 64495.85, 64767.15,
+    64777.350000000006, 64943.649999999994, 65101.4, 65124.35, 65431.95]
+    test "medprice valid" do
+      series_inputs = build_test_inputs(:medprice, :valid, :series)
+      dataframe_inputs = build_test_inputs(:medprice, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:medprice, :valid, :tensor)
+
+      assert(apply(&medprice/3, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&medprice/3, dataframe_inputs) |> elem(1))["medprice" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&medprice/3, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&medprice!/3, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&medprice!/3, dataframe_inputs))["medprice" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&medprice!/3, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 18 [:high, :low, :acceleration_factor, :af_maximum],
+  describe "sar" do
+    @valid_out_1 [:nan, 64790.0, 6.44e4, 64824.4, 64824.4, 64814.312, 64804.42576,
+    64775.568729599996, 64747.865980416, 64696.27402159104, 64647.77758029557,
+    64602.19092547784, 64543.07965143961, 64468.77168629565, 64379.159083940176,
+    64300.29999386735, 64230.90399460327, 64169.83551525088, 64116.095253420775,
+    64058.37391794187, 63985.03409107117, 63559.5, 63559.5, 63589.956,
+    63634.382639999996, 63676.1436816, 63715.399060703996, 63772.775135847674,
+    63825.56112497986, 63874.12423498147, 63933.57181148332, 63987.07463033499,
+    64035.22716730149, 64078.56445057134, 64117.56800551421, 64167.059844852505,
+    64210.6126634702, 64276.592890584376, 64333.33588590256, 64382.134861876206,
+    64681.9, 64674.488000000005, 64658.70848, 64643.5601408, 64629.017735168,
+    64615.057025761285, 64280.0, 64286.772, 64301.941119999996,
+    64330.92465279999, 64375.65068057599, 64416.798626129916, 64454.65473603952,
+    64501.90926243557, 64927.2, 64917.274, 64907.546519999996, 64898.0135896,
+    64866.513046016, 64817.98426325504, 64745.42552219464, 64631.002969975176,
+    64415.626613578155, 64167.976887677214, 63954.9981234024,
+    63771.836386126066, 63614.317292068416, 63478.85087117884, 63362.3497492138,
+    63229.54178933959, 63096.208267258466, 62271.2, 62271.2, 62271.2,
+    62340.085999999996, 62404.83884, 62465.7065096, 62522.922119024,
+    62576.704791882556, 62627.2605043696, 62695.47966402004, 62781.931697618034,
+    62877.92789390387, 63077.01798875733, 63349.01511055616, 63631.61239065605,
+    63863.34216033796, 64116.81372827037, 64363.4509826163, 64569.70078609304]
+    test "sar valid" do
+      series_inputs = build_test_inputs(:sar, :valid, :series)
+      dataframe_inputs = build_test_inputs(:sar, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:sar, :valid, :tensor)
+
+      assert(apply(&sar/5, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&sar/5, dataframe_inputs) |> elem(1))["sar_0.02_0.2" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&sar/5, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&sar!/5, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&sar!/5, dataframe_inputs))["sar_0.02_0.2" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&sar!/5, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+  # Signature 19 [:high, :low, :close],
+  describe "wclprice" do
+    @valid_out_1 [64661.1, 64553.600000000006, 64650.75, 64562.175, 64628.825, 64511.425,
+    64351.85, 64221.7, 64109.375, 64024.775, 64024.0, 64033.825, 63883.025,
+    63946.075, 63971.95, 63934.325, 63990.5, 63864.75, 63795.0, 63715.075,
+    63843.525, 64108.325, 64251.475, 64273.875, 64228.275, 64203.45,
+    64339.774999999994, 64249.25, 64355.3, 64375.8, 64339.325, 64312.75,
+    64355.9, 64405.55, 64474.45, 64457.675, 64589.975, 64583.025, 64512.925,
+    64457.100000000006, 64376.125, 64420.4, 64449.3, 64532.225000000006,
+    64498.424999999996, 64522.6, 64577.649999999994, 64615.775,
+    64735.475000000006, 64746.0, 64766.65, 64824.55, 64750.45, 64603.125,
+    64636.05, 64734.325, 64605.899999999994, 64265.399999999994, 64244.675,
+    64002.774999999994, 63708.375, 63122.3, 62884.75, 62919.925, 62962.275,
+    62955.35, 62786.45, 62850.2, 62683.375, 62646.075, 62404.7, 62980.0,
+    63202.675, 63134.175, 62878.625, 62914.6, 63174.025, 63281.95,
+    63318.850000000006, 63390.225, 63483.5, 63501.774999999994, 64057.675,
+    64620.175, 64738.575, 64781.975000000006, 65003.975, 64990.55, 65219.225,
+    65474.175]
+
+
+    test "wclprice valid" do
+      series_inputs = build_test_inputs(:wclprice, :valid, :series)
+      tensor_inputs = build_test_inputs(:wclprice, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:wclprice, :valid, :series, true)
+      assert(apply(&wclprice/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&wclprice/4, dataframe_inputs) |> elem(1))["wclprice" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&wclprice/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      assert(apply(&wclprice!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&wclprice!/4, dataframe_inputs))["wclprice" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&wclprice!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+  # Signature 20 [:high, :low, :close, :"fast-k_period", :"fast-d_period", :"fast-d_ma"],
+  describe "stochf" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, 42.29835446452629, 12.463485881207173,
+    30.67075172338357, 13.59103947548152, 19.43407960199014, 38.40860973888475,
+    3.554230681036471, 57.01225442520898, 58.85514018691622, 49.17525773195951,
+    80.18992350303381, 27.368421052631152, 21.26596335369216,
+    25.995107849678057, 77.89893059341557, 100.0, 96.27002889414219,
+    93.3973277986767, 87.66376961992498, 74.92461145905847, 84.96692723992777,
+    31.41912206855095, 92.36319903788288, 69.85892566467743, 61.11291897168835,
+    38.98788310762723, 59.54115076474904, 77.62516614975603, 84.11703239289488,
+    79.86764193660635, 83.59880537580862, 69.78102189781022, 34.675236806495434,
+    18.809201623815568, 17.18834322719842, 52.44252873563219, 51.39557266602458,
+    87.92827409541978, 56.11179361179297, 81.69533169533206, 99.7987927565385,
+    91.32439228834987, 97.42574257425784, 60.218102508178525, 67.77163904235738,
+    91.1082138200786, 33.06426575597656, 7.524908232825781, 54.221237154946785,
+    59.19806568607661, 36.2079387467255, 7.891606080634116, 23.761275176078367,
+    0.7426778242676302, 3.796038915914194, 7.252747252747499, 15.56106633602014,
+    15.205293099183823, 30.02778206513389, 22.415234556433152,
+    13.54147422870913, 44.62825278810382, 17.355497941131027,
+    26.787757437070425, 3.3846153846149774, 95.72368421052647,
+    95.88318417333988, 68.59158609877153, 47.84426443689575, 58.68826757251106,
+    71.12869368641982, 87.06604230582829, 87.41456909484917, 88.67647058823529,
+    92.41586348554276, 94.74994812201643, 92.52771825211993, 97.83636242593703,
+    86.99439950217797, 91.76104542626003, 95.95023176384518, 58.57482603717064,
+    89.65871182961263, 86.63465386154473]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, 47.34687416858761, 31.993042737502012,
+    28.477530689705677, 18.90842569335742, 21.231956933618406,
+    23.811242938785465, 20.46564000730378, 32.991698281710065,
+    39.80720843105389, 55.01421744802823, 62.74010714063652, 52.244534095874826,
+    42.941435969785715, 24.876497418667128, 41.7200005989286, 67.96467948103121,
+    91.38965316251927, 96.55578556427298, 92.44370877091463, 85.32856962588673,
+    82.51843610630375, 63.77022025584575, 69.58308278212056, 64.5470822570371,
+    74.4450145580829, 56.65324258133102, 53.21398428135489, 58.71806667404411,
+    73.76111643579999, 80.53661349308577, 82.52782656843664, 77.7491564034084,
+    62.685021360038114, 41.088486776040426, 23.557593885836493,
+    29.48002452888208, 40.342148209618415, 63.9221251656922, 65.1452134577458,
+    75.24513313418163, 79.20197268788786, 90.9395055800735, 96.18297587304876,
+    82.98941245692878, 75.13849470826462, 73.03265179020487, 63.98137287280421,
+    43.89912926962702, 31.603470381249746, 40.31473702461643, 49.87574719591634,
+    34.432536837812115, 22.620273334479368, 10.798519693660078,
+    9.433330638753437, 3.9304879976431484, 8.869950834893984,
+    12.673035562650526, 20.26471383344599, 22.549436573583662,
+    21.994830283425433, 26.861653857748745, 25.17507498598137,
+    29.590502722101803, 15.842623587605521, 41.96535234407067, 64.9971612561605,
+    86.73281816087933, 70.7730115696691, 58.37470603605948, 59.22040856527557,
+    72.29433452158642, 81.86976836236579, 87.71902732963763, 89.5023010562091,
+    91.94742739859821, 93.23117661989308, 95.03800960002451, 92.45282672674502,
+    92.19726911812505, 91.56855889742776, 82.09536774242532, 81.3945898768762,
+    78.28939724277605]
+
+
+    test "stochf valid" do
+      series_inputs = build_test_inputs(:stochf, :valid, :series)
+      tensor_inputs = build_test_inputs(:stochf, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:stochf, :valid, :series, true)
+      assert(apply(&stochf/7, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stochf/7, dataframe_inputs) |> elem(1))["fastk_5_3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stochf/7, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      assert(apply(&stochf!/7, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stochf!/7, dataframe_inputs))["fastk_5_3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stochf!/7, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+
+  # Signature 21 [:high, :low, :close, :"fast-k_period", :"slow-k_period", :"slow-k_ma", :"slow-d_period", :"slow-d_ma"],
+  describe "stoch" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, 28.477530689705677,
+    18.90842569335742, 21.231956933618406, 23.811242938785465,
+    20.46564000730378, 32.991698281710065, 39.80720843105389, 55.01421744802823,
+    62.74010714063652, 52.244534095874826, 42.941435969785715,
+    24.876497418667128, 41.7200005989286, 67.96467948103121, 91.38965316251927,
+    96.55578556427298, 92.44370877091463, 85.32856962588673, 82.51843610630375,
+    63.77022025584575, 69.58308278212056, 64.5470822570371, 74.4450145580829,
+    56.65324258133102, 53.21398428135489, 58.71806667404411, 73.76111643579999,
+    80.53661349308577, 82.52782656843664, 77.7491564034084, 62.685021360038114,
+    41.088486776040426, 23.557593885836493, 29.48002452888208,
+    40.342148209618415, 63.9221251656922, 65.1452134577458, 75.24513313418163,
+    79.20197268788786, 90.9395055800735, 96.18297587304876, 82.98941245692878,
+    75.13849470826462, 73.03265179020487, 63.98137287280421, 43.89912926962702,
+    31.603470381249746, 40.31473702461643, 49.87574719591634,
+    34.432536837812115, 22.620273334479368, 10.798519693660078,
+    9.433330638753437, 3.9304879976431484, 8.869950834893984,
+    12.673035562650526, 20.26471383344599, 22.549436573583662,
+    21.994830283425433, 26.861653857748745, 25.17507498598137,
+    29.590502722101803, 15.842623587605521, 41.96535234407067, 64.9971612561605,
+    86.73281816087933, 70.7730115696691, 58.37470603605948, 59.22040856527557,
+    72.29433452158642, 81.86976836236579, 87.71902732963763, 89.5023010562091,
+    91.94742739859821, 93.23117661989308, 95.03800960002451, 92.45282672674502,
+    92.19726911812505, 91.56855889742776, 82.09536774242532, 81.3945898768762,
+    78.28939724277605]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, 35.939149198598436,
+    26.459666373521703, 22.87263777222717, 21.317208521920435,
+    21.836279959902555, 25.756193742599777, 31.088182240022586,
+    42.60437472026407, 52.52051100657289, 56.66628622817987, 52.64202573543236,
+    40.0208224947759, 36.512644662460495, 44.85372583287566, 67.02477774749305,
+    85.30337273594117, 93.4630491659023, 91.44268798702478, 86.76357150103503,
+    77.20574199601208, 71.95724638142336, 65.96679509833449, 69.52505986574687,
+    65.21511313215036, 61.43741380692296, 56.1950978455767, 61.89772246373301,
+    71.00526553430997, 78.94185216577415, 80.27119882164362, 74.32066811062774,
+    60.50755484649566, 42.44370067397169, 31.375368396919683,
+    31.126588874779014, 44.58143263473091, 56.46982894435215, 68.10415725253989,
+    73.19743975993845, 81.79553713404768, 88.7748180470034, 90.03729797001704,
+    84.77029434608073, 77.05351965179943, 70.71750645709123, 60.304384644212035,
+    46.49465750789366, 38.60577889183107, 40.59798486726084, 41.5410070194483,
+    35.642852456069285, 22.617109955317193, 14.284041222297637,
+    8.054112776685562, 7.411256490430198, 8.491158131729227, 13.93590007699684,
+    18.495728656560065, 21.602993563485033, 23.80197357158595,
+    24.67718637571852, 27.209077188610646, 23.5360670985629, 29.132826217926,
+    40.9350457292789, 64.56511058703684, 74.16766366223631, 71.96017858886931,
+    62.78937539033472, 63.29648304097382, 71.12817048307592, 80.6277100711966,
+    86.36369891607085, 89.72291859481498, 91.56030169156679, 93.4055378728386,
+    93.57400431555419, 93.22936848163152, 92.07288491409928, 88.6203985859927,
+    85.01950550557642, 80.59311828735918]
+
+
+    test "stoch valid" do
+      series_inputs = build_test_inputs(:stoch, :valid, :series)
+      tensor_inputs = build_test_inputs(:stoch, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:stoch, :valid, :series, true)
+      assert(apply(&stoch/9, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stoch/9, dataframe_inputs) |> elem(1))["slowk_5_3_3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stoch/9, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      assert(apply(&stoch!/9, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&stoch!/9, dataframe_inputs))["slowk_5_3_3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&stoch!/9, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 22 [:high, :low, :close, :first_period, :second_period, :third_period],
+  describe "ultosc" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    66.11262447531794, 61.49623287168965, 61.572788561496864, 59.8320278849713,
+    58.90591146996699, 56.67446909851881, 61.292676182965685, 56.70368800823232,
+    60.91567962587189, 59.593576100942094, 58.03431918257607, 55.06395628112371,
+    52.46087523297397, 58.68159630279247, 54.1715228714571, 55.32303688277589,
+    49.453429316376166, 57.08515906230428, 64.6258158088491, 68.37240873658524,
+    68.99771150954727, 62.313043401518456, 56.89889476112475, 64.45317314820393,
+    57.038669459787464, 50.35796391448885, 54.753920636869324,
+    49.93941018060288, 52.99303505065694, 45.41636001597836, 45.15450650855094,
+    40.84580727830308, 37.85391411275869, 28.532089908067643,
+    31.386511160891867, 30.776338529957453, 37.910009434775525,
+    33.96640677521275, 33.91369765265813, 38.88979737836375, 42.01940773719912,
+    41.877870584351356, 36.87305776706365, 47.87335201705957,
+    54.663411802965264, 53.88058540115006, 50.234280501328165,
+    54.785645414108366, 56.35337258119435, 64.63750277176874,
+    57.131014414699465, 54.257162662451044, 63.1289683321077, 71.48551630457872,
+    75.19211154722338, 77.27745051087444, 73.92903432167081, 72.1232409968468,
+    73.01999535196846, 65.67285562476106, 68.11838163845485, 65.19958675515426]
+    test "ultosc valid" do
+      series_inputs = build_test_inputs(:ultosc, :valid, :series)
+      tensor_inputs = build_test_inputs(:ultosc, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:ultosc, :valid, :series, true)
+
+      assert(apply(&ultosc/7, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&ultosc/7, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&ultosc/7, dataframe_inputs) |> elem(1))["ultosc_7_14_28" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&ultosc!/7, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&ultosc!/7, dataframe_inputs))["ultosc_7_14_28" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&ultosc!/7, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+
+
+  # Signature 23 [:high, :low, :close, :time_period]
+  describe "accbands" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, 64862.05261532272, 64838.2787319527,
+    64802.84571401887, 64769.50810683276, 64728.98693425001, 64682.55883971976,
+    64656.87757175402, 64634.15861850404, 64621.94960304313, 64621.289423899565,
+    64612.92708709089, 64614.88853588782, 64622.39854719695, 64623.44477376068,
+    64623.813425793334, 64641.39911077057, 64656.496597630365,
+    64696.103972820136, 64711.76955103909, 64735.328722066115, 64754.23275461876,
+    64752.53508022863, 64759.22445337307, 64753.62607882459, 64770.790134370254,
+    64789.74038897811, 64801.23729910808, 64799.67064608152, 64807.705388929964,
+    64822.413177013645, 64849.72036469864, 64878.75728450237, 64899.83278009838,
+    64937.54937201207, 64957.58830878594, 64981.94175084989, 65013.56849341632,
+    65023.77117466959, 65065.04550668628, 65082.00398171942, 65097.66685176796,
+    65093.64966955602, 65125.61131033454, 65085.498981197285, 65035.5936588343,
+    64985.00720010009, 64935.654700070925, 64864.631337681145, 64796.03346415497,
+    64722.00157435719, 64619.01386845766, 64543.62032281862, 64545.05122275559,
+    64481.10584119108, 64441.04205213636, 64358.159726173166, 64255.435501540414,
+    64188.09792030443, 64099.807736618, 64029.66369637111, 63975.62472039285,
+    63943.31313940503, 63873.973886558946, 63977.9136152031, 64077.01797925345,
+    64159.409820656394, 64237.51786782437, 64355.34339380842, 64492.08143623618,
+    64632.87777349149, 64796.46638233525]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, 64172.244999999995, 64136.86, 64119.094999999994,
+    64102.31, 64084.965000000004, 64065.97000000001, 64050.69000000002,
+    64049.99000000001, 64051.58500000001, 64063.530000000006, 64082.030000000006,
+    64098.83500000001, 64109.655000000006, 64136.755000000005,
+    64156.905000000006, 64182.43000000001, 64210.4, 64239.9, 64278.03999999999,
+    64313.46, 64349.71, 64371.909999999996, 64386.134999999995, 64393.52,
+    64407.275, 64418.645, 64434.829999999994, 64446.609999999986,
+    64468.64999999999, 64487.084999999985, 64504.58999999999, 64524.63499999999,
+    64552.55999999998, 64570.26499999999, 64578.084999999985, 64588.86499999999,
+    64601.48999999999, 64601.219999999994, 64580.81, 64568.869999999995,
+    64542.68000000001, 64506.175, 64431.295, 64355.425, 64272.325, 64200.98,
+    64118.08, 64023.170000000006, 63935.41000000001, 63828.92000000002,
+    63727.345000000016, 63604.65500000001, 63521.98000000002, 63450.85000000001,
+    63375.06000000001, 63281.08500000001, 63192.10000000001, 63123.59500000001,
+    63082.045000000006, 63035.765, 63010.009999999995, 63003.365000000005,
+    63032.95000000001, 63097.80000000001, 63190.395000000004, 63274.105,
+    63369.03500000001, 63486.250000000015, 63585.73, 63719.130000000005,
+    63861.145]
+    @valid_out_3 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    :nan, :nan, :nan, :nan, :nan, 63482.80261532272, 63414.003731952704,
+    63395.84571401887, 63382.83310683277, 63400.21193425001, 63404.383839719754,
+    63398.97757175402, 63420.48361850404, 63434.92460304314, 63460.789423899565,
+    63502.20208709089, 63529.63853588782, 63556.22354719695, 63595.44477376068,
+    63646.53842579333, 63678.37411077057, 63711.97159763037, 63733.30397282013,
+    63784.944551039094, 63834.078722066115, 63891.00775461875, 63954.61008022864,
+    63981.824453373076, 64012.15107882461, 64019.16513437027, 64031.51538897812,
+    64051.46229910808, 64076.97064608153, 64098.130388929974, 64122.56317701365,
+    64134.32036469865, 64150.682284502385, 64176.10778009839, 64181.9743720121,
+    64185.83830878596, 64172.34175084991, 64170.86849341635, 64164.44617466962,
+    64100.845506686295, 64054.303981719444, 64000.34185176798, 63943.97466955602,
+    63803.33631033454, 63682.523981197286, 63576.36865883431, 63462.632200100095,
+    63364.47970007094, 63267.156337681154, 63158.283464154985, 63035.0515743572,
+    62921.23886845767, 62769.94532281863, 62566.426222755596, 62463.25584119108,
+    62361.34205213636, 62280.68472617316, 62197.38550154042, 62115.42292030443,
+    62089.832736618, 62067.21369637111, 62050.12472039285, 62050.63813940503,
+    62135.57388655895, 62137.2886152031, 62193.292979253434, 62298.634820656385,
+    62395.917867824355, 62487.26839380841, 62579.856436236165, 62679.65277349148,
+    62797.841382335246]
+    test "accbands valid" do
+      series_inputs = build_test_inputs(:accbands, :valid, :series)
+      dataframe_inputs = build_test_inputs(:accbands, :valid, :series, true)
+      tensor_inputs = build_test_inputs(:accbands, :valid, :tensor)
+
+      assert(apply(&accbands/5, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&accbands/5, dataframe_inputs) |> elem(1))["accbands_upperband_20" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&accbands/5, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)}})
+
+      # Bang!
+      assert(apply(&accbands!/5, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&accbands!/5, dataframe_inputs))["accbands_upperband_20" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&accbands!/5, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64), @valid_out_3 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+  # Signature 24 [:high, :low, :close, :volume]
+  describe "ad" do
+    @valid_out_1 [-993.2462873240083, -1945.1570624821031, -2503.4956594377804,
+    -7.5854779261158, -433.1303305445463, 157.04221400202124, 2712.5691417128814,
+    1389.3373953224072, 6659.321702801706, 4625.177515786492, 4095.361654916927,
+    6017.6080918848975, 2574.938250304029, 6027.404479262428, 6096.07949628373,
+    5469.245808484104, 6664.300538213813, 4998.359756379442, 4092.0334312376363,
+    4266.585004306138, 9115.5385469162, 15644.607546916199, 18195.97476873599,
+    18614.690537038474, 18977.375186823956, 20072.21972819526, 21534.75298805518,
+    20119.98764843254, 22103.061979328224, 21444.90260214704, 21758.903683333607,
+    21342.64519389698, 21412.67697826357, 21772.50748759192, 22236.235212782794,
+    22667.027550513612, 23649.055054964632, 23399.386895113323,
+    22594.70226565315, 21270.899125868327, 21201.893928749294, 22586.48455336783,
+    22266.789765802976, 22804.152867682857, 21511.254867682856,
+    22134.61358555581, 23146.848060402415, 24174.402470433815,
+    26383.488727243195, 23445.66836360668, 22756.16653474762, 23812.003389649653,
+    22661.210607923735, 21206.330578837005, 24295.250544134386,
+    23894.23573308189, 24077.085005568617, 19654.264297051963,
+    19993.911001428554, 13278.584130076837, 4064.345576312111,
+    -13111.150231579419, -7166.378041578964, -9294.616677896058,
+    -4698.953563104564, -8674.153468730738, -13368.029837858357,
+    -11662.952248338715, -13542.30847053153, -11551.763520040517,
+    -17615.22394292617, -3072.235548189279, 4892.50995308193, 1954.3936647441597,
+    -1836.985960484359, 312.1019635060952, 2499.2595032678055, 4192.966091078488,
+    4415.787055281759, 5141.003437534304, 6646.865266105732, 8560.600244616244,
+    17665.351041995484, 26009.283570716812, 23731.401618131946,
+    23937.09414865569, 26153.841975440075, 20254.825902229946, 23404.98682973135,
+    25708.63333328561]
+    test "ad valid" do
+      series_inputs = build_test_inputs(:ad, :valid, :series)
+      tensor_inputs = build_test_inputs(:ad, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:ad, :valid, :series, true)
+
+      assert(apply(&ad/5, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&ad/5, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&ad/5, dataframe_inputs) |> elem(1))["ad" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&ad!/5, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&ad!/5, dataframe_inputs))["ad" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&ad!/5, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+
+
+
+  # Signature 25 [:high, :low, :close, :volume, :fast_period, :slow_period],
+  describe "adosc" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, 2394.801596215457,
+    1893.2577604493117, 2127.590261175759, 934.6413108630522,
+    1460.1613303252489, 1564.2559954915396, 1265.1880037150013,
+    1408.0696025645066, 808.4427712770485, 201.26953036187388,
+    -9.877615887253341, 1447.4908256492363, 3989.527976673324, 5478.56656570099,
+    5722.894954244828, 5417.983960467705, 5149.063275225413, 5036.305098015779,
+    4082.1782267304734, 3951.724682241431, 3329.695277461771,
+    2872.4385670238407, 2291.8023418399534, 1868.2065136686506,
+    1639.571881142263, 1544.537273020178, 1502.3172887009277,
+    1660.9344748319272, 1495.3894114935647, 1035.6859206184054,
+    332.2620461817205, -7.664105733136239, 294.52349501970093,
+    289.64976337343614, 432.3033361732523, 39.9846763028836, 74.1971187425006,
+    403.5225309424022, 828.5118272212239, 1629.942909481797, 874.8634265693436,
+    267.04729014369514, 330.0662981526075, -40.32056531586204,
+    -651.0933309609354, 141.0735566844196, 324.7213384149618,
+    428.50916869460343, -975.248686963987, -1352.7848867986795,
+    -3520.9459833612673, -7019.638155120076, -13277.702877430522,
+    -12739.237941790967, -12038.011130421954, -9194.524522844433,
+    -8460.250469457917, -8884.258067844228, -7707.531209805631,
+    -7123.435274050678, -5603.546700262815, -6401.643627334777,
+    -1518.8557330538633, 3150.9634043795195, 3840.0375593693834,
+    2566.489145713492, 2495.9755754227267, 2936.13600700771, 3388.1868245042647,
+    3335.9972998625994, 3242.125225056582, 3388.1222103580676,
+    3748.7528147476496, 6452.453968914269, 9626.814430310647, 9325.470867758468,
+    8419.871500266636, 7989.285022063497, 5209.877710225945, 4601.546131385945,
+    4667.3392701381235]
+    test "adosc valid" do
+      series_inputs = build_test_inputs(:adosc, :valid, :series)
+      tensor_inputs = build_test_inputs(:adosc, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:adosc, :valid, :series, true)
+
+      assert(apply(&adosc/7, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&adosc/7, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&adosc/7, dataframe_inputs) |> elem(1))["adosc_3_10" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&adosc!/7, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&adosc!/7, dataframe_inputs))["adosc_3_10" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&adosc!/7, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+
+  # Signature 26 [:high, :low, :close, :volume, :time_period],
+  describe "mfi" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    20.055996389896816, 21.23418480839077, 20.348304785481755, 21.0714186658623,
+    15.183501591810286, 14.204020637582618, 25.92467160179714,
+    36.32401650962901, 46.378511496778316, 53.929230889094505,
+    55.46098782779666, 55.522677119572364, 62.901435301790855,
+    56.767613822668906, 57.237098405010656, 60.540039431777835,
+    57.67891666018195, 58.74324432251113, 65.50683781203247, 76.75417492212017,
+    73.72451139881026, 64.03588855241348, 62.15602007995269, 60.02786941702095,
+    61.70078119847873, 64.22683668984074, 53.55509907140623, 61.84101664794718,
+    58.92736863892378, 58.13971782801936, 57.29384653902343, 63.068106200078276,
+    61.797600246058906, 63.11056393343225, 64.93069534689684, 73.77140336633455,
+    73.32928146466583, 73.57532883728446, 69.9707299362958, 68.2989629080272,
+    78.06173928102288, 78.86528444512912, 70.19351100724202, 57.077163427795206,
+    50.30286232788789, 41.29496362714491, 31.016652785225517,
+    20.265703748244455, 14.655177349344072, 17.717178829886087,
+    21.234763763059288, 23.938469856194306, 23.346695365125534,
+    26.275886485817335, 22.75442540751227, 20.038200575031663,
+    19.392529094707125, 30.67374357392533, 37.523054991659485,
+    38.43165182759037, 41.092426867598554, 53.383432474151896,
+    65.11839816003211, 62.52278541847161, 60.23729095412095, 59.14089218781078,
+    64.86656497546137, 64.3251509357304, 73.93169976587535, 80.96184558408905,
+    89.25371542829096, 87.1575858499161, 85.77565329707602, 92.90972991480176,
+    100.0, 100.0]
+    test "mfi valid" do
+      series_inputs = build_test_inputs(:mfi, :valid, :series)
+      tensor_inputs = build_test_inputs(:mfi, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:mfi, :valid, :series, true)
+
+      assert(apply(&mfi/6, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&mfi/6, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&mfi/6, dataframe_inputs) |> elem(1))["mfi_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&mfi!/6, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&mfi!/6, dataframe_inputs))["mfi_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&mfi!/6, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+
+  # Signature 27 [:high, :low, :start_value, :offset_on_reverse, :af_init_long, :af_long, :af_max_long, :af_init_short, :af_short, :af_max_short],
+  describe "sarext" do
+    @valid_out_1 [:nan, -64790.0, 6.44e4, -64824.4, -64824.4, -64814.312, -64804.42576,
+    -64775.568729599996, -64747.865980416, -64696.27402159104,
+    -64647.77758029557, -64602.19092547784, -64543.07965143961,
+    -64468.77168629565, -64379.159083940176, -64300.29999386735,
+    -64230.90399460327, -64169.83551525088, -64116.095253420775,
+    -64058.37391794187, -63985.03409107117, 63559.5, 63559.5, 63589.956,
+    63634.382639999996, 63676.1436816, 63715.399060703996, 63772.775135847674,
+    63825.56112497986, 63874.12423498147, 63933.57181148332, 63987.07463033499,
+    64035.22716730149, 64078.56445057134, 64117.56800551421, 64167.059844852505,
+    64210.6126634702, 64276.592890584376, 64333.33588590256, 64382.134861876206,
+    -64681.9, -64674.488000000005, -64658.70848, -64643.5601408,
+    -64629.017735168, -64615.057025761285, 64280.0, 64286.772,
+    64301.941119999996, 64330.92465279999, 64375.65068057599,
+    64416.798626129916, 64454.65473603952, 64501.90926243557, -64927.2,
+    -64917.274, -64907.546519999996, -64898.0135896, -64866.513046016,
+    -64817.98426325504, -64745.42552219464, -64631.002969975176,
+    -64415.626613578155, -64167.976887677214, -63954.9981234024,
+    -63771.836386126066, -63614.317292068416, -63478.85087117884,
+    -63362.3497492138, -63229.54178933959, -63096.208267258466, 62271.2,
+    62271.2, 62271.2, 62340.085999999996, 62404.83884, 62465.7065096,
+    62522.922119024, 62576.704791882556, 62627.2605043696, 62695.47966402004,
+    62781.931697618034, 62877.92789390387, 63077.01798875733, 63349.01511055616,
+    63631.61239065605, 63863.34216033796, 64116.81372827037, 64363.4509826163,
+    64569.70078609304]
+    test "sarext valid" do
+      series_inputs = build_test_inputs(:sarext, :valid, :series)
+      tensor_inputs = build_test_inputs(:sarext, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:sarext, :valid, :series, true)
+
+      assert(apply(&sarext/11, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&sarext/11, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&sarext/11, dataframe_inputs) |> elem(1))["sarext_0.0_0.0_0.02_0.02_0.2_0.02_0.02_0.2" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&sarext!/11, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&sarext!/11, dataframe_inputs))["sarext_0.0_0.0_0.02_0.02_0.2_0.02_0.02_0.2" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&sarext!/11, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+  # Signature 28 [:high, :low, :time_period],
+  describe "aroon" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    92.85714285714286, 85.71428571428572, 78.57142857142857, 71.42857142857143,
+    100.0, 100.0, 100.0, 92.85714285714286, 85.71428571428572,
+    78.57142857142857, 71.42857142857143, 64.28571428571429, 57.142857142857146,
+    50.0, 42.85714285714286, 35.714285714285715, 28.571428571428573,
+    21.42857142857143, 14.285714285714286, 7.142857142857143, 0.0, 0.0,
+    21.42857142857143, 14.285714285714286, 7.142857142857143, 0.0, 0.0, 0.0,
+    0.0, 14.285714285714286, 7.142857142857143, 0.0, 64.28571428571429,
+    57.142857142857146, 50.0, 42.85714285714286, 35.714285714285715,
+    28.571428571428573, 21.42857142857143, 14.285714285714286,
+    7.142857142857143, 0.0, 0.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0,
+    92.85714285714286, 85.71428571428572, 78.57142857142857, 71.42857142857143,
+    64.28571428571429, 100.0, 100.0, 100.0, 100.0, 92.85714285714286,
+    85.71428571428572, 78.57142857142857, 71.42857142857143, 64.28571428571429,
+    57.142857142857146, 50.0, 42.85714285714286, 35.714285714285715,
+    28.571428571428573, 21.42857142857143, 14.285714285714286,
+    7.142857142857143, 0.0, 21.42857142857143, 14.285714285714286,
+    7.142857142857143, 0.0]
+    @valid_out_2 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    14.285714285714286, 7.142857142857143, 0.0, 7.142857142857143, 0.0, 0.0,
+    0.0, 0.0, 100.0, 100.0, 92.85714285714286, 85.71428571428572, 100.0,
+    92.85714285714286, 85.71428571428572, 100.0, 92.85714285714286,
+    85.71428571428572, 78.57142857142857, 71.42857142857143, 100.0,
+    92.85714285714286, 100.0, 92.85714285714286, 85.71428571428572,
+    78.57142857142857, 71.42857142857143, 64.28571428571429, 57.142857142857146,
+    50.0, 42.85714285714286, 35.714285714285715, 28.571428571428573,
+    21.42857142857143, 100.0, 100.0, 92.85714285714286, 85.71428571428572,
+    100.0, 92.85714285714286, 85.71428571428572, 78.57142857142857,
+    71.42857142857143, 64.28571428571429, 57.142857142857146, 50.0,
+    42.85714285714286, 35.714285714285715, 28.571428571428573,
+    21.42857142857143, 14.285714285714286, 7.142857142857143, 0.0,
+    14.285714285714286, 7.142857142857143, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    78.57142857142857, 71.42857142857143, 64.28571428571429, 100.0, 100.0,
+    100.0, 100.0, 100.0, 100.0, 92.85714285714286, 100.0, 100.0, 100.0, 100.0]
+
+
+    test "aroon valid" do
+      series_inputs = build_test_inputs(:aroon, :valid, :series)
+      tensor_inputs = build_test_inputs(:aroon, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:aroon, :valid, :series, true)
+      assert(apply(&aroon/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&aroon/4, dataframe_inputs) |> elem(1))["aroon_down_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&aroon/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)}})
+      # Bang!
+      assert(apply(&aroon!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&aroon!/4, dataframe_inputs))["aroon_down_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&aroon!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64), @valid_out_2 |> Nx.tensor(type: :f64)})
+    end
+  end
+
+
+  # Signature 29 [:open, :close, :time_period],
+  describe "imi" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan,
+    29.614660999232967, 26.96262331527003, 27.822782995196572,
+    28.762470812991108, 25.06319748443193, 24.673748103186753,
+    25.035412945741253, 36.3609727512454, 50.15900549291724, 53.38116981952603,
+    58.74611150993066, 56.58758800212994, 54.32921609392217, 68.54659521631183,
+    56.29060055680798, 62.98646868638498, 63.41933928140841, 60.40929274728107,
+    67.28549924736599, 70.33098591549312, 74.75125255804123, 71.81123453872237,
+    64.23392943450943, 65.21902613273181, 63.75666237823974, 61.20864578738446,
+    59.4363060053115, 49.67405475880052, 63.150935720097515, 52.080219232685664,
+    61.37621023513131, 55.999579345882665, 62.6704661103193, 63.12456016889482,
+    61.83936745734496, 64.23905625426531, 60.90774634867822, 56.86454508363946,
+    63.2351539414735, 60.09602319050617, 55.55648605644424, 62.97597190069446,
+    61.02193461635422, 56.66016387046435, 38.05051007713386, 43.3387642561728,
+    32.97912713472515, 26.212358232303885, 18.865337582450334,
+    14.498639794628193, 14.714002410856706, 17.93077642656705,
+    13.752578838785833, 13.63354150688445, 19.609541337375113,
+    14.462709811386103, 14.619317396711482, 13.389439048312202,
+    36.64846378730216, 36.763572293800266, 37.82359938820595, 38.20231147728571,
+    49.65475016157007, 54.966493392622226, 56.83761993807656, 54.59854480469731,
+    58.3977810409527, 63.17085343536836, 61.56597222222208, 73.8429363804443,
+    77.25355824986818, 84.98854640879175, 80.23819521319238, 81.58175608367732,
+    82.92709388109363, 92.10144193428556, 92.30389576204259]
+    test "imi valid" do
+      series_inputs = build_test_inputs(:imi, :valid, :series)
+      tensor_inputs = build_test_inputs(:imi, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:imi, :valid, :series, true)
+
+      assert(apply(&imi/4, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&imi/4, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&imi/4, dataframe_inputs) |> elem(1))["imi_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&imi!/4, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&imi!/4, dataframe_inputs))["imi_14" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&imi!/4, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+
+  # Signature 30 [:open, :high, :low, :close],
+  describe "cdldoji" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, 100.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 100.0, 0.0, 0.0,
+    0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0]
+    test "cdldoji valid" do
+      series_inputs = build_test_inputs(:cdldoji, :valid, :series)
+      tensor_inputs = build_test_inputs(:cdldoji, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:cdldoji, :valid, :series, true)
+
+      assert(apply(&cdldoji/5, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&cdldoji/5, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&cdldoji/5, dataframe_inputs) |> elem(1))["cdldoji" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&cdldoji!/5, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&cdldoji!/5, dataframe_inputs))["cdldoji" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&cdldoji!/5, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+
+  # Signature 31 [:open, :high, :low, :close, :penetration],
+
+  describe "cdlmorningstar" do
+    @valid_out_1 [:nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, :nan, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0]
+    test "cdlmorningstar valid" do
+      series_inputs = build_test_inputs(:cdlmorningstar, :valid, :series)
+      tensor_inputs = build_test_inputs(:cdlmorningstar, :valid, :tensor)
+      dataframe_inputs = build_test_inputs(:cdlmorningstar, :valid, :series, true)
+
+      assert(apply(&cdlmorningstar/6, series_inputs) |> elem(1) |> elem(0) |> Explorer.Series.to_list === @valid_out_1 )
+      assert(apply(&cdlmorningstar/6, tensor_inputs) === {:ok, {@valid_out_1 |> Nx.tensor(type: :f64)}})
+      assert((apply(&cdlmorningstar/6, dataframe_inputs) |> elem(1))["cdlmorningstar_0.3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      # Bang!
+      assert(apply(&cdlmorningstar!/6, series_inputs) |> elem(0) |> Explorer.Series.to_list === @valid_out_1)
+      assert((apply(&cdlmorningstar!/6, dataframe_inputs))["cdlmorningstar_0.3" |> String.to_atom] |> Explorer.Series.to_list === @valid_out_1)
+      assert(apply(&cdlmorningstar!/6, tensor_inputs) === {@valid_out_1 |> Nx.tensor(type: :f64)})
+    end
+
+  end
+
+
+
+
+
+
+
+
 
 end

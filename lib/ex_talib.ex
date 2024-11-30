@@ -65,7 +65,7 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.accbands(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 13.785714285714285, 14.318181818181817]
@@ -78,13 +78,13 @@ df
             Polars[3]
             f64 [NaN, -1.214285714285714, -0.6818181818181814]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64)]
       iex> ExTalib.accbands(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 13.785714285714285, 14.318181818181817]
@@ -97,12 +97,12 @@ df
             f64[3]
             [NaN, -1.214285714285714, -0.6818181818181814]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec accbands(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec accbands(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec accbands(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def accbands(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 20, options \\ [])
   def accbands(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:accbands, options, dataframe, time_period])
   def accbands(high, low, close, time_period, options), do: run([:accbands, options, high, low, close, time_period])
@@ -117,7 +117,7 @@ df
   """
   @doc type: :overlap_studies
   @spec accbands!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec accbands!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec accbands!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def accbands!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 20, options \\ [])
   def accbands!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:accbands, options, dataframe, time_period])
   def accbands!(high, low, close, time_period, options), do: run!([:accbands, options, high, low, close, time_period])
@@ -159,28 +159,28 @@ df
       iex> series = Explorer.Series.from_list([0.3, 0.4, 0.5], dtype: {:f, 64})
       iex> ExTalib.acos(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [1.2661036727794992, 1.1592794807274085, 1.0471975511965979]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([0.3, 0.4, 0.5], type: :f64)
       iex> ExTalib.acos(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [1.2661036727794992, 1.1592794807274085, 1.0471975511965979]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec acos(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec acos(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec acos(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def acos(values_or_dataframe, options \\ [])
   def acos(dataframe, options) when is_dataframe(dataframe), do: run_df([:acos, options, dataframe])
   def acos(values, options), do: run([:acos, options, values])
@@ -195,7 +195,7 @@ df
   """
   @doc type: :math_transform
   @spec acos!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec acos!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec acos!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def acos!(values_or_dataframe, options \\ [])
   def acos!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:acos, options, dataframe])
   def acos!(values, options), do: run!([:acos, options, values])
@@ -238,28 +238,28 @@ df
       iex> [high, low, close, volume] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64}), Explorer.Series.from_list([10.0, 11.0, 12.0], dtype: {:f, 64})]
       iex> ExTalib.ad(high, low, close, volume)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [-3.333333333333333, -7.0, -11.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close, volume] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64), Nx.tensor([10.0, 11.0, 12.0], type: :f64)]
       iex> ExTalib.ad(high, low, close, volume)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [-3.333333333333333, -7.0, -11.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :volume_indicators
   @spec ad(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ad(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ad(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ad(high_or_dataframe, low \\ nil, close \\ nil, volume \\ nil, options \\ [])
   def ad(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:ad, options, dataframe])
   def ad(high, low, close, volume, options), do: run([:ad, options, high, low, close, volume])
@@ -274,7 +274,7 @@ df
   """
   @doc type: :volume_indicators
   @spec ad!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ad!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ad!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ad!(high_or_dataframe, low \\ nil, close \\ nil, volume \\ nil, options \\ [])
   def ad!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:ad, options, dataframe])
   def ad!(high, low, close, volume, options), do: run!([:ad, options, high, low, close, volume])
@@ -315,28 +315,28 @@ df
       iex> [values_a, values_b] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0])]
       iex> ExTalib.add(values_a, values_b)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [7.0, 9.0, 11.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values_a, values_b] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64)]
       iex> ExTalib.add(values_a, values_b)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [7.0, 9.0, 11.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec add(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec add(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec add(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def add(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def add(dataframe, nil, options) when is_dataframe(dataframe), do: run_df([:add, options, dataframe])
   def add(values_a, values_b, options), do: run([:add, options, values_a, values_b])
@@ -351,7 +351,7 @@ df
   """
   @doc type: :math_operators
   @spec add!(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec add!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec add!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def add!(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def add!(dataframe, nil, options) when is_dataframe(dataframe), do: run_df!([:add, options, dataframe])
   def add!(values_a, values_b, options), do: run!([:add, options, values_a, values_b])
@@ -394,28 +394,28 @@ df
       iex> [high, low, close, volume] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64}), Explorer.Series.from_list([10.0, 11.0, 12.0], dtype: {:f, 64})]
       iex> ExTalib.adosc(high, low, close, volume, 2, 3)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, -1.1759259259259274]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close, volume] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64), Nx.tensor([10.0, 11.0, 12.0], type: :f64)]
       iex> ExTalib.adosc(high, low, close, volume, 2, 3)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, -1.1759259259259274]
           >
-        ]}
+        }}
 
   """
   @doc type: :volume_indicators
   @spec adosc(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, fast_period :: integer(), slow_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec adosc(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec adosc(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def adosc(high_or_dataframe, low \\ nil, close \\ nil, volume \\ nil, fast_period \\ 3, slow_period \\ 10, options \\ [])
   def adosc(dataframe, nil, nil, nil, fast_period, slow_period, options) when is_dataframe(dataframe), do: run_df([:adosc, options, dataframe, fast_period, slow_period])
   def adosc(high, low, close, volume, fast_period, slow_period, options), do: run([:adosc, options, high, low, close, volume, fast_period, slow_period])
@@ -430,7 +430,7 @@ df
   """
   @doc type: :volume_indicators
   @spec adosc!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, fast_period :: integer(), slow_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec adosc!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec adosc!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def adosc!(high_or_dataframe, low \\ nil, close \\ nil, volume \\ nil, fast_period \\ 3, slow_period \\ 10, options \\ [])
   def adosc!(dataframe, nil, nil, nil, fast_period, slow_period, options) when is_dataframe(dataframe), do: run_df!([:adosc, options, dataframe, fast_period, slow_period])
   def adosc!(high, low, close, volume, fast_period, slow_period, options), do: run!([:adosc, options, high, low, close, volume, fast_period, slow_period])
@@ -472,28 +472,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0], dtype: {:f, 64})]
       iex> ExTalib.adx(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[4]
             f64 [NaN, NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.adx(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[4]
             [NaN, NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec adx(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec adx(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec adx(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def adx(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def adx(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:adx, options, dataframe, time_period])
   def adx(high, low, close, time_period, options), do: run([:adx, options, high, low, close, time_period])
@@ -508,7 +508,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec adx!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec adx!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec adx!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def adx!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def adx!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:adx, options, dataframe, time_period])
   def adx!(high, low, close, time_period, options), do: run!([:adx, options, high, low, close, time_period])
@@ -550,28 +550,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0, 7.0], dtype: {:f, 64})]
       iex> ExTalib.adxr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, NaN, NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0, 6.0, 7.0], type: :f64)]
       iex> ExTalib.adxr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, NaN, NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec adxr(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec adxr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec adxr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def adxr(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def adxr(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:adxr, options, dataframe, time_period])
   def adxr(high, low, close, time_period, options), do: run([:adxr, options, high, low, close, time_period])
@@ -586,7 +586,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec adxr!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec adxr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec adxr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def adxr!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def adxr!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:adxr, options, dataframe, time_period])
   def adxr!(high, low, close, time_period, options), do: run!([:adxr, options, high, low, close, time_period])
@@ -626,28 +626,28 @@ df
       iex> values = Explorer.Series.from_list([3.0, 4.0, 5.0])
       iex> ExTalib.apo(values, 2, 3)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 0.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> values = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.apo(values, 2, 3)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 0.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :volume_indicators
   @spec apo(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec apo(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec apo(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def apo(values_or_dataframe, fast_period \\ 12, slow_period \\ 26, ma_type \\ :sma, options \\ [])
   def apo(dataframe, fast_period, slow_period, ma_type, options) when is_dataframe(dataframe), do: run_df([:apo, options, dataframe, fast_period, slow_period, ma_type])
   def apo(values, fast_period, slow_period, ma_type, options), do: run([:apo, options, values, fast_period, slow_period, ma_type])
@@ -662,7 +662,7 @@ df
   """
   @doc type: :volume_indicators
   @spec apo!(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec apo!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec apo!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def apo!(values_or_dataframe, fast_period \\ 12, slow_period \\ 26, ma_type \\ :sma, options \\ [])
   def apo!(dataframe, fast_period, slow_period, ma_type, options) when is_dataframe(dataframe), do: run_df!([:apo, options, dataframe, fast_period, slow_period, ma_type])
   def apo!(values, fast_period, slow_period, ma_type, options), do: run!([:apo, options, values, fast_period, slow_period, ma_type])
@@ -697,14 +697,14 @@ df
         Polars[5 x 4]
         high f64 [5.0, 6.0, 7.0, 8.0, 9.0]
         low f64 [2.0, 3.0, 4.0, 5.0, 6.0]
-        outaroondown_2 f64 [NaN, NaN, 0.0, 0.0, 0.0]
-        outaroonup_2 f64 [NaN, NaN, 100.0, 100.0, 100.0]
+        aroon_down_2 f64 [NaN, NaN, 0.0, 0.0, 0.0]
+        aroon_up_2 f64 [NaN, NaN, 100.0, 100.0, 100.0]
       >}
   ## Example Using Series:
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.aroon(high, low, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, NaN, 0.0, 0.0, 0.0]
@@ -713,13 +713,13 @@ df
             Polars[5]
             f64 [NaN, NaN, 100.0, 100.0, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.aroon(high, low, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, NaN, 0.0, 0.0, 0.0]
@@ -728,12 +728,12 @@ df
             f64[5]
             [NaN, NaN, 100.0, 100.0, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec aroon(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec aroon(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec aroon(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def aroon(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def aroon(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:aroon, options, dataframe, time_period])
   def aroon(high, low, time_period, options), do: run([:aroon, options, high, low, time_period])
@@ -748,7 +748,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec aroon!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec aroon!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec aroon!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def aroon!(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def aroon!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:aroon, options, dataframe, time_period])
   def aroon!(high, low, time_period, options), do: run!([:aroon, options, high, low, time_period])
@@ -788,28 +788,28 @@ df
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.aroonosc(high, low, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, NaN, 100.0, 100.0, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.aroonosc(high, low, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, NaN, 100.0, 100.0, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec aroonosc(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec aroonosc(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec aroonosc(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def aroonosc(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def aroonosc(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:aroonosc, options, dataframe, time_period])
   def aroonosc(high, low, time_period, options), do: run([:aroonosc, options, high, low, time_period])
@@ -824,7 +824,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec aroonosc!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec aroonosc!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec aroonosc!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def aroonosc!(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def aroonosc!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:aroonosc, options, dataframe, time_period])
   def aroonosc!(high, low, time_period, options), do: run!([:aroonosc, options, high, low, time_period])
@@ -866,28 +866,28 @@ df
       iex> series = Explorer.Series.from_list([0.3, 0.4, 0.5], dtype: {:f, 64})
       iex> ExTalib.asin(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [0.3046926540153975, 0.41151684606748806, 0.5235987755982989]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([0.3, 0.4, 0.5], type: :f64)
       iex> ExTalib.asin(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [0.3046926540153975, 0.41151684606748806, 0.5235987755982989]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec asin(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec asin(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec asin(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def asin(values_or_dataframe, options \\ [])
   def asin(dataframe, options) when is_dataframe(dataframe), do: run_df([:asin, options, dataframe])
   def asin(values, options), do: run([:asin, options, values])
@@ -902,7 +902,7 @@ df
   """
   @doc type: :math_transform
   @spec asin!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec asin!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec asin!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def asin!(values_or_dataframe, options \\ [])
   def asin!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:asin, options, dataframe])
   def asin!(values, options), do: run!([:asin, options, values])
@@ -944,28 +944,28 @@ df
       iex> series = Explorer.Series.from_list([0.3, 0.4, 0.5], dtype: {:f, 64})
       iex> ExTalib.atan(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [0.2914567944778671, 0.3805063771123649, 0.4636476090008061]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([0.3, 0.4, 0.5], type: :f64)
       iex> ExTalib.atan(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [0.2914567944778671, 0.3805063771123649, 0.4636476090008061]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec atan(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec atan(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec atan(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def atan(values_or_dataframe, options \\ [])
   def atan(dataframe, options) when is_dataframe(dataframe), do: run_df([:atan, options, dataframe])
   def atan(values, options), do: run([:atan, options, values])
@@ -980,7 +980,7 @@ df
   """
   @doc type: :math_transform
   @spec atan!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec atan!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec atan!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def atan!(values_or_dataframe, options \\ [])
   def atan!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:atan, options, dataframe])
   def atan!(values, options), do: run!([:atan, options, values])
@@ -1022,7 +1022,7 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.atr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 3.0]
@@ -1035,13 +1035,13 @@ df
             Polars[3]
             f64 [NaN, NaN, 3.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64)]
       iex> ExTalib.atr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 13.785714285714285, 14.318181818181817]
@@ -1054,12 +1054,12 @@ df
             f64[3]
             [NaN, -1.214285714285714, -0.6818181818181814]
           >
-        ]}
+        }}
 
   """
   @doc type: :volatility_indicators
   @spec atr(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec atr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec atr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def atr(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def atr(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:atr, options, dataframe, time_period])
   def atr(high, low, close, time_period, options), do: run([:atr, options, high, low, close, time_period])
@@ -1074,7 +1074,7 @@ df
   """
   @doc type: :volatility_indicators
   @spec atr!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec atr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec atr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def atr!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def atr!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:atr, options, dataframe, time_period])
   def atr!(high, low, close, time_period, options), do: run!([:atr, options, high, low, close, time_period])
@@ -1117,28 +1117,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.avgprice(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [3.5, 4.5, 5.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.avgprice(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [3.5, 4.5, 5.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :price_transform
   @spec avgprice(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec avgprice(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec avgprice(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def avgprice(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def avgprice(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:avgprice, options, dataframe])
   def avgprice(open, high, low, close,  options), do: run([:avgprice, options, open, high, low, close])
@@ -1153,7 +1153,7 @@ df
   """
   @doc type: :price_transform
   @spec avgprice!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec avgprice!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec avgprice!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def avgprice!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def avgprice!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:avgprice, options, dataframe])
   def avgprice!(open, high, low, close, options), do: run!([:avgprice, options, open, high, low, close])
@@ -1194,28 +1194,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.avgdev(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 0.5, 0.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.avgdev(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 0.5, 0.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :price_transform
   @spec avgdev(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec avgdev(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec avgdev(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def avgdev(values_or_dataframe, time_period \\ 30, options \\ [])
   def avgdev(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:avgdev, options, dataframe, time_period])
   def avgdev(values, time_period, options), do: run([:avgdev, options, values, time_period])
@@ -1230,7 +1230,7 @@ df
   """
   @doc type: :price_transform
   @spec avgdev!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec avgdev!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec avgdev!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def avgdev!(values_or_dataframe, time_period \\ 30, options \\ [])
   def avgdev!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:avgdev, options, dataframe, time_period])
   def avgdev!(values, time_period, options), do: run!([:avgdev, options, values, time_period])
@@ -1275,7 +1275,7 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.bbands(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 4.5, 5.5]
@@ -1288,13 +1288,13 @@ df
             Polars[3]
             f64 [NaN, 2.5, 3.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.bbands(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 4.5, 5.5]
@@ -1307,12 +1307,12 @@ df
             f64[3]
             [NaN, 2.5, 3.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec bbands(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), deviations_up :: float(), deviations_down :: float(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec bbands(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations_up :: float(), deviations_down :: float(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec bbands(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations_up :: float(), deviations_down :: float(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def bbands(values_or_dataframe, time_period \\ 5, deviations_up \\ 2.0, deviations_down \\ 2.0, ma_type \\ :sma, options \\ [])
   def bbands(dataframe, time_period, deviations_up, deviations_down, ma_type, options) when is_dataframe(dataframe), do: run_df([:bbands, options, dataframe, time_period, deviations_up, deviations_down, ma_type])
   def bbands(values, time_period, deviations_up, deviations_down, ma_type, options), do: run([:bbands, options, values, time_period, deviations_up, deviations_down, ma_type])
@@ -1327,7 +1327,7 @@ df
   """
   @doc type: :overlap_studies
   @spec bbands!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), deviations_up :: float(), deviations_down :: float(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec bbands!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations_up :: float(), deviations_down :: float(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec bbands!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations_up :: float(), deviations_down :: float(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def bbands!(values_or_dataframe, time_period \\ 5, deviations_up \\ 2.0, deviations_down \\ 2.0, ma_type \\ :sma, options \\ [])
   def bbands!(dataframe, time_period, deviations_up, deviations_down, ma_type, options) when is_dataframe(dataframe), do: run_df!([:bbands, options, dataframe, time_period, deviations_up, deviations_down, ma_type])
   def bbands!(values, time_period, deviations_up, deviations_down, ma_type, options), do: run!([:bbands, options, values, time_period, deviations_up, deviations_down, ma_type])
@@ -1368,43 +1368,43 @@ df
       iex> [values_a, values_b] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0])]
       iex> ExTalib.beta(values_a, values_b, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 5.000000000000075]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values_a, values_b] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64)]
       iex> ExTalib.beta(values_a, values_b, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 5.000000000000075]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec beta(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec beta(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec beta(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def beta(values_a_or_dataframe, values_b \\ nil, time_period \\ 5, options \\ [])
   def beta(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:beta, options, dataframe, time_period])
   def beta(values_a, values_b, time_period, options), do: run([:beta, options, values_a, values_b, time_period])
   @doc """
-  A bang! version of `beta/3`. It does **not** perform any validations.
+  A bang! version of `beta/4`. It does **not** perform any validations.
 
-  Please refer to `beta/3` documentation for more information.
+  Please refer to `beta/4` documentation for more information.
 
   ## Notes
   - **No validations are performed.** It may raise errors or produce incorrect results if provided with invalid inputs.
-  - For a version that includes input / output validations and error handling, use `beta/3`.
+  - For a version that includes input / output validations and error handling, use `beta/4`.
   """
   @doc type: :statistic_functions
   @spec beta!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(),options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec beta!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec beta!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def beta!(values_a_or_dataframe, values_b \\ nil, time_period \\ 5, options \\ [])
   def beta!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:beta, options, dataframe, time_period])
   def beta!(values_a, values_b, time_period, options), do: run!([:beta, options, values_a, values_b, time_period])
@@ -1447,28 +1447,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.bop(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [-0.3333333333333333, -0.3333333333333333, -0.3333333333333333]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.bop(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [-0.3333333333333333, -0.3333333333333333, -0.3333333333333333]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec bop(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec bop(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec bop(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def bop(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def bop(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:bop, options, dataframe])
   def bop(open, high, low, close,  options), do: run([:bop, options, open, high, low, close])
@@ -1483,7 +1483,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec bop!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec bop!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec bop!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def bop!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def bop!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:bop, options, dataframe])
   def bop!(open, high, low, close, options), do: run!([:bop, options, open, high, low, close])
@@ -1525,28 +1525,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cci(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 66.6666666666667, 66.66666666666667]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64)]
       iex> ExTalib.cci(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 66.6666666666667, 66.66666666666667]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec cci(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cci(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cci(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cci(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def cci(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:cci, options, dataframe, time_period])
   def cci(high, low, close, time_period, options), do: run([:cci, options, high, low, close, time_period])
@@ -1561,7 +1561,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec cci!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cci!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cci!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cci!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def cci!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:cci, options, dataframe, time_period])
   def cci!(high, low, close, time_period, options), do: run!([:cci, options, high, low, close, time_period])
@@ -1587,7 +1587,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdl2crows`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdl2crows`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -1605,28 +1605,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdl2crows(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdl2crows(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdl2crows(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdl2crows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdl2crows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdl2crows(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl2crows(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdl2crows, options, dataframe])
   def cdl2crows(open, high, low, close,  options), do: run([:cdl2crows, options, open, high, low, close])
@@ -1641,7 +1641,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdl2crows!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdl2crows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdl2crows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdl2crows!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl2crows!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdl2crows, options, dataframe])
   def cdl2crows!(open, high, low, close, options), do: run!([:cdl2crows, options, open, high, low, close])
@@ -1667,7 +1667,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdl3blackcrows`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdl3blackcrows`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -1685,28 +1685,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdl3blackcrows(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdl3blackcrows(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdl3blackcrows(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdl3blackcrows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdl3blackcrows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdl3blackcrows(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3blackcrows(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdl3blackcrows, options, dataframe])
   def cdl3blackcrows(open, high, low, close,  options), do: run([:cdl3blackcrows, options, open, high, low, close])
@@ -1721,7 +1721,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdl3blackcrows!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdl3blackcrows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdl3blackcrows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdl3blackcrows!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3blackcrows!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdl3blackcrows, options, dataframe])
   def cdl3blackcrows!(open, high, low, close, options), do: run!([:cdl3blackcrows, options, open, high, low, close])
@@ -1747,7 +1747,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdl3inside`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdl3inside`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -1765,28 +1765,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdl3inside(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdl3inside(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdl3inside(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdl3inside(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdl3inside(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdl3inside(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3inside(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdl3inside, options, dataframe])
   def cdl3inside(open, high, low, close,  options), do: run([:cdl3inside, options, open, high, low, close])
@@ -1801,7 +1801,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdl3inside!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdl3inside!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdl3inside!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdl3inside!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3inside!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdl3inside, options, dataframe])
   def cdl3inside!(open, high, low, close, options), do: run!([:cdl3inside, options, open, high, low, close])
@@ -1827,7 +1827,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdl3linestrike`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdl3linestrike`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -1845,28 +1845,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdl3linestrike(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdl3linestrike(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdl3linestrike(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdl3linestrike(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdl3linestrike(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdl3linestrike(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3linestrike(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdl3linestrike, options, dataframe])
   def cdl3linestrike(open, high, low, close,  options), do: run([:cdl3linestrike, options, open, high, low, close])
@@ -1881,7 +1881,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdl3linestrike!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdl3linestrike!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdl3linestrike!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdl3linestrike!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3linestrike!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdl3linestrike, options, dataframe])
   def cdl3linestrike!(open, high, low, close, options), do: run!([:cdl3linestrike, options, open, high, low, close])
@@ -1907,7 +1907,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdl3outside`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdl3outside`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -1925,28 +1925,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdl3outside(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdl3outside(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdl3outside(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdl3outside(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdl3outside(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdl3outside(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3outside(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdl3outside, options, dataframe])
   def cdl3outside(open, high, low, close,  options), do: run([:cdl3outside, options, open, high, low, close])
@@ -1961,7 +1961,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdl3outside!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdl3outside!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdl3outside!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdl3outside!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3outside!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdl3outside, options, dataframe])
   def cdl3outside!(open, high, low, close, options), do: run!([:cdl3outside, options, open, high, low, close])
@@ -1987,7 +1987,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdl3starsinsouth`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdl3starsinsouth`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2005,28 +2005,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdl3starsinsouth(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdl3starsinsouth(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdl3starsinsouth(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdl3starsinsouth(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdl3starsinsouth(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdl3starsinsouth(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3starsinsouth(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdl3starsinsouth, options, dataframe])
   def cdl3starsinsouth(open, high, low, close,  options), do: run([:cdl3starsinsouth, options, open, high, low, close])
@@ -2041,7 +2041,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdl3starsinsouth!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdl3starsinsouth!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdl3starsinsouth!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdl3starsinsouth!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3starsinsouth!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdl3starsinsouth, options, dataframe])
   def cdl3starsinsouth!(open, high, low, close, options), do: run!([:cdl3starsinsouth, options, open, high, low, close])
@@ -2067,7 +2067,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdl3whitesoldiers`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdl3whitesoldiers`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2085,28 +2085,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdl3whitesoldiers(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdl3whitesoldiers(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdl3whitesoldiers(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdl3whitesoldiers(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdl3whitesoldiers(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdl3whitesoldiers(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3whitesoldiers(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdl3whitesoldiers, options, dataframe])
   def cdl3whitesoldiers(open, high, low, close,  options), do: run([:cdl3whitesoldiers, options, open, high, low, close])
@@ -2121,7 +2121,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdl3whitesoldiers!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdl3whitesoldiers!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdl3whitesoldiers!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdl3whitesoldiers!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdl3whitesoldiers!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdl3whitesoldiers, options, dataframe])
   def cdl3whitesoldiers!(open, high, low, close, options), do: run!([:cdl3whitesoldiers, options, open, high, low, close])
@@ -2148,7 +2148,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlabandonedbaby`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlabandonedbaby`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2160,34 +2160,34 @@ df
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
           open f64 [4.0, 5.0, 6.0]
-          cdlabandonedbaby f64 [NaN, NaN, NaN]
+          cdlabandonedbaby_0.3 f64 [NaN, NaN, NaN]
         >}
   ## Example Using Series:
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlabandonedbaby(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlabandonedbaby(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlabandonedbaby(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlabandonedbaby(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlabandonedbaby(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlabandonedbaby(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlabandonedbaby(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df([:cdlabandonedbaby, options, dataframe, penetration])
   def cdlabandonedbaby(open, high, low, close, penetration, options), do: run([:cdlabandonedbaby, options, open, high, low, close, penetration])
@@ -2202,7 +2202,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlabandonedbaby!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlabandonedbaby!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlabandonedbaby!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlabandonedbaby!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlabandonedbaby!(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df!([:cdlabandonedbaby, options, dataframe, penetration])
   def cdlabandonedbaby!(open, high, low, close, penetration, options), do: run!([:cdlabandonedbaby, options, open, high, low, close, penetration])
@@ -2228,7 +2228,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdladvanceblock`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdladvanceblock`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2246,28 +2246,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdladvanceblock(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdladvanceblock(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdladvanceblock(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdladvanceblock(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdladvanceblock(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdladvanceblock(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdladvanceblock(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdladvanceblock, options, dataframe])
   def cdladvanceblock(open, high, low, close,  options), do: run([:cdladvanceblock, options, open, high, low, close])
@@ -2282,7 +2282,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdladvanceblock!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdladvanceblock!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdladvanceblock!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdladvanceblock!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdladvanceblock!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdladvanceblock, options, dataframe])
   def cdladvanceblock!(open, high, low, close, options), do: run!([:cdladvanceblock, options, open, high, low, close])
@@ -2308,7 +2308,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlbelthold`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlbelthold`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2326,28 +2326,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlbelthold(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlbelthold(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlbelthold(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlbelthold(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlbelthold(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlbelthold(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlbelthold(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlbelthold, options, dataframe])
   def cdlbelthold(open, high, low, close,  options), do: run([:cdlbelthold, options, open, high, low, close])
@@ -2362,7 +2362,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlbelthold!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlbelthold!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlbelthold!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlbelthold!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlbelthold!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlbelthold, options, dataframe])
   def cdlbelthold!(open, high, low, close, options), do: run!([:cdlbelthold, options, open, high, low, close])
@@ -2388,7 +2388,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlbreakaway`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlbreakaway`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2406,28 +2406,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlbreakaway(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlbreakaway(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlbreakaway(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlbreakaway(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlbreakaway(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlbreakaway(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlbreakaway(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlbreakaway, options, dataframe])
   def cdlbreakaway(open, high, low, close,  options), do: run([:cdlbreakaway, options, open, high, low, close])
@@ -2442,7 +2442,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlbreakaway!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlbreakaway!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlbreakaway!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlbreakaway!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlbreakaway!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlbreakaway, options, dataframe])
   def cdlbreakaway!(open, high, low, close, options), do: run!([:cdlbreakaway, options, open, high, low, close])
@@ -2468,7 +2468,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlclosingmarubozu`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlclosingmarubozu`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2486,28 +2486,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlclosingmarubozu(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlclosingmarubozu(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlclosingmarubozu(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlclosingmarubozu(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlclosingmarubozu(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlclosingmarubozu(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlclosingmarubozu(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlclosingmarubozu, options, dataframe])
   def cdlclosingmarubozu(open, high, low, close,  options), do: run([:cdlclosingmarubozu, options, open, high, low, close])
@@ -2522,7 +2522,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlclosingmarubozu!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlclosingmarubozu!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlclosingmarubozu!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlclosingmarubozu!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlclosingmarubozu!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlclosingmarubozu, options, dataframe])
   def cdlclosingmarubozu!(open, high, low, close, options), do: run!([:cdlclosingmarubozu, options, open, high, low, close])
@@ -2548,7 +2548,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlconcealbabyswall`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlconcealbabyswall`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2566,28 +2566,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlconcealbabyswall(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlconcealbabyswall(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlconcealbabyswall(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlconcealbabyswall(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlconcealbabyswall(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlconcealbabyswall(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlconcealbabyswall(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlconcealbabyswall, options, dataframe])
   def cdlconcealbabyswall(open, high, low, close,  options), do: run([:cdlconcealbabyswall, options, open, high, low, close])
@@ -2602,7 +2602,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlconcealbabyswall!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlconcealbabyswall!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlconcealbabyswall!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlconcealbabyswall!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlconcealbabyswall!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlconcealbabyswall, options, dataframe])
   def cdlconcealbabyswall!(open, high, low, close, options), do: run!([:cdlconcealbabyswall, options, open, high, low, close])
@@ -2628,7 +2628,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlcounterattack`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlcounterattack`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2646,28 +2646,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlcounterattack(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlcounterattack(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlcounterattack(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlcounterattack(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlcounterattack(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlcounterattack(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlcounterattack(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlcounterattack, options, dataframe])
   def cdlcounterattack(open, high, low, close,  options), do: run([:cdlcounterattack, options, open, high, low, close])
@@ -2682,7 +2682,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlcounterattack!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlcounterattack!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlcounterattack!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlcounterattack!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlcounterattack!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlcounterattack, options, dataframe])
   def cdlcounterattack!(open, high, low, close, options), do: run!([:cdlcounterattack, options, open, high, low, close])
@@ -2709,7 +2709,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdldarkcloudcover`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdldarkcloudcover`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2721,34 +2721,34 @@ df
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
           open f64 [4.0, 5.0, 6.0]
-          cdldarkcloudcover f64 [NaN, NaN, NaN]
+          cdldarkcloudcover_0.3 f64 [NaN, NaN, NaN]
         >}
   ## Example Using Series:
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdldarkcloudcover(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdldarkcloudcover(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdldarkcloudcover(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdldarkcloudcover(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdldarkcloudcover(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdldarkcloudcover(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdldarkcloudcover(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df([:cdldarkcloudcover, options, dataframe, penetration])
   def cdldarkcloudcover(open, high, low, close, penetration, options), do: run([:cdldarkcloudcover, options, open, high, low, close, penetration])
@@ -2763,7 +2763,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdldarkcloudcover!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdldarkcloudcover!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdldarkcloudcover!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdldarkcloudcover!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdldarkcloudcover!(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df!([:cdldarkcloudcover, options, dataframe, penetration])
   def cdldarkcloudcover!(open, high, low, close, penetration, options), do: run!([:cdldarkcloudcover, options, open, high, low, close, penetration])
@@ -2789,7 +2789,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdldoji`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdldoji`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2807,28 +2807,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdldoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdldoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdldoji(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdldoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdldoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdldoji(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdldoji(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdldoji, options, dataframe])
   def cdldoji(open, high, low, close,  options), do: run([:cdldoji, options, open, high, low, close])
@@ -2843,7 +2843,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdldoji!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdldoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdldoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdldoji!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdldoji!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdldoji, options, dataframe])
   def cdldoji!(open, high, low, close, options), do: run!([:cdldoji, options, open, high, low, close])
@@ -2869,7 +2869,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdldojistar`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdldojistar`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2887,28 +2887,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdldojistar(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdldojistar(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdldojistar(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdldojistar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdldojistar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdldojistar(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdldojistar(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdldojistar, options, dataframe])
   def cdldojistar(open, high, low, close,  options), do: run([:cdldojistar, options, open, high, low, close])
@@ -2923,7 +2923,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdldojistar!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdldojistar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdldojistar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdldojistar!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdldojistar!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdldojistar, options, dataframe])
   def cdldojistar!(open, high, low, close, options), do: run!([:cdldojistar, options, open, high, low, close])
@@ -2949,7 +2949,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdldragonflydoji`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdldragonflydoji`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -2967,28 +2967,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdldragonflydoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdldragonflydoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdldragonflydoji(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdldragonflydoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdldragonflydoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdldragonflydoji(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdldragonflydoji(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdldragonflydoji, options, dataframe])
   def cdldragonflydoji(open, high, low, close,  options), do: run([:cdldragonflydoji, options, open, high, low, close])
@@ -3003,7 +3003,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdldragonflydoji!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdldragonflydoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdldragonflydoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdldragonflydoji!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdldragonflydoji!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdldragonflydoji, options, dataframe])
   def cdldragonflydoji!(open, high, low, close, options), do: run!([:cdldragonflydoji, options, open, high, low, close])
@@ -3028,7 +3028,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlengulfing`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlengulfing`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3046,28 +3046,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlengulfing(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 0.0]]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlengulfing(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 0.0]]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlengulfing(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlengulfing(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlengulfing(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlengulfing(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlengulfing(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlengulfing, options, dataframe])
   def cdlengulfing(open, high, low, close,  options), do: run([:cdlengulfing, options, open, high, low, close])
@@ -3082,7 +3082,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlengulfing!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlengulfing!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlengulfing!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlengulfing!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlengulfing!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlengulfing, options, dataframe])
   def cdlengulfing!(open, high, low, close, options), do: run!([:cdlengulfing, options, open, high, low, close])
@@ -3109,7 +3109,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdleveningdojistar`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdleveningdojistar`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3121,34 +3121,34 @@ df
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
           open f64 [4.0, 5.0, 6.0]
-          cdleveningdojistar f64 [NaN, NaN, NaN]
+          cdleveningdojistar_0.3 f64 [NaN, NaN, NaN]
         >}
   ## Example Using Series:
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdleveningdojistar(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdleveningdojistar(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdleveningdojistar(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdleveningdojistar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdleveningdojistar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdleveningdojistar(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdleveningdojistar(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df([:cdleveningdojistar, options, dataframe, penetration])
   def cdleveningdojistar(open, high, low, close, penetration, options), do: run([:cdleveningdojistar, options, open, high, low, close, penetration])
@@ -3163,7 +3163,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdleveningdojistar!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdleveningdojistar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdleveningdojistar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdleveningdojistar!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdleveningdojistar!(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df!([:cdleveningdojistar, options, dataframe, penetration])
   def cdleveningdojistar!(open, high, low, close, penetration, options), do: run!([:cdleveningdojistar, options, open, high, low, close, penetration])
@@ -3190,7 +3190,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdleveningstar`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdleveningstar`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3202,34 +3202,34 @@ df
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
           open f64 [4.0, 5.0, 6.0]
-          cdleveningstar f64 [NaN, NaN, NaN]
+          cdleveningstar_0.3 f64 [NaN, NaN, NaN]
         >}
   ## Example Using Series:
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdleveningstar(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdleveningstar(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdleveningstar(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdleveningstar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdleveningstar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdleveningstar(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdleveningstar(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df([:cdleveningstar, options, dataframe, penetration])
   def cdleveningstar(open, high, low, close, penetration, options), do: run([:cdleveningstar, options, open, high, low, close, penetration])
@@ -3244,7 +3244,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdleveningstar!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdleveningstar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdleveningstar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdleveningstar!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdleveningstar!(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df!([:cdleveningstar, options, dataframe, penetration])
   def cdleveningstar!(open, high, low, close, penetration, options), do: run!([:cdleveningstar, options, open, high, low, close, penetration])
@@ -3270,7 +3270,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlgapsidesidewhite`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlgapsidesidewhite`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3288,28 +3288,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlgapsidesidewhite(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlgapsidesidewhite(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlgapsidesidewhite(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlgapsidesidewhite(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlgapsidesidewhite(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlgapsidesidewhite(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlgapsidesidewhite(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlgapsidesidewhite, options, dataframe])
   def cdlgapsidesidewhite(open, high, low, close,  options), do: run([:cdlgapsidesidewhite, options, open, high, low, close])
@@ -3324,7 +3324,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlgapsidesidewhite!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlgapsidesidewhite!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlgapsidesidewhite!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlgapsidesidewhite!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlgapsidesidewhite!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlgapsidesidewhite, options, dataframe])
   def cdlgapsidesidewhite!(open, high, low, close, options), do: run!([:cdlgapsidesidewhite, options, open, high, low, close])
@@ -3350,7 +3350,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlgravestonedoji`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlgravestonedoji`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3368,28 +3368,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlgravestonedoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlgravestonedoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlgravestonedoji(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlgravestonedoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlgravestonedoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlgravestonedoji(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlgravestonedoji(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlgravestonedoji, options, dataframe])
   def cdlgravestonedoji(open, high, low, close,  options), do: run([:cdlgravestonedoji, options, open, high, low, close])
@@ -3404,7 +3404,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlgravestonedoji!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlgravestonedoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlgravestonedoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlgravestonedoji!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlgravestonedoji!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlgravestonedoji, options, dataframe])
   def cdlgravestonedoji!(open, high, low, close, options), do: run!([:cdlgravestonedoji, options, open, high, low, close])
@@ -3430,7 +3430,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlhammer`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlhammer`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3448,28 +3448,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlhammer(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlhammer(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlhammer(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlhammer(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlhammer(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlhammer(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhammer(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlhammer, options, dataframe])
   def cdlhammer(open, high, low, close,  options), do: run([:cdlhammer, options, open, high, low, close])
@@ -3484,7 +3484,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlhammer!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlhammer!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlhammer!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlhammer!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhammer!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlhammer, options, dataframe])
   def cdlhammer!(open, high, low, close, options), do: run!([:cdlhammer, options, open, high, low, close])
@@ -3510,7 +3510,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlhangingman`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlhangingman`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3528,28 +3528,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlhangingman(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlhangingman(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlhangingman(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlhangingman(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlhangingman(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlhangingman(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhangingman(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlhangingman, options, dataframe])
   def cdlhangingman(open, high, low, close,  options), do: run([:cdlhangingman, options, open, high, low, close])
@@ -3564,7 +3564,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlhangingman!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlhangingman!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlhangingman!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlhangingman!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhangingman!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlhangingman, options, dataframe])
   def cdlhangingman!(open, high, low, close, options), do: run!([:cdlhangingman, options, open, high, low, close])
@@ -3590,7 +3590,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlharami`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlharami`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3608,28 +3608,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlharami(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlharami(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlharami(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlharami(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlharami(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlharami(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlharami(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlharami, options, dataframe])
   def cdlharami(open, high, low, close,  options), do: run([:cdlharami, options, open, high, low, close])
@@ -3644,7 +3644,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlharami!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlharami!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlharami!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlharami!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlharami!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlharami, options, dataframe])
   def cdlharami!(open, high, low, close, options), do: run!([:cdlharami, options, open, high, low, close])
@@ -3670,7 +3670,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlharamicross`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlharamicross`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3688,28 +3688,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlharamicross(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlharamicross(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlharamicross(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlharamicross(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlharamicross(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlharamicross(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlharamicross(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlharamicross, options, dataframe])
   def cdlharamicross(open, high, low, close,  options), do: run([:cdlharamicross, options, open, high, low, close])
@@ -3724,7 +3724,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlharamicross!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlharamicross!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlharamicross!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlharamicross!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlharamicross!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlharamicross, options, dataframe])
   def cdlharamicross!(open, high, low, close, options), do: run!([:cdlharamicross, options, open, high, low, close])
@@ -3750,7 +3750,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlhighwave`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlhighwave`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3768,28 +3768,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlhighwave(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlhighwave(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlhighwave(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlhighwave(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlhighwave(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlhighwave(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhighwave(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlhighwave, options, dataframe])
   def cdlhighwave(open, high, low, close,  options), do: run([:cdlhighwave, options, open, high, low, close])
@@ -3804,7 +3804,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlhighwave!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlhighwave!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlhighwave!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlhighwave!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhighwave!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlhighwave, options, dataframe])
   def cdlhighwave!(open, high, low, close, options), do: run!([:cdlhighwave, options, open, high, low, close])
@@ -3830,7 +3830,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlhikkake`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlhikkake`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3848,28 +3848,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlhikkake(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlhikkake(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlhikkake(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlhikkake(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlhikkake(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlhikkake(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhikkake(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlhikkake, options, dataframe])
   def cdlhikkake(open, high, low, close,  options), do: run([:cdlhikkake, options, open, high, low, close])
@@ -3884,7 +3884,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlhikkake!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlhikkake!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlhikkake!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlhikkake!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhikkake!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlhikkake, options, dataframe])
   def cdlhikkake!(open, high, low, close, options), do: run!([:cdlhikkake, options, open, high, low, close])
@@ -3910,7 +3910,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlhikkakemod`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlhikkakemod`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -3928,28 +3928,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlhikkakemod(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlhikkakemod(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlhikkakemod(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlhikkakemod(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlhikkakemod(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlhikkakemod(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhikkakemod(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlhikkakemod, options, dataframe])
   def cdlhikkakemod(open, high, low, close,  options), do: run([:cdlhikkakemod, options, open, high, low, close])
@@ -3964,7 +3964,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlhikkakemod!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlhikkakemod!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlhikkakemod!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlhikkakemod!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhikkakemod!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlhikkakemod, options, dataframe])
   def cdlhikkakemod!(open, high, low, close, options), do: run!([:cdlhikkakemod, options, open, high, low, close])
@@ -3990,7 +3990,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlhomingpigeon`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlhomingpigeon`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4008,28 +4008,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlhomingpigeon(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlhomingpigeon(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlhomingpigeon(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlhomingpigeon(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlhomingpigeon(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlhomingpigeon(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhomingpigeon(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlhomingpigeon, options, dataframe])
   def cdlhomingpigeon(open, high, low, close,  options), do: run([:cdlhomingpigeon, options, open, high, low, close])
@@ -4044,7 +4044,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlhomingpigeon!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlhomingpigeon!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlhomingpigeon!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlhomingpigeon!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlhomingpigeon!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlhomingpigeon, options, dataframe])
   def cdlhomingpigeon!(open, high, low, close, options), do: run!([:cdlhomingpigeon, options, open, high, low, close])
@@ -4070,7 +4070,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlidentical3crows`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlidentical3crows`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4088,28 +4088,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlidentical3crows(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlidentical3crows(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlidentical3crows(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlidentical3crows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlidentical3crows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlidentical3crows(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlidentical3crows(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlidentical3crows, options, dataframe])
   def cdlidentical3crows(open, high, low, close,  options), do: run([:cdlidentical3crows, options, open, high, low, close])
@@ -4124,7 +4124,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlidentical3crows!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlidentical3crows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlidentical3crows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlidentical3crows!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlidentical3crows!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlidentical3crows, options, dataframe])
   def cdlidentical3crows!(open, high, low, close, options), do: run!([:cdlidentical3crows, options, open, high, low, close])
@@ -4150,7 +4150,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlinneck`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlinneck`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4168,28 +4168,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlinneck(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlinneck(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlinneck(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlinneck(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlinneck(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlinneck(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlinneck(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlinneck, options, dataframe])
   def cdlinneck(open, high, low, close,  options), do: run([:cdlinneck, options, open, high, low, close])
@@ -4204,7 +4204,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlinneck!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlinneck!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlinneck!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlinneck!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlinneck!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlinneck, options, dataframe])
   def cdlinneck!(open, high, low, close, options), do: run!([:cdlinneck, options, open, high, low, close])
@@ -4230,7 +4230,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlinvertedhammer`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlinvertedhammer`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4248,28 +4248,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlinvertedhammer(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlinvertedhammer(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlinvertedhammer(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlinvertedhammer(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlinvertedhammer(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlinvertedhammer(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlinvertedhammer(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlinvertedhammer, options, dataframe])
   def cdlinvertedhammer(open, high, low, close,  options), do: run([:cdlinvertedhammer, options, open, high, low, close])
@@ -4284,7 +4284,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlinvertedhammer!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlinvertedhammer!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlinvertedhammer!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlinvertedhammer!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlinvertedhammer!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlinvertedhammer, options, dataframe])
   def cdlinvertedhammer!(open, high, low, close, options), do: run!([:cdlinvertedhammer, options, open, high, low, close])
@@ -4310,7 +4310,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlkicking`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlkicking`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4328,28 +4328,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlkicking(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlkicking(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlkicking(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlkicking(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlkicking(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlkicking(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlkicking(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlkicking, options, dataframe])
   def cdlkicking(open, high, low, close,  options), do: run([:cdlkicking, options, open, high, low, close])
@@ -4364,7 +4364,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlkicking!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlkicking!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlkicking!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlkicking!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlkicking!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlkicking, options, dataframe])
   def cdlkicking!(open, high, low, close, options), do: run!([:cdlkicking, options, open, high, low, close])
@@ -4390,7 +4390,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlkickingbylength`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlkickingbylength`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4408,28 +4408,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlkickingbylength(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlkickingbylength(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlkickingbylength(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlkickingbylength(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlkickingbylength(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlkickingbylength(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlkickingbylength(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlkickingbylength, options, dataframe])
   def cdlkickingbylength(open, high, low, close,  options), do: run([:cdlkickingbylength, options, open, high, low, close])
@@ -4444,7 +4444,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlkickingbylength!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlkickingbylength!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlkickingbylength!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlkickingbylength!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlkickingbylength!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlkickingbylength, options, dataframe])
   def cdlkickingbylength!(open, high, low, close, options), do: run!([:cdlkickingbylength, options, open, high, low, close])
@@ -4470,7 +4470,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlladderbottom`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlladderbottom`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4488,28 +4488,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlladderbottom(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlladderbottom(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlladderbottom(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlladderbottom(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlladderbottom(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlladderbottom(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlladderbottom(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlladderbottom, options, dataframe])
   def cdlladderbottom(open, high, low, close,  options), do: run([:cdlladderbottom, options, open, high, low, close])
@@ -4524,7 +4524,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlladderbottom!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlladderbottom!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlladderbottom!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlladderbottom!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlladderbottom!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlladderbottom, options, dataframe])
   def cdlladderbottom!(open, high, low, close, options), do: run!([:cdlladderbottom, options, open, high, low, close])
@@ -4550,7 +4550,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdllongleggeddoji`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdllongleggeddoji`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4568,28 +4568,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdllongleggeddoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdllongleggeddoji(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdllongleggeddoji(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdllongleggeddoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdllongleggeddoji(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdllongleggeddoji(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdllongleggeddoji(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdllongleggeddoji, options, dataframe])
   def cdllongleggeddoji(open, high, low, close,  options), do: run([:cdllongleggeddoji, options, open, high, low, close])
@@ -4604,7 +4604,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdllongleggeddoji!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdllongleggeddoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdllongleggeddoji!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdllongleggeddoji!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdllongleggeddoji!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdllongleggeddoji, options, dataframe])
   def cdllongleggeddoji!(open, high, low, close, options), do: run!([:cdllongleggeddoji, options, open, high, low, close])
@@ -4630,7 +4630,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdllongline`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdllongline`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4648,28 +4648,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdllongline(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdllongline(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdllongline(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdllongline(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdllongline(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdllongline(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdllongline(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdllongline, options, dataframe])
   def cdllongline(open, high, low, close,  options), do: run([:cdllongline, options, open, high, low, close])
@@ -4684,7 +4684,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdllongline!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdllongline!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdllongline!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdllongline!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdllongline!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdllongline, options, dataframe])
   def cdllongline!(open, high, low, close, options), do: run!([:cdllongline, options, open, high, low, close])
@@ -4710,7 +4710,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlmarubozu`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlmarubozu`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4728,28 +4728,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlmarubozu(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlmarubozu(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlmarubozu(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlmarubozu(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlmarubozu(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlmarubozu(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlmarubozu(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlmarubozu, options, dataframe])
   def cdlmarubozu(open, high, low, close,  options), do: run([:cdlmarubozu, options, open, high, low, close])
@@ -4764,7 +4764,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlmarubozu!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlmarubozu!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlmarubozu!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlmarubozu!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlmarubozu!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlmarubozu, options, dataframe])
   def cdlmarubozu!(open, high, low, close, options), do: run!([:cdlmarubozu, options, open, high, low, close])
@@ -4790,7 +4790,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlmatchinglow`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlmatchinglow`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4808,28 +4808,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlmatchinglow(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlmatchinglow(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlmatchinglow(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlmatchinglow(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlmatchinglow(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlmatchinglow(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlmatchinglow(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlmatchinglow, options, dataframe])
   def cdlmatchinglow(open, high, low, close,  options), do: run([:cdlmatchinglow, options, open, high, low, close])
@@ -4844,7 +4844,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlmatchinglow!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlmatchinglow!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlmatchinglow!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlmatchinglow!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlmatchinglow!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlmatchinglow, options, dataframe])
   def cdlmatchinglow!(open, high, low, close, options), do: run!([:cdlmatchinglow, options, open, high, low, close])
@@ -4871,7 +4871,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlmathold`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlmathold`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4883,34 +4883,34 @@ df
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
           open f64 [4.0, 5.0, 6.0]
-          cdlmathold f64 [NaN, NaN, NaN]
+          cdlmathold_0.3 f64 [NaN, NaN, NaN]
         >}
   ## Example Using Series:
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlmathold(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlmathold(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlmathold(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlmathold(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlmathold(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlmathold(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlmathold(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df([:cdlmathold, options, dataframe, penetration])
   def cdlmathold(open, high, low, close, penetration, options), do: run([:cdlmathold, options, open, high, low, close, penetration])
@@ -4925,7 +4925,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlmathold!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlmathold!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlmathold!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlmathold!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlmathold!(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df!([:cdlmathold, options, dataframe, penetration])
   def cdlmathold!(open, high, low, close, penetration, options), do: run!([:cdlmathold, options, open, high, low, close, penetration])
@@ -4952,7 +4952,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlmorningdojistar`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlmorningdojistar`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -4964,34 +4964,34 @@ df
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
           open f64 [4.0, 5.0, 6.0]
-          cdlmorningdojistar f64 [NaN, NaN, NaN]
+          cdlmorningdojistar_0.3 f64 [NaN, NaN, NaN]
         >}
   ## Example Using Series:
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlmorningdojistar(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlmorningdojistar(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlmorningdojistar(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlmorningdojistar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlmorningdojistar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlmorningdojistar(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlmorningdojistar(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df([:cdlmorningdojistar, options, dataframe, penetration])
   def cdlmorningdojistar(open, high, low, close, penetration, options), do: run([:cdlmorningdojistar, options, open, high, low, close, penetration])
@@ -5006,7 +5006,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlmorningdojistar!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlmorningdojistar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlmorningdojistar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlmorningdojistar!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlmorningdojistar!(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df!([:cdlmorningdojistar, options, dataframe, penetration])
   def cdlmorningdojistar!(open, high, low, close, penetration, options), do: run!([:cdlmorningdojistar, options, open, high, low, close, penetration])
@@ -5033,7 +5033,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlmorningstar`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlmorningstar`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5045,34 +5045,34 @@ df
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
           open f64 [4.0, 5.0, 6.0]
-          cdlmorningstar f64 [NaN, NaN, NaN]
+          cdlmorningstar_0.3 f64 [NaN, NaN, NaN]
         >}
   ## Example Using Series:
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlmorningstar(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlmorningstar(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlmorningstar(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlmorningstar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlmorningstar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlmorningstar(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlmorningstar(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df([:cdlmorningstar, options, dataframe, penetration])
   def cdlmorningstar(open, high, low, close, penetration, options), do: run([:cdlmorningstar, options, open, high, low, close, penetration])
@@ -5087,7 +5087,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlmorningstar!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, penetration :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlmorningstar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlmorningstar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), penetration :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlmorningstar!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, penetration \\ 0.3, options \\ [])
   def cdlmorningstar!(dataframe, nil, nil, nil, penetration, options) when is_dataframe(dataframe), do: run_df!([:cdlmorningstar, options, dataframe, penetration])
   def cdlmorningstar!(open, high, low, close, penetration, options), do: run!([:cdlmorningstar, options, open, high, low, close, penetration])
@@ -5113,7 +5113,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlonneck`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlonneck`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5131,28 +5131,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlonneck(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlonneck(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlonneck(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlonneck(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlonneck(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlonneck(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlonneck(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlonneck, options, dataframe])
   def cdlonneck(open, high, low, close,  options), do: run([:cdlonneck, options, open, high, low, close])
@@ -5167,7 +5167,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlonneck!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlonneck!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlonneck!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlonneck!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlonneck!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlonneck, options, dataframe])
   def cdlonneck!(open, high, low, close, options), do: run!([:cdlonneck, options, open, high, low, close])
@@ -5193,7 +5193,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlpiercing`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlpiercing`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5211,28 +5211,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlpiercing(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlpiercing(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlpiercing(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlpiercing(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlpiercing(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlpiercing(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlpiercing(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlpiercing, options, dataframe])
   def cdlpiercing(open, high, low, close,  options), do: run([:cdlpiercing, options, open, high, low, close])
@@ -5247,7 +5247,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlpiercing!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlpiercing!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlpiercing!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlpiercing!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlpiercing!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlpiercing, options, dataframe])
   def cdlpiercing!(open, high, low, close, options), do: run!([:cdlpiercing, options, open, high, low, close])
@@ -5273,7 +5273,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlrickshawman`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlrickshawman`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5291,28 +5291,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlrickshawman(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlrickshawman(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlrickshawman(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlrickshawman(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlrickshawman(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlrickshawman(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlrickshawman(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlrickshawman, options, dataframe])
   def cdlrickshawman(open, high, low, close,  options), do: run([:cdlrickshawman, options, open, high, low, close])
@@ -5327,7 +5327,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlrickshawman!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlrickshawman!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlrickshawman!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlrickshawman!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlrickshawman!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlrickshawman, options, dataframe])
   def cdlrickshawman!(open, high, low, close, options), do: run!([:cdlrickshawman, options, open, high, low, close])
@@ -5353,7 +5353,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlrisefall3methods`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlrisefall3methods`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5371,28 +5371,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlrisefall3methods(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlrisefall3methods(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlrisefall3methods(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlrisefall3methods(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlrisefall3methods(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlrisefall3methods(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlrisefall3methods(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlrisefall3methods, options, dataframe])
   def cdlrisefall3methods(open, high, low, close,  options), do: run([:cdlrisefall3methods, options, open, high, low, close])
@@ -5407,7 +5407,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlrisefall3methods!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlrisefall3methods!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlrisefall3methods!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlrisefall3methods!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlrisefall3methods!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlrisefall3methods, options, dataframe])
   def cdlrisefall3methods!(open, high, low, close, options), do: run!([:cdlrisefall3methods, options, open, high, low, close])
@@ -5433,7 +5433,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlseparatinglines`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlseparatinglines`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5451,28 +5451,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlseparatinglines(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlseparatinglines(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlseparatinglines(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlseparatinglines(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlseparatinglines(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlseparatinglines(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlseparatinglines(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlseparatinglines, options, dataframe])
   def cdlseparatinglines(open, high, low, close,  options), do: run([:cdlseparatinglines, options, open, high, low, close])
@@ -5487,7 +5487,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlseparatinglines!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlseparatinglines!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlseparatinglines!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlseparatinglines!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlseparatinglines!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlseparatinglines, options, dataframe])
   def cdlseparatinglines!(open, high, low, close, options), do: run!([:cdlseparatinglines, options, open, high, low, close])
@@ -5513,7 +5513,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlshootingstar`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlshootingstar`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5531,28 +5531,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlshootingstar(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlshootingstar(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlshootingstar(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlshootingstar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlshootingstar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlshootingstar(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlshootingstar(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlshootingstar, options, dataframe])
   def cdlshootingstar(open, high, low, close,  options), do: run([:cdlshootingstar, options, open, high, low, close])
@@ -5567,7 +5567,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlshootingstar!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlshootingstar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlshootingstar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlshootingstar!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlshootingstar!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlshootingstar, options, dataframe])
   def cdlshootingstar!(open, high, low, close, options), do: run!([:cdlshootingstar, options, open, high, low, close])
@@ -5593,7 +5593,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlshortline`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlshortline`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5611,28 +5611,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlshortline(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlshortline(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlshortline(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlshortline(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlshortline(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlshortline(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlshortline(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlshortline, options, dataframe])
   def cdlshortline(open, high, low, close,  options), do: run([:cdlshortline, options, open, high, low, close])
@@ -5647,7 +5647,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlshortline!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlshortline!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlshortline!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlshortline!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlshortline!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlshortline, options, dataframe])
   def cdlshortline!(open, high, low, close, options), do: run!([:cdlshortline, options, open, high, low, close])
@@ -5673,7 +5673,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlspinningtop`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlspinningtop`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5691,28 +5691,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlspinningtop(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlspinningtop(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlspinningtop(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlspinningtop(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlspinningtop(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlspinningtop(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlspinningtop(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlspinningtop, options, dataframe])
   def cdlspinningtop(open, high, low, close,  options), do: run([:cdlspinningtop, options, open, high, low, close])
@@ -5727,7 +5727,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlspinningtop!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlspinningtop!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlspinningtop!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlspinningtop!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlspinningtop!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlspinningtop, options, dataframe])
   def cdlspinningtop!(open, high, low, close, options), do: run!([:cdlspinningtop, options, open, high, low, close])
@@ -5753,7 +5753,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlstalledpattern`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlstalledpattern`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5771,28 +5771,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlstalledpattern(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlstalledpattern(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlstalledpattern(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlstalledpattern(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlstalledpattern(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlstalledpattern(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlstalledpattern(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlstalledpattern, options, dataframe])
   def cdlstalledpattern(open, high, low, close,  options), do: run([:cdlstalledpattern, options, open, high, low, close])
@@ -5807,7 +5807,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlstalledpattern!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlstalledpattern!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlstalledpattern!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlstalledpattern!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlstalledpattern!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlstalledpattern, options, dataframe])
   def cdlstalledpattern!(open, high, low, close, options), do: run!([:cdlstalledpattern, options, open, high, low, close])
@@ -5833,7 +5833,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlsticksandwich`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlsticksandwich`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5851,28 +5851,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlsticksandwich(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlsticksandwich(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlsticksandwich(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlsticksandwich(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlsticksandwich(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlsticksandwich(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlsticksandwich(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlsticksandwich, options, dataframe])
   def cdlsticksandwich(open, high, low, close,  options), do: run([:cdlsticksandwich, options, open, high, low, close])
@@ -5887,7 +5887,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlsticksandwich!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlsticksandwich!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlsticksandwich!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlsticksandwich!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlsticksandwich!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlsticksandwich, options, dataframe])
   def cdlsticksandwich!(open, high, low, close, options), do: run!([:cdlsticksandwich, options, open, high, low, close])
@@ -5913,7 +5913,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdltakuri`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdltakuri`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -5931,28 +5931,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdltakuri(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdltakuri(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdltakuri(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdltakuri(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdltakuri(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdltakuri(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdltakuri(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdltakuri, options, dataframe])
   def cdltakuri(open, high, low, close,  options), do: run([:cdltakuri, options, open, high, low, close])
@@ -5967,7 +5967,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdltakuri!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdltakuri!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdltakuri!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdltakuri!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdltakuri!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdltakuri, options, dataframe])
   def cdltakuri!(open, high, low, close, options), do: run!([:cdltakuri, options, open, high, low, close])
@@ -5993,7 +5993,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdltasukigap`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdltasukigap`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -6011,28 +6011,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdltasukigap(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdltasukigap(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdltasukigap(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdltasukigap(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdltasukigap(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdltasukigap(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdltasukigap(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdltasukigap, options, dataframe])
   def cdltasukigap(open, high, low, close,  options), do: run([:cdltasukigap, options, open, high, low, close])
@@ -6047,7 +6047,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdltasukigap!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdltasukigap!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdltasukigap!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdltasukigap!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdltasukigap!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdltasukigap, options, dataframe])
   def cdltasukigap!(open, high, low, close, options), do: run!([:cdltasukigap, options, open, high, low, close])
@@ -6073,7 +6073,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlthrusting`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlthrusting`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -6091,28 +6091,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlthrusting(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlthrusting(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlthrusting(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlthrusting(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlthrusting(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlthrusting(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlthrusting(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlthrusting, options, dataframe])
   def cdlthrusting(open, high, low, close,  options), do: run([:cdlthrusting, options, open, high, low, close])
@@ -6127,7 +6127,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlthrusting!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlthrusting!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlthrusting!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlthrusting!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlthrusting!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlthrusting, options, dataframe])
   def cdlthrusting!(open, high, low, close, options), do: run!([:cdlthrusting, options, open, high, low, close])
@@ -6153,7 +6153,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdltristar`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdltristar`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -6171,28 +6171,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdltristar(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdltristar(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdltristar(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdltristar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdltristar(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdltristar(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdltristar(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdltristar, options, dataframe])
   def cdltristar(open, high, low, close,  options), do: run([:cdltristar, options, open, high, low, close])
@@ -6207,7 +6207,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdltristar!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdltristar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdltristar!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdltristar!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdltristar!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdltristar, options, dataframe])
   def cdltristar!(open, high, low, close, options), do: run!([:cdltristar, options, open, high, low, close])
@@ -6233,7 +6233,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlunique3river`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlunique3river`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -6251,28 +6251,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlunique3river(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlunique3river(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlunique3river(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlunique3river(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlunique3river(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlunique3river(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlunique3river(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlunique3river, options, dataframe])
   def cdlunique3river(open, high, low, close,  options), do: run([:cdlunique3river, options, open, high, low, close])
@@ -6287,7 +6287,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlunique3river!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlunique3river!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlunique3river!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlunique3river!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlunique3river!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlunique3river, options, dataframe])
   def cdlunique3river!(open, high, low, close, options), do: run!([:cdlunique3river, options, open, high, low, close])
@@ -6313,7 +6313,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlupsidegap2crows`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlupsidegap2crows`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -6331,28 +6331,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlupsidegap2crows(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlupsidegap2crows(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlupsidegap2crows(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlupsidegap2crows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlupsidegap2crows(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlupsidegap2crows(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlupsidegap2crows(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlupsidegap2crows, options, dataframe])
   def cdlupsidegap2crows(open, high, low, close,  options), do: run([:cdlupsidegap2crows, options, open, high, low, close])
@@ -6367,7 +6367,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlupsidegap2crows!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlupsidegap2crows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlupsidegap2crows!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlupsidegap2crows!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlupsidegap2crows!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlupsidegap2crows, options, dataframe])
   def cdlupsidegap2crows!(open, high, low, close, options), do: run!([:cdlupsidegap2crows, options, open, high, low, close])
@@ -6393,7 +6393,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `cdlxsidegap3methods`, type: `[:s32]` (`100` when pattern identified, `0` otherwise) **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `cdlxsidegap3methods`, type: `[:f64]` (`100.0` when pattern identified, `0.0` otherwise)
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{open: [4.0, 5.0, 6.0], high: [5.0, 6.0, 7.0], low: [2.0, 3.0, 4.0], close: [3.0, 4.0, 5.0]})
@@ -6411,28 +6411,28 @@ df
       iex> [open, high, low, close] = [Explorer.Series.from_list([4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.cdlxsidegap3methods(open, high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 0.0]]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, high, low, close] = [Nx.tensor([4.0, 5.0, 6.0], type: :f64), Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.cdlxsidegap3methods(open, high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 0.0]]
           >
-        ]}
+        }}
 
   """
   @doc type: :pattern_recognition
   @spec cdlxsidegap3methods(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cdlxsidegap3methods(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cdlxsidegap3methods(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cdlxsidegap3methods(open_or_dataframe, high \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlxsidegap3methods(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df([:cdlxsidegap3methods, options, dataframe])
   def cdlxsidegap3methods(open, high, low, close,  options), do: run([:cdlxsidegap3methods, options, open, high, low, close])
@@ -6447,7 +6447,7 @@ df
   """
   @doc type: :pattern_recognition
   @spec cdlxsidegap3methods!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cdlxsidegap3methods!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cdlxsidegap3methods!(open :: Explorer.Series.t() | Nx.Tensor.t(), high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cdlxsidegap3methods!(open_or_dataframe, open \\ nil, low \\ nil, close \\ nil, options \\ [])
   def cdlxsidegap3methods!(dataframe, nil, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:cdlxsidegap3methods, options, dataframe])
   def cdlxsidegap3methods!(open, high, low, close, options), do: run!([:cdlxsidegap3methods, options, open, high, low, close])
@@ -6488,28 +6488,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.ceil(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [4.0, 5.0, 5.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.ceil(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [4.0, 5.0, 5.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec ceil(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ceil(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ceil(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ceil(values_or_dataframe, options \\ [])
   def ceil(dataframe, options) when is_dataframe(dataframe), do: run_df([:ceil, options, dataframe])
   def ceil(values, options), do: run([:ceil, options, values])
@@ -6524,7 +6524,7 @@ df
   """
   @doc type: :math_transform
   @spec ceil!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ceil!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ceil!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ceil!(values_or_dataframe, options \\ [])
   def ceil!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ceil, options, dataframe])
   def ceil!(values, options), do: run!([:ceil, options, values])
@@ -6566,28 +6566,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.cmo(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.cmo(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec cmo(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cmo(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cmo(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cmo(values_or_dataframe, time_period \\ 14, options \\ [])
   def cmo(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:cmo, options, dataframe, time_period])
   def cmo(values, time_period, options), do: run([:cmo, options, values, time_period])
@@ -6602,7 +6602,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec cmo!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cmo!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cmo!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cmo!(values_or_dataframe, time_period \\ 14, options \\ [])
   def cmo!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:cmo, options, dataframe, time_period])
   def cmo!(values, time_period, options), do: run!([:cmo, options, values, time_period])
@@ -6643,28 +6643,28 @@ df
       iex> [values_a, values_b] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 3.0])]
       iex> ExTalib.correl(values_a, values_b, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 1.0, 0.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values_a, values_b] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 3.0], type: :f64)]
       iex> ExTalib.correl(values_a, values_b, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 1.0, 0.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec correl(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec correl(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec correl(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def correl(values_a_or_dataframe, values_b \\ nil, time_period \\ 30, options \\ [])
   def correl(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:correl, options, dataframe, time_period])
   def correl(values_a, values_b, time_period, options), do: run([:correl, options, values_a, values_b, time_period])
@@ -6679,7 +6679,7 @@ df
   """
   @doc type: :statistic_functions
   @spec correl!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(),options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec correl!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec correl!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(),options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def correl!(values_a_or_dataframe, values_b \\ nil, time_period \\ 30, options \\ [])
   def correl!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:correl, options, dataframe, time_period])
   def correl!(values_a, values_b, time_period, options), do: run!([:correl, options, values_a, values_b, time_period])
@@ -6720,28 +6720,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.cos(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [-0.9364566872907963, -0.2107957994307797, 0.28366218546322625]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.cos(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [-0.9364566872907963, -0.2107957994307797, 0.28366218546322625]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec cos(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cos(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cos(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cos(values_or_dataframe, options \\ [])
   def cos(dataframe, options) when is_dataframe(dataframe), do: run_df([:cos, options, dataframe])
   def cos(values, options), do: run([:cos, options, values])
@@ -6756,7 +6756,7 @@ df
   """
   @doc type: :math_transform
   @spec cos!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cos!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cos!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cos!(values_or_dataframe, options \\ [])
   def cos!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:cos, options, dataframe])
   def cos!(values, options), do: run!([:cos, options, values])
@@ -6797,28 +6797,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.cosh(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [-0.9364566872907963, -0.2107957994307797, 0.28366218546322625]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.cosh(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [-0.9364566872907963, -0.2107957994307797, 0.28366218546322625]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec cosh(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec cosh(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec cosh(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def cosh(values_or_dataframe, options \\ [])
   def cosh(dataframe, options) when is_dataframe(dataframe), do: run_df([:cosh, options, dataframe])
   def cosh(values, options), do: run([:cosh, options, values])
@@ -6833,7 +6833,7 @@ df
   """
   @doc type: :math_transform
   @spec cosh!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec cosh!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec cosh!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def cosh!(values_or_dataframe, options \\ [])
   def cosh!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:cosh, options, dataframe])
   def cosh!(values, options), do: run!([:cosh, options, values])
@@ -6874,28 +6874,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.dema(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 5.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.dema(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 5.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec dema(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec dema(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec dema(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def dema(values_or_dataframe, time_period \\ 30, options \\ [])
   def dema(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:dema, options, dataframe, time_period])
   def dema(values, time_period, options), do: run([:dema, options, values, time_period])
@@ -6910,7 +6910,7 @@ df
   """
   @doc type: :overlap_studies
   @spec dema!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec dema!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec dema!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def dema!(values_or_dataframe, time_period \\ 30, options \\ [])
   def dema!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:dema, options, dataframe, time_period])
   def dema!(values, time_period, options), do: run!([:dema, options, values, time_period])
@@ -6951,28 +6951,28 @@ df
       iex> [values_a, values_b] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0])]
       iex> ExTalib.div(values_a, values_b)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [2.5, 2.0, 1.75]]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values_a, values_b] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64)]
       iex> ExTalib.div(values_a, values_b)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [2.5, 2.0, 1.75]]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec div(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec div(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec div(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def div(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def div(dataframe, nil, options) when is_dataframe(dataframe), do: run_df([:div, options, dataframe])
   def div(values_a, values_b, options), do: run([:div, options, values_a, values_b])
@@ -6987,7 +6987,7 @@ df
   """
   @doc type: :math_operators
   @spec div!(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec div!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec div!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def div!(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def div!(dataframe, nil, options) when is_dataframe(dataframe), do: run_df!([:div, options, dataframe])
   def div!(values_a, values_b, options), do: run!([:div, options, values_a, values_b])
@@ -7029,28 +7029,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0, 7.0], dtype: {:f, 64})]
       iex> ExTalib.dx(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, NaN, 100.0, 100.0, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0, 6.0, 7.0], type: :f64)]
       iex> ExTalib.dx(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, NaN, 100.0, 100.0, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec dx(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec dx(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec dx(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def dx(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def dx(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:dx, options, dataframe, time_period])
   def dx(high, low, close, time_period, options), do: run([:dx, options, high, low, close, time_period])
@@ -7065,7 +7065,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec dx!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec dx!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec dx!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def dx!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def dx!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:dx, options, dataframe, time_period])
   def dx!(high, low, close, time_period, options), do: run!([:dx, options, high, low, close, time_period])
@@ -7106,28 +7106,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.ema(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.ema(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec ema(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ema(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ema(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ema(values_or_dataframe, time_period \\ 30, options \\ [])
   def ema(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:ema, options, dataframe, time_period])
   def ema(values, time_period, options), do: run([:ema, options, values, time_period])
@@ -7142,7 +7142,7 @@ df
   """
   @doc type: :overlap_studies
   @spec ema!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ema!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ema!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ema!(values_or_dataframe, time_period \\ 30, options \\ [])
   def ema!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:ema, options, dataframe, time_period])
   def ema!(values, time_period, options), do: run!([:ema, options, values, time_period])
@@ -7183,28 +7183,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.exp(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [33.11545195869231, 90.01713130052181, 148.4131591025766]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.exp(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [33.11545195869231, 90.01713130052181, 148.4131591025766]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec exp(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec exp(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec exp(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def exp(values_or_dataframe, options \\ [])
   def exp(dataframe, options) when is_dataframe(dataframe), do: run_df([:exp, options, dataframe])
   def exp(values, options), do: run([:exp, options, values])
@@ -7219,7 +7219,7 @@ df
   """
   @doc type: :math_transform
   @spec exp!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec exp!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec exp!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def exp!(values_or_dataframe, options \\ [])
   def exp!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:exp, options, dataframe])
   def exp!(values, options), do: run!([:exp, options, values])
@@ -7260,28 +7260,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.floor(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [3.0, 4.0, 5.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.floor(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [3.0, 4.0, 5.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec floor(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec floor(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec floor(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def floor(values_or_dataframe, options \\ [])
   def floor(dataframe, options) when is_dataframe(dataframe), do: run_df([:floor, options, dataframe])
   def floor(values, options), do: run([:floor, options, values])
@@ -7296,7 +7296,7 @@ df
   """
   @doc type: :math_transform
   @spec floor!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec floor!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec floor!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def floor!(values_or_dataframe, options \\ [])
   def floor!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:floor, options, dataframe])
   def floor!(values, options), do: run!([:floor, options, values])
@@ -7338,28 +7338,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.ht_dcperiod(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.ht_dcperiod(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :cycle_indicators
   @spec ht_dcperiod(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ht_dcperiod(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ht_dcperiod(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ht_dcperiod(values_or_dataframe, options \\ [])
   def ht_dcperiod(dataframe, options) when is_dataframe(dataframe), do: run_df([:ht_dcperiod, options, dataframe])
   def ht_dcperiod(values, options), do: run([:ht_dcperiod, options, values])
@@ -7374,7 +7374,7 @@ df
   """
   @doc type: :cycle_indicators
   @spec ht_dcperiod!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ht_dcperiod!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ht_dcperiod!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ht_dcperiod!(values_or_dataframe, options \\ [])
   def ht_dcperiod!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ht_dcperiod, options, dataframe])
   def ht_dcperiod!(values, options), do: run!([:ht_dcperiod, options, values])
@@ -7416,28 +7416,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.ht_dcphase(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.ht_dcphase(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :cycle_indicators
   @spec ht_dcphase(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ht_dcphase(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ht_dcphase(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ht_dcphase(values_or_dataframe, options \\ [])
   def ht_dcphase(dataframe, options) when is_dataframe(dataframe), do: run_df([:ht_dcphase, options, dataframe])
   def ht_dcphase(values, options), do: run([:ht_dcphase, options, values])
@@ -7452,7 +7452,7 @@ df
   """
   @doc type: :cycle_indicators
   @spec ht_dcphase!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ht_dcphase!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ht_dcphase!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ht_dcphase!(values_or_dataframe, options \\ [])
   def ht_dcphase!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ht_dcphase, options, dataframe])
   def ht_dcphase!(values, options), do: run!([:ht_dcphase, options, values])
@@ -7496,7 +7496,7 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.ht_phasor(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
@@ -7505,13 +7505,13 @@ df
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.ht_phasor(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
@@ -7520,12 +7520,12 @@ df
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :cycle_indicators
   @spec ht_phasor(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ht_phasor(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ht_phasor(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ht_phasor(values_or_dataframe, options \\ [])
   def ht_phasor(dataframe, options) when is_dataframe(dataframe), do: run_df([:ht_phasor, options, dataframe])
   def ht_phasor(values, options), do: run([:ht_phasor, options, values])
@@ -7540,7 +7540,7 @@ df
   """
   @doc type: :cycle_indicators
   @spec ht_phasor!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ht_phasor!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ht_phasor!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ht_phasor!(values_or_dataframe, options \\ [])
   def ht_phasor!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ht_phasor, options, dataframe])
   def ht_phasor!(values, options), do: run!([:ht_phasor, options, values])
@@ -7584,7 +7584,7 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.ht_sine(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
@@ -7593,13 +7593,13 @@ df
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.ht_sine(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
@@ -7608,12 +7608,12 @@ df
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :cycle_indicators
   @spec ht_sine(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ht_sine(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ht_sine(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ht_sine(values_or_dataframe, options \\ [])
   def ht_sine(dataframe, options) when is_dataframe(dataframe), do: run_df([:ht_sine, options, dataframe])
   def ht_sine(values, options), do: run([:ht_sine, options, values])
@@ -7628,7 +7628,7 @@ df
   """
   @doc type: :cycle_indicators
   @spec ht_sine!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ht_sine!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ht_sine!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ht_sine!(values_or_dataframe, options \\ [])
   def ht_sine!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ht_sine, options, dataframe])
   def ht_sine!(values, options), do: run!([:ht_sine, options, values])
@@ -7671,28 +7671,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.ht_trendline(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.ht_trendline(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec ht_trendline(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ht_trendline(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ht_trendline(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ht_trendline(values_or_dataframe, options \\ [])
   def ht_trendline(dataframe, options) when is_dataframe(dataframe), do: run_df([:ht_trendline, options, dataframe])
   def ht_trendline(values, options), do: run([:ht_trendline, options, values])
@@ -7707,7 +7707,7 @@ df
   """
   @doc type: :overlap_studies
   @spec ht_trendline!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ht_trendline!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ht_trendline!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ht_trendline!(values_or_dataframe, options \\ [])
   def ht_trendline!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ht_trendline, options, dataframe])
   def ht_trendline!(values, options), do: run!([:ht_trendline, options, values])
@@ -7733,7 +7733,7 @@ df
       Only applies when input is `Explorer.DataFrame`.
 
   ## Output
-    - `ht_trendmode`, type: `[:s32]` **Please note:** If the output conatin NaNs, the type will be converted to :f64
+    - `ht_trendmode`, type: `[:s32]`
 
   ## Example Using a DataFrame:
       iex> df = Explorer.DataFrame.new(%{values: [3.0, 4.0, 5.0]})
@@ -7749,28 +7749,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.ht_trendmode(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.ht_trendmode(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :cycle_indicators
   @spec ht_trendmode(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ht_trendmode(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ht_trendmode(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ht_trendmode(values_or_dataframe, options \\ [])
   def ht_trendmode(dataframe, options) when is_dataframe(dataframe), do: run_df([:ht_trendmode, options, dataframe])
   def ht_trendmode(values, options), do: run([:ht_trendmode, options, values])
@@ -7785,7 +7785,7 @@ df
   """
   @doc type: :cycle_indicators
   @spec ht_trendmode!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ht_trendmode!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ht_trendmode!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ht_trendmode!(values_or_dataframe, options \\ [])
   def ht_trendmode!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ht_trendmode, options, dataframe])
   def ht_trendmode!(values, options), do: run!([:ht_trendmode, options, values])
@@ -7825,28 +7825,28 @@ df
       iex> [open, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.imi(open, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, 0.0, 0.0, 0.0, 0.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [open, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.imi(open, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, 0.0, 0.0, 0.0, 0.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec imi(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec imi(open :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec imi(open :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def imi(open_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def imi(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:imi, options, dataframe, time_period])
   def imi(open, close, time_period, options), do: run([:imi, options, open, close, time_period])
@@ -7861,7 +7861,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec imi!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec imi!(open :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec imi!(open :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def imi!(open_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def imi!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:imi, options, dataframe, time_period])
   def imi!(open, close, time_period, options), do: run!([:imi, options, open, close, time_period])
@@ -7902,28 +7902,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.kama(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 4.444444444444445]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.kama(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 4.444444444444445]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec kama(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec kama(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec kama(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def kama(values_or_dataframe, time_period \\ 30, options \\ [])
   def kama(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:kama, options, dataframe, time_period])
   def kama(values, time_period, options), do: run([:kama, options, values, time_period])
@@ -7938,7 +7938,7 @@ df
   """
   @doc type: :overlap_studies
   @spec kama!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec kama!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec kama!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def kama!(values_or_dataframe, time_period \\ 30, options \\ [])
   def kama!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:kama, options, dataframe, time_period])
   def kama!(values, time_period, options), do: run!([:kama, options, values, time_period])
@@ -7979,28 +7979,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.linearreg(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 4.0, 5.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.linearreg(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 4.0, 5.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec linearreg(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec linearreg(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec linearreg(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def linearreg(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:linearreg, options, dataframe, time_period])
   def linearreg(values, time_period, options), do: run([:linearreg, options, values, time_period])
@@ -8015,7 +8015,7 @@ df
   """
   @doc type: :statistic_functions
   @spec linearreg!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec linearreg!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec linearreg!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def linearreg!(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:linearreg, options, dataframe, time_period])
   def linearreg!(values, time_period, options), do: run!([:linearreg, options, values, time_period])
@@ -8056,28 +8056,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.linearreg_angle(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 45.0, 45.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.linearreg_angle(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 45.0, 45.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec linearreg_angle(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec linearreg_angle(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec linearreg_angle(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def linearreg_angle(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg_angle(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:linearreg_angle, options, dataframe, time_period])
   def linearreg_angle(values, time_period, options), do: run([:linearreg_angle, options, values, time_period])
@@ -8092,7 +8092,7 @@ df
   """
   @doc type: :statistic_functions
   @spec linearreg_angle!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec linearreg_angle!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec linearreg_angle!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def linearreg_angle!(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg_angle!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:linearreg_angle, options, dataframe, time_period])
   def linearreg_angle!(values, time_period, options), do: run!([:linearreg_angle, options, values, time_period])
@@ -8133,28 +8133,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.linearreg_intercept(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.0, 4.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.linearreg_intercept(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.0, 4.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec linearreg_intercept(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec linearreg_intercept(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec linearreg_intercept(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def linearreg_intercept(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg_intercept(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:linearreg_intercept, options, dataframe, time_period])
   def linearreg_intercept(values, time_period, options), do: run([:linearreg_intercept, options, values, time_period])
@@ -8169,7 +8169,7 @@ df
   """
   @doc type: :statistic_functions
   @spec linearreg_intercept!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec linearreg_intercept!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec linearreg_intercept!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def linearreg_intercept!(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg_intercept!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:linearreg_intercept, options, dataframe, time_period])
   def linearreg_intercept!(values, time_period, options), do: run!([:linearreg_intercept, options, values, time_period])
@@ -8210,28 +8210,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.linearreg_slope(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 1.0, 1.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.linearreg_slope(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 1.0, 1.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec linearreg_slope(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec linearreg_slope(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec linearreg_slope(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def linearreg_slope(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg_slope(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:linearreg_slope, options, dataframe, time_period])
   def linearreg_slope(values, time_period, options), do: run([:linearreg_slope, options, values, time_period])
@@ -8246,7 +8246,7 @@ df
   """
   @doc type: :statistic_functions
   @spec linearreg_slope!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec linearreg_slope!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec linearreg_slope!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def linearreg_slope!(values_or_dataframe, time_period \\ 14, options \\ [])
   def linearreg_slope!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:linearreg_slope, options, dataframe, time_period])
   def linearreg_slope!(values, time_period, options), do: run!([:linearreg_slope, options, values, time_period])
@@ -8288,28 +8288,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.ln(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [1.0986122886681098, 1.3862943611198906, 1.6094379124341003]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.ln(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [1.0986122886681098, 1.3862943611198906, 1.6094379124341003]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec ln(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ln(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ln(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ln(values_or_dataframe, options \\ [])
   def ln(dataframe, options) when is_dataframe(dataframe), do: run_df([:ln, options, dataframe])
   def ln(values, options), do: run([:ln, options, values])
@@ -8324,7 +8324,7 @@ df
   """
   @doc type: :math_transform
   @spec ln!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ln!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ln!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ln!(values_or_dataframe, options \\ [])
   def ln!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:ln, options, dataframe])
   def ln!(values, options), do: run!([:ln, options, values])
@@ -8365,28 +8365,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.log10(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [0.47712125471966244, 0.6020599913279624, 0.6989700043360189]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.log10(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [0.47712125471966244, 0.6020599913279624, 0.6989700043360189]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec log10(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec log10(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec log10(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def log10(values_or_dataframe, options \\ [])
   def log10(dataframe, options) when is_dataframe(dataframe), do: run_df([:log10, options, dataframe])
   def log10(values, options), do: run([:log10, options, values])
@@ -8401,7 +8401,7 @@ df
   """
   @doc type: :math_transform
   @spec log10!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec log10!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec log10!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def log10!(values_or_dataframe, options \\ [])
   def log10!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:log10, options, dataframe])
   def log10!(values, options), do: run!([:log10, options, values])
@@ -8442,28 +8442,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.ma(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.ma(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec ma(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ma(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ma(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ma(values_or_dataframe, time_period \\ 30, ma_type \\ :sma, options \\ [])
   def ma(dataframe, time_period, ma_type, options) when is_dataframe(dataframe), do: run_df([:ma, options, dataframe, time_period, ma_type])
   def ma(values, time_period, ma_type, options), do: run([:ma, options, values, time_period, ma_type])
@@ -8478,7 +8478,7 @@ df
   """
   @doc type: :overlap_studies
   @spec ma!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ma!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ma!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ma!(values_or_dataframe, time_period \\ 30, ma_type \\ :sma, options \\ [])
   def ma!(dataframe, time_period, ma_type, options) when is_dataframe(dataframe), do: run_df!([:ma, options, dataframe, time_period, ma_type])
   def ma!(values, time_period, ma_type, options), do: run!([:ma, options, values, time_period, ma_type])
@@ -8523,7 +8523,7 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0])
       iex> ExTalib.macd(series, 3, 2, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[4]
             f64 [NaN, NaN, NaN, 0.5]
@@ -8536,13 +8536,13 @@ df
             Polars[4]
             f64 [NaN, NaN, NaN, 0.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0, 6.0], type: :f64)
       iex> ExTalib.macd(tensor, 3, 2, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[4]
             [NaN, NaN, NaN, 0.5]
@@ -8555,12 +8555,12 @@ df
             f64[4]
             [NaN, NaN, NaN, 0.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec macd(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), slow_period :: integer(), signal_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec macd(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), signal_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec macd(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), signal_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def macd(values_or_dataframe, fast_period \\ 12, slow_period \\ 26, signal_period \\ 9, options \\ [])
   def macd(dataframe, fast_period, slow_period, signal_period, options) when is_dataframe(dataframe), do: run_df([:macd, options, dataframe, fast_period, slow_period, signal_period])
   def macd(values, fast_period, slow_period, signal_period, options), do: run([:macd, options, values, fast_period, slow_period, signal_period])
@@ -8575,7 +8575,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec macd!(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), slow_period :: integer(), signal_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec macd!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), signal_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec macd!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), signal_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def macd!(values_or_dataframe, fast_period \\ 12, slow_period \\ 26, signal_period \\ 9, options \\ [])
   def macd!(dataframe, fast_period, slow_period, signal_period, options) when is_dataframe(dataframe), do: run_df!([:macd, options, dataframe, fast_period, slow_period, signal_period])
   def macd!(values, fast_period, slow_period, signal_period, options), do: run!([:macd, options, values, fast_period, slow_period, signal_period])
@@ -8620,7 +8620,7 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0])
       iex> ExTalib.macdext(series, 3, :sma, 2, :sma, 2, :sma)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[4]
             f64 [NaN, NaN, NaN, 0.5]
@@ -8633,13 +8633,13 @@ df
             Polars[4]
             f64 [NaN, NaN, NaN, 0.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0, 6.0], type: :f64)
       iex> ExTalib.macdext(tensor, 3, :sma, 2, :sma, 2, :sma)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[4]
             [NaN, NaN, NaN, 0.5]
@@ -8652,12 +8652,12 @@ df
             f64[4]
             [NaN, NaN, NaN, 0.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec macdext(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), fast_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_period :: integer(), slow_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, signal_period :: integer(), signal_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec macdext(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), fast_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_period :: integer(), slow_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, signal_period :: integer(), signal_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec macdext(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), fast_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_period :: integer(), slow_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, signal_period :: integer(), signal_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def macdext(values_or_dataframe, fast_period \\ 12, fast_ma \\ :sma, slow_period \\ 26, slow_ma \\ :sma, signal_period \\ 9, signal_ma \\ :sma, options \\ [])
   def macdext(dataframe, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma, options) when is_dataframe(dataframe), do: run_df([:macdext, options, dataframe, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma])
   def macdext(values, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma, options), do: run([:macdext, options, values, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma])
@@ -8672,7 +8672,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec macdext!(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), fast_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_period :: integer(), slow_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, signal_period :: integer(), signal_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec macdext!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), fast_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_period :: integer(), slow_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, signal_period :: integer(), signal_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec macdext!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), fast_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_period :: integer(), slow_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, signal_period :: integer(), signal_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def macdext!(values_or_dataframe, fast_period \\ 12, fast_ma \\ :sma, slow_period \\ 26, slow_ma \\ :sma, signal_period \\ 9, signal_ma \\ :sma, options \\ [])
   def macdext!(dataframe, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma, options) when is_dataframe(dataframe), do: run_df!([:macdext, options, dataframe, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma])
   def macdext!(values, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma, options), do: run!([:macdext, options, values, fast_period, fast_ma, slow_period, slow_ma, signal_period, signal_ma])
@@ -8717,7 +8717,7 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0])
       iex> ExTalib.macdfix(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[4]
             f64 [NaN, NaN, NaN, NaN]
@@ -8730,13 +8730,13 @@ df
             Polars[4]
             f64 [NaN, NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0, 6.0], type: :f64)
       iex> ExTalib.macdfix(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[4]
             [NaN, NaN, NaN, NaN]
@@ -8749,12 +8749,12 @@ df
             f64[4]
             [NaN, NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec macdfix(dataframe :: Explorer.DataFrame.t(), signal_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec macdfix(values :: Explorer.Series.t() | Nx.Tensor.t(), signal_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec macdfix(values :: Explorer.Series.t() | Nx.Tensor.t(), signal_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def macdfix(values_or_dataframe, signal_period \\ 9, options \\ [])
   def macdfix(dataframe, signal_period, options) when is_dataframe(dataframe), do: run_df([:macdfix, options, dataframe, signal_period])
   def macdfix(values, signal_period, options), do: run([:macdfix, options, values, signal_period])
@@ -8769,7 +8769,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec macdfix!(dataframe :: Explorer.DataFrame.t(), signal_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec macdfix!(values :: Explorer.Series.t() | Nx.Tensor.t(), signal_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec macdfix!(values :: Explorer.Series.t() | Nx.Tensor.t(), signal_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def macdfix!(values_or_dataframe, signal_period \\ 9, options \\ [])
   def macdfix!(dataframe, signal_period, options) when is_dataframe(dataframe), do: run_df!([:macdfix, options, dataframe, signal_period])
   def macdfix!(values, signal_period, options), do: run!([:macdfix, options, values, signal_period])
@@ -8812,7 +8812,7 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0])
       iex> ExTalib.mama(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[4]
             f64 [NaN, NaN, NaN, NaN]
@@ -8825,13 +8825,13 @@ df
             Polars[4]
             f64 [NaN, NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0, 6.0], type: :f64)
       iex> ExTalib.mama(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[4]
             [NaN, NaN, NaN, NaN]
@@ -8844,12 +8844,12 @@ df
             f64[4]
             [NaN, NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec mama(dataframe :: Explorer.DataFrame.t(), fast_limit :: float(), slow_limit :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec mama(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_limit :: float(), slow_limit :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec mama(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_limit :: float(), slow_limit :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def mama(values_or_dataframe, fast_limit \\ 0.5, slow_limit \\ 0.05, options \\ [])
   def mama(dataframe, fast_limit, slow_limit, options) when is_dataframe(dataframe), do: run_df([:mama, options, dataframe, fast_limit, slow_limit])
   def mama(values, fast_limit, slow_limit, options), do: run([:mama, options, values, fast_limit, slow_limit])
@@ -8864,7 +8864,7 @@ df
   """
   @doc type: :overlap_studies
   @spec mama!(dataframe :: Explorer.DataFrame.t(), fast_limit :: float(), slow_limit :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec mama!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_limit :: float(), slow_limit :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec mama!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_limit :: float(), slow_limit :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def mama!(values_or_dataframe, fast_limit \\ 0.5, slow_limit \\ 0.05, options \\ [])
   def mama!(dataframe, fast_limit, slow_limit, options) when is_dataframe(dataframe), do: run_df!([:mama, options, dataframe, fast_limit, slow_limit])
   def mama!(values, fast_limit, slow_limit, options), do: run!([:mama, options, values, fast_limit, slow_limit])
@@ -8905,43 +8905,43 @@ df
       iex> [values, periods] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 2.0, 2.0])]
       iex> ExTalib.mavp(values, periods, 2, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 5.5, 6.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values, periods] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 2.0, 2.0], type: :f64)]
       iex> ExTalib.mavp(values, periods, 2, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 5.5, 6.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec mavp(dataframe :: Explorer.DataFrame.t(), nil, minimum_period :: integer(), time_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec mavp(values :: Explorer.Series.t() | Nx.Tensor.t(), periods :: Explorer.Series.t() | Nx.Tensor.t(), minimum_period :: integer(), maximum_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec mavp(values :: Explorer.Series.t() | Nx.Tensor.t(), periods :: Explorer.Series.t() | Nx.Tensor.t(), minimum_period :: integer(), maximum_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def mavp(values_or_dataframe, periods \\ nil, minimum_period \\ 2, maximum_period \\ 30, ma_type \\ :sma, options \\ [])
   def mavp(dataframe, nil, minimum_period, maximum_period, ma_type, options) when is_dataframe(dataframe), do: run_df([:mavp, options, dataframe, minimum_period, maximum_period, ma_type])
   def mavp(values, periods, minimum_period, maximum_period, ma_type, options), do: run([:mavp, options, values, periods, minimum_period, maximum_period, ma_type])
   @doc """
-  A bang! version of `mavp/5`. It does **not** perform any validations.
+  A bang! version of `mavp/6`. It does **not** perform any validations.
 
-  Please refer to `mavp/5` documentation for more information.
+  Please refer to `mavp/6` documentation for more information.
 
   ## Notes
   - **No validations are performed.** It may raise errors or produce incorrect results if provided with invalid inputs.
-  - For a version that includes input / output validations and error handling, use `mavp/5`.
+  - For a version that includes input / output validations and error handling, use `mavp/6`.
   """
   @doc type: :overlap_studies
   @spec mavp!(dataframe :: Explorer.DataFrame.t(), nil, minimum_period :: integer(), maximum_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec mavp!(values :: Explorer.Series.t() | Nx.Tensor.t(), periods :: Explorer.Series.t() | Nx.Tensor.t(), minimum_period :: integer(), maximum_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec mavp!(values :: Explorer.Series.t() | Nx.Tensor.t(), periods :: Explorer.Series.t() | Nx.Tensor.t(), minimum_period :: integer(), maximum_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def mavp!(values_or_dataframe, periods \\ nil, minimum_period \\ 2, maximum_period \\ 30, ma_type \\ :sma, options \\ [])
   def mavp!(dataframe, nil, minimum_period, maximum_period, ma_type, options) when is_dataframe(dataframe), do: run_df!([:mavp, options, dataframe, minimum_period, maximum_period, ma_type])
   def mavp!(values, periods, minimum_period, maximum_period, ma_type, options), do: run!([:mavp, options, values, periods, minimum_period, maximum_period, ma_type])
@@ -8982,28 +8982,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 5.0, 4.0], dtype: {:f, 64})
       iex> ExTalib.max(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 5.0, 5.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 5.0, 4.0], type: :f64)
       iex> ExTalib.max(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 5.0, 5.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec max(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec max(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec max(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def max(values_or_dataframe, time_period \\ 30, options \\ [])
   def max(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:max, options, dataframe, time_period])
   def max(values, time_period, options), do: run([:max, options, values, time_period])
@@ -9018,7 +9018,7 @@ df
   """
   @doc type: :math_operators
   @spec max!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec max!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec max!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def max!(values_or_dataframe, time_period \\ 30, options \\ [])
   def max!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:max, options, dataframe, time_period])
   def max!(values, time_period, options), do: run!([:max, options, values, time_period])
@@ -9059,28 +9059,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 5.0, 4.0], dtype: {:f, 64})
       iex> ExTalib.maxindex(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 1.0, 1.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 5.0, 4.0], type: :f64)
       iex> ExTalib.maxindex(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 1.0, 1.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec maxindex(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec maxindex(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec maxindex(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def maxindex(values_or_dataframe, time_period \\ 30, options \\ [])
   def maxindex(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:maxindex, options, dataframe, time_period])
   def maxindex(values, time_period, options), do: run([:maxindex, options, values, time_period])
@@ -9095,7 +9095,7 @@ df
   """
   @doc type: :math_operators
   @spec maxindex!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec maxindex!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec maxindex!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def maxindex!(values_or_dataframe, time_period \\ 30, options \\ [])
   def maxindex!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:maxindex, options, dataframe, time_period])
   def maxindex!(values, time_period, options), do: run!([:maxindex, options, values, time_period])
@@ -9136,28 +9136,28 @@ df
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0], dtype: {:f, 64})]
       iex> ExTalib.medprice(high, low)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [3.5, 4.5, 5.5, 6.5, 7.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.medprice(high, low)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [3.5, 4.5, 5.5, 6.5, 7.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :price_transform
   @spec medprice(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec medprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec medprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def medprice(high_or_dataframe, low \\ nil, options \\ [])
   def medprice(dataframe, nil, options) when is_dataframe(dataframe), do: run_df([:medprice, options, dataframe])
   def medprice(high, low, options), do: run([:medprice, options, high, low])
@@ -9172,7 +9172,7 @@ df
   """
   @doc type: :price_transform
   @spec medprice!(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec medprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec medprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def medprice!(high_or_dataframe, low \\ nil,  options \\ [])
   def medprice!(dataframe, nil, options) when is_dataframe(dataframe), do: run_df!([:medprice, options, dataframe])
   def medprice!(high, low, options), do: run!([:medprice, options, high, low])
@@ -9215,28 +9215,28 @@ df
       iex> [high, low, close, volume] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64}), Explorer.Series.from_list([10.0, 11.0, 12.0], dtype: {:f, 64})]
       iex> ExTalib.mfi(high, low, close, volume, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close, volume] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64), Nx.tensor([10.0, 11.0, 12.0], type: :f64)]
       iex> ExTalib.mfi(high, low, close, volume, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec mfi(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec mfi(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec mfi(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def mfi(high_or_dataframe, low \\ nil, close \\ nil, volume \\ nil, time_period \\ 14, options \\ [])
   def mfi(dataframe, nil, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:mfi, options, dataframe, time_period])
   def mfi(high, low, close, volume, time_period, options), do: run([:mfi, options, high, low, close, volume, time_period])
@@ -9251,7 +9251,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec mfi!(dataframe :: Explorer.DataFrame.t(), nil, nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec mfi!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec mfi!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def mfi!(high_or_dataframe, low \\ nil, close \\ nil, volume \\ nil, time_period \\ 14, options \\ [])
   def mfi!(dataframe, nil, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:mfi, options, dataframe, time_period])
   def mfi!(high, low, close, volume, time_period, options), do: run!([:mfi, options, high, low, close, volume, time_period])
@@ -9292,28 +9292,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 5.0, 4.0], dtype: {:f, 64})
       iex> ExTalib.midpoint(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 4.0, 4.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 5.0, 4.0], type: :f64)
       iex> ExTalib.midpoint(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 4.0, 4.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec midpoint(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec midpoint(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec midpoint(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def midpoint(values_or_dataframe, time_period \\ 30, options \\ [])
   def midpoint(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:midpoint, options, dataframe, time_period])
   def midpoint(values, time_period, options), do: run([:midpoint, options, values, time_period])
@@ -9328,7 +9328,7 @@ df
   """
   @doc type: :overlap_studies
   @spec midpoint!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec midpoint!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec midpoint!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def midpoint!(values_or_dataframe, time_period \\ 30, options \\ [])
   def midpoint!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:midpoint, options, dataframe, time_period])
   def midpoint!(values, time_period, options), do: run!([:midpoint, options, values, time_period])
@@ -9368,28 +9368,28 @@ df
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.midprice(high, low, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, 4.0, 5.0, 6.0, 7.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.midprice(high, low, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, 4.0, 5.0, 6.0, 7.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec midprice(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec midprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec midprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def midprice(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def midprice(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:midprice, options, dataframe, time_period])
   def midprice(high, low, time_period, options), do: run([:midprice, options, high, low, time_period])
@@ -9404,7 +9404,7 @@ df
   """
   @doc type: :overlap_studies
   @spec midprice!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec midprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec midprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def midprice!(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def midprice!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:midprice, options, dataframe, time_period])
   def midprice!(high, low, time_period, options), do: run!([:midprice, options, high, low, time_period])
@@ -9445,28 +9445,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 5.0, 4.0], dtype: {:f, 64})
       iex> ExTalib.min(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.0, 4.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 5.0, 4.0], type: :f64)
       iex> ExTalib.min(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.0, 4.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec min(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec min(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec min(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def min(values_or_dataframe, time_period \\ 30, options \\ [])
   def min(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:min, options, dataframe, time_period])
   def min(values, time_period, options), do: run([:min, options, values, time_period])
@@ -9481,7 +9481,7 @@ df
   """
   @doc type: :math_operators
   @spec min!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec min!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec min!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def min!(values_or_dataframe, time_period \\ 30, options \\ [])
   def min!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:min, options, dataframe, time_period])
   def min!(values, time_period, options), do: run!([:min, options, values, time_period])
@@ -9522,28 +9522,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 5.0, 4.0], dtype: {:f, 64})
       iex> ExTalib.minindex(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 0.0, 2.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 5.0, 4.0], type: :f64)
       iex> ExTalib.minindex(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 0.0, 2.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec minindex(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec minindex(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec minindex(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def minindex(values_or_dataframe, time_period \\ 30, options \\ [])
   def minindex(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:minindex, options, dataframe, time_period])
   def minindex(values, time_period, options), do: run([:minindex, options, values, time_period])
@@ -9558,7 +9558,7 @@ df
   """
   @doc type: :math_operators
   @spec minindex!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec minindex!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec minindex!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def minindex!(values_or_dataframe, time_period \\ 30, options \\ [])
   def minindex!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:minindex, options, dataframe, time_period])
   def minindex!(values, time_period, options), do: run!([:minindex, options, values, time_period])
@@ -9601,7 +9601,7 @@ df
       iex> series = Explorer.Series.from_list([3.0, 5.0, 4.0], dtype: {:f, 64})
       iex> ExTalib.minmax(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.0, 4.0]
@@ -9610,13 +9610,13 @@ df
             Polars[3]
             f64 [NaN, 5.0, 5.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 5.0, 4.0], type: :f64)
       iex> ExTalib.minmax(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.0, 4.0]
@@ -9625,12 +9625,12 @@ df
             f64[3]
             [NaN, 5.0, 5.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec minmax(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec minmax(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec minmax(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def minmax(values_or_dataframe, time_period \\ 30, options \\ [])
   def minmax(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:minmax, options, dataframe, time_period])
   def minmax(values, time_period, options), do: run([:minmax, options, values, time_period])
@@ -9645,7 +9645,7 @@ df
   """
   @doc type: :math_operators
   @spec minmax!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec minmax!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec minmax!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def minmax!(values_or_dataframe, time_period \\ 30, options \\ [])
   def minmax!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:minmax, options, dataframe, time_period])
   def minmax!(values, time_period, options), do: run!([:minmax, options, values, time_period])
@@ -9688,7 +9688,7 @@ df
       iex> series = Explorer.Series.from_list([3.0, 5.0, 4.0], dtype: {:f, 64})
       iex> ExTalib.minmaxindex(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 0.0, 2.0]
@@ -9697,13 +9697,13 @@ df
             Polars[3]
             f64 [NaN, 1.0, 1.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 5.0, 4.0], type: :f64)
       iex> ExTalib.minmaxindex(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 0.0, 2.0]
@@ -9712,12 +9712,12 @@ df
             f64[3]
             [NaN, 1.0, 1.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec minmaxindex(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec minmaxindex(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec minmaxindex(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def minmaxindex(values_or_dataframe, time_period \\ 30, options \\ [])
   def minmaxindex(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:minmaxindex, options, dataframe, time_period])
   def minmaxindex(values, time_period, options), do: run([:minmaxindex, options, values, time_period])
@@ -9732,7 +9732,7 @@ df
   """
   @doc type: :math_operators
   @spec minmaxindex!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec minmaxindex!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec minmaxindex!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def minmaxindex!(values_or_dataframe, time_period \\ 30, options \\ [])
   def minmaxindex!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:minmaxindex, options, dataframe, time_period])
   def minmaxindex!(values, time_period, options), do: run!([:minmaxindex, options, values, time_period])
@@ -9774,28 +9774,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0, 7.0], dtype: {:f, 64})]
       iex> ExTalib.minus_di(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, NaN, 0.0, 0.0, 0.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0, 6.0, 7.0], type: :f64)]
       iex> ExTalib.minus_di(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, NaN, 0.0, 0.0, 0.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec minus_di(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec minus_di(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec minus_di(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def minus_di(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def minus_di(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:minus_di, options, dataframe, time_period])
   def minus_di(high, low, close, time_period, options), do: run([:minus_di, options, high, low, close, time_period])
@@ -9810,7 +9810,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec minus_di!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec minus_di!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec minus_di!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def minus_di!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def minus_di!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:minus_di, options, dataframe, time_period])
   def minus_di!(high, low, close, time_period, options), do: run!([:minus_di, options, high, low, close, time_period])
@@ -9850,28 +9850,28 @@ df
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.minus_dm(high, low, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, 0.0, 0.0, 0.0, 0.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.minus_dm(high, low, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, 0.0, 0.0, 0.0, 0.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec minus_dm(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec minus_dm(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec minus_dm(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def minus_dm(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def minus_dm(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:minus_dm, options, dataframe, time_period])
   def minus_dm(high, low, time_period, options), do: run([:minus_dm, options, high, low, time_period])
@@ -9886,7 +9886,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec minus_dm!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec minus_dm!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec minus_dm!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def minus_dm!(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def minus_dm!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:minus_dm, options, dataframe, time_period])
   def minus_dm!(high, low, time_period, options), do: run!([:minus_dm, options, high, low, time_period])
@@ -9927,28 +9927,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.mom(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 2.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.mom(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 2.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec mom(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec mom(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec mom(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def mom(values_or_dataframe, time_period \\ 30, options \\ [])
   def mom(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:mom, options, dataframe, time_period])
   def mom(values, time_period, options), do: run([:mom, options, values, time_period])
@@ -9963,7 +9963,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec mom!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec mom!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec mom!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def mom!(values_or_dataframe, time_period \\ 30, options \\ [])
   def mom!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:mom, options, dataframe, time_period])
   def mom!(values, time_period, options), do: run!([:mom, options, values, time_period])
@@ -10004,28 +10004,28 @@ df
       iex> [values_a, values_b] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0])]
       iex> ExTalib.mult(values_a, values_b)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [10.0, 18.0, 28.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values_a, values_b] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64)]
       iex> ExTalib.mult(values_a, values_b)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [10.0, 18.0, 28.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec mult(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec mult(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec mult(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def mult(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def mult(dataframe, nil, options) when is_dataframe(dataframe), do: run_df([:mult, options, dataframe])
   def mult(values_a, values_b, options), do: run([:mult, options, values_a, values_b])
@@ -10040,7 +10040,7 @@ df
   """
   @doc type: :math_operators
   @spec mult!(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec mult!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec mult!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def mult!(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def mult!(dataframe, nil, options) when is_dataframe(dataframe), do: run_df!([:mult, options, dataframe])
   def mult!(values_a, values_b, options), do: run!([:mult, options, values_a, values_b])
@@ -10082,28 +10082,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0, 7.0], dtype: {:f, 64})]
       iex> ExTalib.natr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, NaN, 60.0, 50.0, 42.857142857142854]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0, 6.0, 7.0], type: :f64)]
       iex> ExTalib.natr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, NaN, 60.0, 50.0, 42.857142857142854]
           >
-        ]}
+        }}
 
   """
   @doc type: :volatility_indicators
   @spec natr(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec natr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec natr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def natr(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def natr(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:natr, options, dataframe, time_period])
   def natr(high, low, close, time_period, options), do: run([:natr, options, high, low, close, time_period])
@@ -10118,7 +10118,7 @@ df
   """
   @doc type: :volatility_indicators
   @spec natr!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec natr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec natr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def natr!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def natr!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:natr, options, dataframe, time_period])
   def natr!(high, low, close, time_period, options), do: run!([:natr, options, high, low, close, time_period])
@@ -10159,28 +10159,28 @@ df
       iex> [values, volume] = [Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64}), Explorer.Series.from_list([100.0, 120.0, 150.0], dtype: {:f, 64})]
       iex> ExTalib.obv(values, volume)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [100.0, 220.0, 370.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values, volume] = [Nx.tensor([3.0, 4.0, 5.0], type: :f64), Nx.tensor([100.0, 120.0, 150.0], type: :f64)]
       iex> ExTalib.obv(values, volume)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [100.0, 220.0, 370.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :volume_indicators
   @spec obv(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec obv(values :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec obv(values :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def obv(values_or_dataframe, volume \\ nil, options \\ [])
   def obv(dataframe, nil, options) when is_dataframe(dataframe), do: run_df([:obv, options, dataframe])
   def obv(values, volume, options), do: run([:obv, options, values, volume])
@@ -10195,7 +10195,7 @@ df
   """
   @doc type: :volume_indicators
   @spec obv!(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec obv!(values :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec obv!(values :: Explorer.Series.t() | Nx.Tensor.t(), volume :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def obv!(values_or_dataframe, volume \\ nil, options \\ [])
   def obv!(dataframe, nil, options) when is_dataframe(dataframe), do: run_df!([:obv, options, dataframe])
   def obv!(values, volume, options), do: run!([:obv, options, values, volume])
@@ -10237,28 +10237,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0, 7.0], dtype: {:f, 64})]
       iex> ExTalib.plus_di(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, NaN, 33.33333333333333, 33.33333333333333, 33.33333333333333]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0, 6.0, 7.0], type: :f64)]
       iex> ExTalib.plus_di(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, NaN, 33.33333333333333, 33.33333333333333, 33.33333333333333]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec plus_di(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec plus_di(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec plus_di(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def plus_di(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def plus_di(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:plus_di, options, dataframe, time_period])
   def plus_di(high, low, close, time_period, options), do: run([:plus_di, options, high, low, close, time_period])
@@ -10273,7 +10273,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec plus_di!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec plus_di!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec plus_di!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def plus_di!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def plus_di!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:plus_di, options, dataframe, time_period])
   def plus_di!(high, low, close, time_period, options), do: run!([:plus_di, options, high, low, close, time_period])
@@ -10313,28 +10313,28 @@ df
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.plus_dm(high, low, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, 1.0, 1.5, 1.75, 1.875]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.plus_dm(high, low, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, 1.0, 1.5, 1.75, 1.875]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec plus_dm(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec plus_dm(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec plus_dm(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def plus_dm(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def plus_dm(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:plus_dm, options, dataframe, time_period])
   def plus_dm(high, low, time_period, options), do: run([:plus_dm, options, high, low, time_period])
@@ -10349,7 +10349,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec plus_dm!(dataframe :: Explorer.DataFrame.t(), nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec plus_dm!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec plus_dm!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def plus_dm!(high_or_dataframe, low \\ nil, time_period \\ 14, options \\ [])
   def plus_dm!(dataframe, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:plus_dm, options, dataframe, time_period])
   def plus_dm!(high, low, time_period, options), do: run!([:plus_dm, options, high, low, time_period])
@@ -10389,28 +10389,28 @@ df
       iex> values = Explorer.Series.from_list([3.0, 4.0, 5.0])
       iex> ExTalib.ppo(values, 2, 3)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 12.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> values = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.ppo(values, 2, 3)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 12.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec ppo(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ppo(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ppo(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ppo(values_or_dataframe, fast_period \\ 12, slow_period \\ 26, ma_type \\ :sma, options \\ [])
   def ppo(dataframe, fast_period, slow_period, ma_type, options) when is_dataframe(dataframe), do: run_df([:ppo, options, dataframe, fast_period, slow_period, ma_type])
   def ppo(values, fast_period, slow_period, ma_type, options), do: run([:ppo, options, values, fast_period, slow_period, ma_type])
@@ -10425,7 +10425,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec ppo!(dataframe :: Explorer.DataFrame.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ppo!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ppo!(values :: Explorer.Series.t() | Nx.Tensor.t(), fast_period :: integer(), slow_period :: integer(), ma_type :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ppo!(values_or_dataframe, fast_period \\ 12, slow_period \\ 26, ma_type \\ :sma, options \\ [])
   def ppo!(dataframe, fast_period, slow_period, ma_type, options) when is_dataframe(dataframe), do: run_df!([:ppo, options, dataframe, fast_period, slow_period, ma_type])
   def ppo!(values, fast_period, slow_period, ma_type, options), do: run!([:ppo, options, values, fast_period, slow_period, ma_type])
@@ -10466,28 +10466,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.roc(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 66.66666666666667]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.roc(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 66.66666666666667]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec roc(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec roc(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec roc(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def roc(values_or_dataframe, time_period \\ 10, options \\ [])
   def roc(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:roc, options, dataframe, time_period])
   def roc(values, time_period, options), do: run([:roc, options, values, time_period])
@@ -10502,7 +10502,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec roc!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec roc!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec roc!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def roc!(values_or_dataframe, time_period \\ 10, options \\ [])
   def roc!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:roc, options, dataframe, time_period])
   def roc!(values, time_period, options), do: run!([:roc, options, values, time_period])
@@ -10543,28 +10543,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.rocp(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 0.6666666666666666]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.rocp(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 0.6666666666666666]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec rocp(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec rocp(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec rocp(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def rocp(values_or_dataframe, time_period \\ 10, options \\ [])
   def rocp(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:rocp, options, dataframe, time_period])
   def rocp(values, time_period, options), do: run([:rocp, options, values, time_period])
@@ -10579,7 +10579,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec rocp!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec rocp!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec rocp!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def rocp!(values_or_dataframe, time_period \\ 10, options \\ [])
   def rocp!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:rocp, options, dataframe, time_period])
   def rocp!(values, time_period, options), do: run!([:rocp, options, values, time_period])
@@ -10621,28 +10621,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.rocr(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 1.6666666666666667]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.rocr(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 1.6666666666666667]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec rocr(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec rocr(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec rocr(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def rocr(values_or_dataframe, time_period \\ 10, options \\ [])
   def rocr(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:rocr, options, dataframe, time_period])
   def rocr(values, time_period, options), do: run([:rocr, options, values, time_period])
@@ -10657,7 +10657,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec rocr!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec rocr!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec rocr!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def rocr!(values_or_dataframe, time_period \\ 10, options \\ [])
   def rocr!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:rocr, options, dataframe, time_period])
   def rocr!(values, time_period, options), do: run!([:rocr, options, values, time_period])
@@ -10698,28 +10698,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.rocr100(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 166.66666666666669]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.rocr100(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 166.66666666666669]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec rocr100(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec rocr100(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec rocr100(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def rocr100(values_or_dataframe, time_period \\ 10, options \\ [])
   def rocr100(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:rocr100, options, dataframe, time_period])
   def rocr100(values, time_period, options), do: run([:rocr100, options, values, time_period])
@@ -10734,7 +10734,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec rocr100!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec rocr100!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec rocr100!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def rocr100!(values_or_dataframe, time_period \\ 10, options \\ [])
   def rocr100!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:rocr100, options, dataframe, time_period])
   def rocr100!(values, time_period, options), do: run!([:rocr100, options, values, time_period])
@@ -10775,28 +10775,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.rsi(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.rsi(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 100.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec rsi(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec rsi(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec rsi(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def rsi(values_or_dataframe, time_period \\ 14, options \\ [])
   def rsi(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:rsi, options, dataframe, time_period])
   def rsi(values, time_period, options), do: run([:rsi, options, values, time_period])
@@ -10811,7 +10811,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec rsi!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec rsi!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec rsi!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def rsi!(values_or_dataframe, time_period \\ 14, options \\ [])
   def rsi!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:rsi, options, dataframe, time_period])
   def rsi!(values, time_period, options), do: run!([:rsi, options, values, time_period])
@@ -10853,28 +10853,28 @@ df
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.sar(high, low)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, 2.0, 2.08, 2.1784, 2.294832]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.sar(high, low)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, 2.0, 2.08, 2.1784, 2.294832]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec sar(dataframe :: Explorer.DataFrame.t(), nil, acceleration_factor :: float(), af_maximum :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sar(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), acceleration_factor :: float(), af_maximum :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sar(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), acceleration_factor :: float(), af_maximum :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sar(high_or_dataframe, low \\ nil, acceleration_factor \\ 0.02, af_maximum \\ 0.2, options \\ [])
   def sar(dataframe, nil, acceleration_factor, af_maximum, options) when is_dataframe(dataframe), do: run_df([:sar, options, dataframe, acceleration_factor, af_maximum])
   def sar(high, low, acceleration_factor, af_maximum, options), do: run([:sar, options, high, low, acceleration_factor, af_maximum])
@@ -10889,7 +10889,7 @@ df
   """
   @doc type: :overlap_studies
   @spec sar!(dataframe :: Explorer.DataFrame.t(), nil, acceleration_factor :: float(), af_maximum :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sar!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), acceleration_factor :: float(), af_maximum :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sar!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), acceleration_factor :: float(), af_maximum :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sar!(high_or_dataframe, low \\ nil, acceleration_factor \\ 0.02, af_maximum \\ 0.2, options \\ [])
   def sar!(dataframe, nil, acceleration_factor, af_maximum, options) when is_dataframe(dataframe), do: run_df!([:sar, options, dataframe, acceleration_factor, af_maximum])
   def sar!(high, low, acceleration_factor, af_maximum, options), do: run!([:sar, options, high, low, acceleration_factor, af_maximum])
@@ -10937,28 +10937,28 @@ df
       iex> [high, low] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0])]
       iex> ExTalib.sarext(high, low)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, 0.2, 0.316, 0.44967999999999997, 0.6006864]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64)]
       iex> ExTalib.sarext(high, low)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, 0.2, 0.316, 0.44967999999999997, 0.6006864]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec sarext(dataframe :: Explorer.DataFrame.t(), nil, start_value :: float(), offset_on_reverse :: float(), af_init_long :: float(), af_long :: float(), af_max_long :: float(), af_init_short :: float(), af_short :: float(), af_max_short :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sarext(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), start_value :: float(), offset_on_reverse :: float(), af_init_long :: float(), af_long :: float(), af_max_long :: float(), af_init_short :: float(), af_short :: float(), af_max_short :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sarext(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), start_value :: float(), offset_on_reverse :: float(), af_init_long :: float(), af_long :: float(), af_max_long :: float(), af_init_short :: float(), af_short :: float(), af_max_short :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sarext(high_or_dataframe, low \\ nil, start_value \\ 0.0, offset_on_reverse \\ 0.0, af_init_long \\ 0.02, af_long \\ 0.02, af_max_long \\ 0.2, af_init_short \\ 0.02, af_short \\ 0.02, af_max_short \\ 0.2, options \\ [])
   def sarext(dataframe, nil, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short, options) when is_dataframe(dataframe), do: run_df([:sarext, options, dataframe, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short])
   def sarext(high, low, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short, options), do: run([:sarext, options, high, low, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short])
@@ -10973,7 +10973,7 @@ df
   """
   @doc type: :overlap_studies
   @spec sarext!(dataframe :: Explorer.DataFrame.t(), nil, start_value :: float(), offset_on_reverse :: float(), af_init_long :: float(), af_long :: float(), af_max_long :: float(), af_init_short :: float(), af_short :: float(), af_max_short :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sarext!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), start_value :: float(), offset_on_reverse :: float(), af_init_long :: float(), af_long :: float(), af_max_long :: float(), af_init_short :: float(), af_short :: float(), af_max_short :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sarext!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), start_value :: float(), offset_on_reverse :: float(), af_init_long :: float(), af_long :: float(), af_max_long :: float(), af_init_short :: float(), af_short :: float(), af_max_short :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sarext!(high_or_dataframe, low \\ nil, start_value \\ 0.0, offset_on_reverse \\ 0.0, af_init_long \\ 0.02, af_long \\ 0.02, af_max_long \\ 0.2, af_init_short \\ 0.02, af_short \\ 0.02, af_max_short \\ 0.2, options \\ [])
   def sarext!(dataframe, nil, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short, options) when is_dataframe(dataframe), do: run_df!([:sarext, options, dataframe, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short])
   def sarext!(high, low, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short, options), do: run!([:sarext, options, high, low, start_value, offset_on_reverse, af_init_long, af_long, af_max_long, af_init_short, af_short, af_max_short])
@@ -11014,28 +11014,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.sin(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [-0.35078322768961984, -0.977530117665097, -0.9589242746631385]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.sin(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [-0.35078322768961984, -0.977530117665097, -0.9589242746631385]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec sin(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sin(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sin(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sin(values_or_dataframe, options \\ [])
   def sin(dataframe, options) when is_dataframe(dataframe), do: run_df([:sin, options, dataframe])
   def sin(values, options), do: run([:sin, options, values])
@@ -11050,7 +11050,7 @@ df
   """
   @doc type: :math_transform
   @spec sin!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sin!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sin!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sin!(values_or_dataframe, options \\ [])
   def sin!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:sin, options, dataframe])
   def sin!(values, options), do: run!([:sin, options, values])
@@ -11091,28 +11091,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.sinh(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [16.542627287634996, 45.003011151991785, 74.20321057778875]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.sinh(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [16.542627287634996, 45.003011151991785, 74.20321057778875]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec sinh(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sinh(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sinh(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sinh(values_or_dataframe, options \\ [])
   def sinh(dataframe, options) when is_dataframe(dataframe), do: run_df([:sinh, options, dataframe])
   def sinh(values, options), do: run([:sinh, options, values])
@@ -11127,7 +11127,7 @@ df
   """
   @doc type: :math_transform
   @spec sinh!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sinh!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sinh!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sinh!(values_or_dataframe, options \\ [])
   def sinh!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:sinh, options, dataframe])
   def sinh!(values, options), do: run!([:sinh, options, values])
@@ -11168,28 +11168,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.sma(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.sma(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec sma(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sma(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sma(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sma(values_or_dataframe, time_period \\ 30, options \\ [])
   def sma(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:sma, options, dataframe, time_period])
   def sma(values, time_period, options), do: run([:sma, options, values, time_period])
@@ -11204,7 +11204,7 @@ df
   """
   @doc type: :overlap_studies
   @spec sma!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sma!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sma!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sma!(values_or_dataframe, time_period \\ 30, options \\ [])
   def sma!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:sma, options, dataframe, time_period])
   def sma!(values, time_period, options), do: run!([:sma, options, values, time_period])
@@ -11245,28 +11245,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.sqrt(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [1.8708286933869707, 2.1213203435596424, 2.23606797749979]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.sqrt(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [1.8708286933869707, 2.1213203435596424, 2.23606797749979]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec sqrt(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sqrt(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sqrt(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sqrt(values_or_dataframe, options \\ [])
   def sqrt(dataframe, options) when is_dataframe(dataframe), do: run_df([:sqrt, options, dataframe])
   def sqrt(values, options), do: run([:sqrt, options, values])
@@ -11281,7 +11281,7 @@ df
   """
   @doc type: :math_transform
   @spec sqrt!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sqrt!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sqrt!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sqrt!(values_or_dataframe, options \\ [])
   def sqrt!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:sqrt, options, dataframe])
   def sqrt!(values, options), do: run!([:sqrt, options, values])
@@ -11322,28 +11322,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.stddev(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 0.5, 0.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.stddev(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 0.5, 0.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec stddev(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec stddev(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec stddev(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def stddev(values_or_dataframe, time_period \\ 5, deviations \\ 1.0, options \\ [])
   def stddev(dataframe, time_period, deviations, options) when is_dataframe(dataframe), do: run_df([:stddev, options, dataframe, time_period, deviations])
   def stddev(values, time_period, deviations, options), do: run([:stddev, options, values, time_period, deviations])
@@ -11358,7 +11358,7 @@ df
   """
   @doc type: :overlap_studies
   @spec stddev!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec stddev!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec stddev!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def stddev!(values_or_dataframe, time_period \\ 5, deviations \\ 1.0, options \\ [])
   def stddev!(dataframe, time_period, deviations, options) when is_dataframe(dataframe), do: run_df!([:stddev, options, dataframe, time_period, deviations])
   def stddev!(values, time_period, deviations, options), do: run!([:stddev, options, values, time_period, deviations])
@@ -11402,7 +11402,7 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.stoch(high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
@@ -11411,13 +11411,13 @@ df
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64)]
       iex> ExTalib.stoch(high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
@@ -11426,12 +11426,12 @@ df
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec stoch(dataframe :: Explorer.DataFrame.t(), nil, nil, fast_k_period :: integer(), slow_k_period :: integer(), slow_k_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_d_period :: integer(), slow_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec stoch(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), slow_k_period :: integer(), slow_k_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_d_period :: integer(), slow_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec stoch(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), slow_k_period :: integer(), slow_k_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_d_period :: integer(), slow_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def stoch(high_or_dataframe, low \\ nil, close \\ nil, fast_k_period \\ 5, slow_k_period \\ 3, slow_k_ma \\ :sma, slow_d_period \\ 3, slow_d_ma \\ :sma, options \\ [])
   def stoch(dataframe, nil, nil, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma, options) when is_dataframe(dataframe), do: run_df([:stoch, options, dataframe, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma])
   def stoch(high, low, close, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma, options), do: run([:stoch, options, high, low, close, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma])
@@ -11446,7 +11446,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec stoch!(dataframe :: Explorer.DataFrame.t(), nil, nil, fast_k_period :: integer(), slow_k_period :: integer(), slow_k_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_d_period :: integer(), slow_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec stoch!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), slow_k_period :: integer(), slow_k_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_d_period :: integer(), slow_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec stoch!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), slow_k_period :: integer(), slow_k_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, slow_d_period :: integer(), slow_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def stoch!(high_or_dataframe, low \\ nil, close \\ nil, fast_k_period \\ 5, slow_k_period \\ 3, slow_k_ma \\ :sma, slow_d_period \\ 3, slow_d_ma \\ :sma, options \\ [])
   def stoch!(dataframe, nil, nil, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma, options) when is_dataframe(dataframe), do: run_df!([:stoch, options, dataframe, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma])
   def stoch!(high, low, close, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma, options), do: run!([:stoch, options, high, low, close, fast_k_period, slow_k_period, slow_k_ma, slow_d_period, slow_d_ma])
@@ -11490,7 +11490,7 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.stochf(high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
@@ -11499,13 +11499,13 @@ df
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0], type: :f64)]
       iex> ExTalib.stochf(high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
@@ -11514,12 +11514,12 @@ df
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec stochf(dataframe :: Explorer.DataFrame.t(), nil, nil, fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec stochf(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec stochf(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def stochf(high_or_dataframe, low \\ nil, close \\ nil, fast_k_period \\ 5, fast_d_period \\ 3, fast_d_ma \\ :sma, options \\ [])
   def stochf(dataframe, nil, nil, fast_k_period, fast_d_period, fast_d_ma, options) when is_dataframe(dataframe), do: run_df([:stochf, options, dataframe, fast_k_period, fast_d_period, fast_d_ma])
   def stochf(high, low, close, fast_k_period, fast_d_period, fast_d_ma, options), do: run([:stochf, options, high, low, close, fast_k_period, fast_d_period, fast_d_ma])
@@ -11534,7 +11534,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec stochf!(dataframe :: Explorer.DataFrame.t(), nil, nil, fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec stochf!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec stochf!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def stochf!(high_or_dataframe, low \\ nil, close \\ nil, fast_k_period \\ 5, fast_d_period \\ 3, fast_d_ma \\ :sma, options \\ [])
   def stochf!(dataframe, nil, nil, fast_k_period, fast_d_period, fast_d_ma, options) when is_dataframe(dataframe), do: run_df!([:stochf, options, dataframe, fast_k_period, fast_d_period, fast_d_ma])
   def stochf!(high, low, close, fast_k_period, fast_d_period, fast_d_ma, options), do: run!([:stochf, options, high, low, close, fast_k_period, fast_d_period, fast_d_ma])
@@ -11577,7 +11577,7 @@ df
       iex> series = Explorer.Series.from_list([5.0, 6.0, 7.0])
       iex> ExTalib.stochrsi(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
@@ -11586,13 +11586,13 @@ df
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([5.0, 6.0, 7.0], type: :f64)
       iex> ExTalib.stochrsi(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
@@ -11601,12 +11601,12 @@ df
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec stochrsi(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec stochrsi(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec stochrsi(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def stochrsi(values_or_dataframe, time_period \\ 14, fast_k_period \\ 5, fast_d_period \\ 3, fast_d_ma \\ :sma, options \\ [])
   def stochrsi(dataframe, time_period, fast_k_period, fast_d_period, fast_d_ma, options) when is_dataframe(dataframe), do: run_df([:stochrsi, options, dataframe, time_period, fast_k_period, fast_d_period, fast_d_ma])
   def stochrsi(values, time_period, fast_k_period, fast_d_period, fast_d_ma, options), do: run([:stochrsi, options, values, time_period, fast_k_period, fast_d_period, fast_d_ma])
@@ -11621,7 +11621,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec stochrsi!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec stochrsi!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec stochrsi!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), fast_k_period :: integer(), fast_d_period :: integer(), fast_d_ma :: :sma | :ema | :wma | :dema | :tema | :trima | :kama | :mama | :t3, options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def stochrsi!(values_or_dataframe, time_period \\ 14, fast_k_period \\ 5, fast_d_period \\ 3, fast_d_ma \\ :sma, options \\ [])
   def stochrsi!(dataframe, time_period, fast_k_period, fast_d_period, fast_d_ma, options) when is_dataframe(dataframe), do: run_df!([:stochrsi, options, dataframe, time_period, fast_k_period, fast_d_period, fast_d_ma])
   def stochrsi!(values, time_period, fast_k_period, fast_d_period, fast_d_ma, options), do: run!([:stochrsi, options, values, time_period, fast_k_period, fast_d_period, fast_d_ma])
@@ -11662,28 +11662,28 @@ df
       iex> [values_a, values_b] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0])]
       iex> ExTalib.sub(values_a, values_b)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [3.0, 3.0, 3.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [values_a, values_b] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64)]
       iex> ExTalib.sub(values_a, values_b)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [3.0, 3.0, 3.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_operators
   @spec sub(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sub(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sub(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sub(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def sub(dataframe, nil, options) when is_dataframe(dataframe), do: run_df([:sub, options, dataframe])
   def sub(values_a, values_b, options), do: run([:sub, options, values_a, values_b])
@@ -11698,7 +11698,7 @@ df
   """
   @doc type: :math_operators
   @spec sub!(dataframe :: Explorer.DataFrame.t(), nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sub!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sub!(values_a :: Explorer.Series.t() | Nx.Tensor.t(), values_b :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sub!(values_a_or_dataframe, values_b \\ nil, options \\ [])
   def sub!(dataframe, nil, options) when is_dataframe(dataframe), do: run_df!([:sub, options, dataframe])
   def sub!(values_a, values_b, options), do: run!([:sub, options, values_a, values_b])
@@ -11739,28 +11739,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.sum(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 7.0, 9.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.sum(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 7.0, 9.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :price_transform
   @spec sum(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec sum(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec sum(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def sum(values_or_dataframe, time_period \\ 30, options \\ [])
   def sum(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:sum, options, dataframe, time_period])
   def sum(values, time_period, options), do: run([:sum, options, values, time_period])
@@ -11775,7 +11775,7 @@ df
   """
   @doc type: :price_transform
   @spec sum!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec sum!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec sum!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def sum!(values_or_dataframe, time_period \\ 30, options \\ [])
   def sum!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:sum, options, dataframe, time_period])
   def sum!(values, time_period, options), do: run!([:sum, options, values, time_period])
@@ -11809,35 +11809,35 @@ df
         #Explorer.DataFrame<
           Polars[3 x 2]
           values f64 [3.0, 4.0, 5.0]
-          avgdt3_2_0.7 f64 [NaN, NaN, NaN]
+          t3_2_0.7 f64 [NaN, NaN, NaN]
         >}
 
   ## Example Using Series:
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.t3(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.t3(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec t3(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), volume_factor :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec t3(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), volume_factor :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec t3(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), volume_factor :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def t3(values_or_dataframe, time_period \\ 5, volume_factor \\ 0.7, options \\ [])
   def t3(dataframe, time_period, volume_factor, options) when is_dataframe(dataframe), do: run_df([:t3, options, dataframe, time_period, volume_factor])
   def t3(values, time_period, volume_factor, options), do: run([:t3, options, values, time_period, volume_factor])
@@ -11852,7 +11852,7 @@ df
   """
   @doc type: :overlap_studies
   @spec t3!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), volume_factor :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec t3!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), volume_factor :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec t3!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), volume_factor :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def t3!(values_or_dataframe, time_period \\ 5, volume_factor \\ 0.7, options \\ [])
   def t3!(dataframe, time_period, volume_factor, options) when is_dataframe(dataframe), do: run_df!([:t3, options, dataframe, time_period, volume_factor])
   def t3!(values, time_period, volume_factor, options), do: run!([:t3, options, values, time_period, volume_factor])
@@ -11893,28 +11893,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.tan(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [0.3745856401585947, 4.637332054551185, -3.380515006246586]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.tan(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [0.3745856401585947, 4.637332054551185, -3.380515006246586]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec tan(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec tan(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec tan(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def tan(values_or_dataframe, options \\ [])
   def tan(dataframe, options) when is_dataframe(dataframe), do: run_df([:tan, options, dataframe])
   def tan(values, options), do: run([:tan, options, values])
@@ -11929,7 +11929,7 @@ df
   """
   @doc type: :math_transform
   @spec tan!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec tan!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec tan!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def tan!(values_or_dataframe, options \\ [])
   def tan!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:tan, options, dataframe])
   def tan!(values, options), do: run!([:tan, options, values])
@@ -11970,28 +11970,28 @@ df
       iex> series = Explorer.Series.from_list([3.5, 4.5, 5.0], dtype: {:f, 64})
       iex> ExTalib.tanh(series)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [0.9981778976111987, 0.9997532108480275, 0.9999092042625951]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.5, 4.5, 5.0], type: :f64)
       iex> ExTalib.tanh(tensor)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [0.9981778976111987, 0.9997532108480275, 0.9999092042625951]
           >
-        ]}
+        }}
 
   """
   @doc type: :math_transform
   @spec tanh(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec tanh(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec tanh(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def tanh(values_or_dataframe, options \\ [])
   def tanh(dataframe, options) when is_dataframe(dataframe), do: run_df([:tanh, options, dataframe])
   def tanh(values, options), do: run([:tanh, options, values])
@@ -12006,7 +12006,7 @@ df
   """
   @doc type: :math_transform
   @spec tanh!(dataframe :: Explorer.DataFrame.t(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec tanh!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec tanh!(values :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def tanh!(values_or_dataframe, options \\ [])
   def tanh!(dataframe, options) when is_dataframe(dataframe), do: run_df!([:tanh, options, dataframe])
   def tanh!(values, options), do: run!([:tanh, options, values])
@@ -12047,28 +12047,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0], dtype: {:f, 64})
       iex> ExTalib.tema(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN, 6.0]]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0, 6.0], type: :f64)
       iex> ExTalib.tema(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN, 6.0]]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec tema(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec tema(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec tema(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def tema(values_or_dataframe, time_period \\ 30, options \\ [])
   def tema(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:tema, options, dataframe, time_period])
   def tema(values, time_period, options), do: run([:tema, options, values, time_period])
@@ -12083,7 +12083,7 @@ df
   """
   @doc type: :overlap_studies
   @spec tema!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec tema!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec tema!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def tema!(values_or_dataframe, time_period \\ 30, options \\ [])
   def tema!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:tema, options, dataframe, time_period])
   def tema!(values, time_period, options), do: run!([:tema, options, values, time_period])
@@ -12125,28 +12125,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.trange(high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.0, 3.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.trange(high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.0, 3.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :volatility_indicators
   @spec trange(dataframe :: Explorer.DataFrame.t(), nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec trange(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec trange(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def trange(high_or_dataframe, low \\ nil, close \\ nil, options \\ [])
   def trange(dataframe, nil, nil, options) when is_dataframe(dataframe), do: run_df([:trange, options, dataframe])
   def trange(high, low, close,  options), do: run([:trange, options, high, low, close])
@@ -12161,7 +12161,7 @@ df
   """
   @doc type: :volatility_indicators
   @spec trange!(dataframe :: Explorer.DataFrame.t(), nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec trange!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec trange!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def trange!(high_or_dataframe, low \\ nil, close \\ nil, options \\ [])
   def trange!(dataframe, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:trange, options, dataframe])
   def trange!(high, low, close, options), do: run!([:trange, options, high, low, close])
@@ -12202,28 +12202,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.trima(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.trima(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.5, 4.5]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec trima(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec trima(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec trima(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def trima(values_or_dataframe, time_period \\ 30, options \\ [])
   def trima(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:trima, options, dataframe, time_period])
   def trima(values, time_period, options), do: run([:trima, options, values, time_period])
@@ -12238,7 +12238,7 @@ df
   """
   @doc type: :overlap_studies
   @spec trima!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec trima!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec trima!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def trima!(values_or_dataframe, time_period \\ 30, options \\ [])
   def trima!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:trima, options, dataframe, time_period])
   def trima!(values, time_period, options), do: run!([:trima, options, values, time_period])
@@ -12279,28 +12279,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0, 7.0], dtype: {:f, 64})
       iex> ExTalib.trix(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, NaN, NaN, 22.222222222222232]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0, 6.0, 7.0], type: :f64)
       iex> ExTalib.trix(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, NaN, NaN, 22.222222222222232]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec trix(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec trix(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec trix(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def trix(values_or_dataframe, time_period \\ 30, options \\ [])
   def trix(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:trix, options, dataframe, time_period])
   def trix(values, time_period, options), do: run([:trix, options, values, time_period])
@@ -12315,7 +12315,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec trix!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec trix!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec trix!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def trix!(values_or_dataframe, time_period \\ 30, options \\ [])
   def trix!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:trix, options, dataframe, time_period])
   def trix!(values, time_period, options), do: run!([:trix, options, values, time_period])
@@ -12356,28 +12356,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.tsf(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 5.0, 6.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.tsf(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 5.0, 6.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec tsf(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec tsf(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec tsf(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def tsf(values_or_dataframe, time_period \\ 30, options \\ [])
   def tsf(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:tsf, options, dataframe, time_period])
   def tsf(values, time_period, options), do: run([:tsf, options, values, time_period])
@@ -12392,7 +12392,7 @@ df
   """
   @doc type: :statistic_functions
   @spec tsf!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec tsf!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec tsf!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def tsf!(values_or_dataframe, time_period \\ 30, options \\ [])
   def tsf!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:tsf, options, dataframe, time_period])
   def tsf!(values, time_period, options), do: run!([:tsf, options, values, time_period])
@@ -12434,28 +12434,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.typprice(high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [3.3333333333333335, 4.333333333333333, 5.333333333333333]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.typprice(high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [3.3333333333333335, 4.333333333333333, 5.333333333333333]
           >
-        ]}
+        }}
 
   """
   @doc type: :price_transform
   @spec typprice(dataframe :: Explorer.DataFrame.t(), nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec typprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec typprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def typprice(high_or_dataframe, low \\ nil, close \\ nil, options \\ [])
   def typprice(dataframe, nil, nil, options) when is_dataframe(dataframe), do: run_df([:typprice, options, dataframe])
   def typprice(high, low, close,  options), do: run([:typprice, options, high, low, close])
@@ -12470,7 +12470,7 @@ df
   """
   @doc type: :price_transform
   @spec typprice!(dataframe :: Explorer.DataFrame.t(), nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec typprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec typprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def typprice!(high_or_dataframe, low \\ nil, close \\ nil, options \\ [])
   def typprice!(dataframe, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:typprice, options, dataframe])
   def typprice!(high, low, close, options), do: run!([:typprice, options, high, low, close])
@@ -12506,49 +12506,49 @@ df
           close f64 [3.0, 4.0, 5.0]
           high f64 [5.0, 6.0, 7.0]
           low f64 [2.0, 3.0, 4.0]
-          ultsoc_2_2_2 f64 [NaN, NaN, 33.333333333333336]
+          ultosc_2_2_2 f64 [NaN, NaN, 33.333333333333336]
         >}
   ## Example Using Series:
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.ultosc(high, low, close, 2, 2, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, NaN, 33.333333333333336]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.ultosc(high, low, close, 2, 2, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, NaN, 33.333333333333336]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec ultosc(dataframe :: Explorer.DataFrame.t(), nil, nil, first_period :: integer(), second_period :: integer(), third_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec ultosc(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), first_period :: integer(), second_period :: integer(), third_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec ultosc(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), first_period :: integer(), second_period :: integer(), third_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def ultosc(high_or_dataframe, low \\ nil, close \\ nil, first_period \\ 7, second_period \\ 14, third_period \\ 28, options \\ [])
   def ultosc(dataframe, nil, nil, first_period, second_period, third_period, options) when is_dataframe(dataframe), do: run_df([:ultosc, options, dataframe, first_period, second_period, third_period])
   def ultosc(high, low, close, first_period, second_period, third_period, options), do: run([:ultosc, options, high, low, close, first_period, second_period, third_period])
   @doc """
-  A bang! version of `ultosc/6`. It does **not** perform any validations.
+  A bang! version of `ultosc/7`. It does **not** perform any validations.
 
-  Please refer to `ultosc/6` documentation for more information.
+  Please refer to `ultosc/7` documentation for more information.
 
   ## Notes
   - **No validations are performed.** It may raise errors or produce incorrect results if provided with invalid inputs.
-  - For a version that includes input / output validations and error handling, use `ultosc/6`.
+  - For a version that includes input / output validations and error handling, use `ultosc/7`.
   """
   @doc type: :momentum_indicators
   @spec ultosc!(dataframe :: Explorer.DataFrame.t(), nil, nil, first_period :: integer(), second_period :: integer(), third_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec ultosc!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), first_period :: integer(), second_period :: integer(), third_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec ultosc!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), first_period :: integer(), second_period :: integer(), third_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def ultosc!(high_or_dataframe, low \\ nil, close \\ nil, first_period \\ 7, second_period \\ 14, third_period \\ 28, options \\ [])
   def ultosc!(dataframe, nil, nil, first_period, second_period, third_period, options) when is_dataframe(dataframe), do: run_df!([:ultosc, options, dataframe, first_period, second_period, third_period])
   def ultosc!(high, low, close, first_period, second_period, third_period, options), do: run!([:ultosc, options, high, low, close, first_period, second_period, third_period])
@@ -12589,28 +12589,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.var(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 0.25, 0.25]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.var(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 0.25, 0.25]
           >
-        ]}
+        }}
 
   """
   @doc type: :statistic_functions
   @spec var(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec var(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec var(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def var(values_or_dataframe, time_period \\ 5, deviations \\ 1.0, options \\ [])
   def var(dataframe, time_period, deviations, options) when is_dataframe(dataframe), do: run_df([:var, options, dataframe, time_period, deviations])
   def var(values, time_period, deviations, options), do: run([:var, options, values, time_period, deviations])
@@ -12625,7 +12625,7 @@ df
   """
   @doc type: :statistic_functions
   @spec var!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec var!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec var!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), deviations :: float(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def var!(values_or_dataframe, time_period \\ 5, deviations \\ 1.0, options \\ [])
   def var!(dataframe, time_period, deviations, options) when is_dataframe(dataframe), do: run_df!([:var, options, dataframe, time_period, deviations])
   def var!(values, time_period, deviations, options), do: run!([:var, options, values, time_period, deviations])
@@ -12667,28 +12667,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})]
       iex> ExTalib.wclprice(high, low, close)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [3.25, 4.25, 5.25]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0])]
       iex> ExTalib.wclprice(high, low, close)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [3.25, 4.25, 5.25]
           >
-        ]}
+        }}
 
   """
   @doc type: :price_transform
   @spec wclprice(dataframe :: Explorer.DataFrame.t(), nil, nil, options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec wclprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec wclprice(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def wclprice(high_or_dataframe, low \\ nil, close \\ nil, options \\ [])
   def wclprice(dataframe, nil, nil, options) when is_dataframe(dataframe), do: run_df([:wclprice, options, dataframe])
   def wclprice(high, low, close,  options), do: run([:wclprice, options, high, low, close])
@@ -12703,7 +12703,7 @@ df
   """
   @doc type: :price_transform
   @spec wclprice!(dataframe :: Explorer.DataFrame.t(), nil, nil, options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec wclprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec wclprice!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def wclprice!(high_or_dataframe, low \\ nil, close \\ nil, options \\ [])
   def wclprice!(dataframe, nil, nil, options) when is_dataframe(dataframe), do: run_df!([:wclprice, options, dataframe])
   def wclprice!(high, low, close, options), do: run!([:wclprice, options, high, low, close])
@@ -12745,28 +12745,28 @@ df
       iex> [high, low, close] = [Explorer.Series.from_list([5.0, 6.0, 7.0, 8.0, 9.0], dtype: {:f, 64}), Explorer.Series.from_list([2.0, 3.0, 4.0, 5.0, 6.0], dtype: {:f, 64}), Explorer.Series.from_list([3.0, 4.0, 5.0, 6.0, 7.0], dtype: {:f, 64})]
       iex> ExTalib.willr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[5]
             f64 [NaN, -50.0, -50.0, -50.0, -50.0]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> [high, low, close] = [Nx.tensor([5.0, 6.0, 7.0, 8.0, 9.0], type: :f64), Nx.tensor([2.0, 3.0, 4.0, 5.0, 6.0], type: :f64), Nx.tensor([3.0, 4.0, 5.0, 6.0, 7.0], type: :f64)]
       iex> ExTalib.willr(high, low, close, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[5]
             [NaN, -50.0, -50.0, -50.0, -50.0]
           >
-        ]}
+        }}
 
   """
   @doc type: :momentum_indicators
   @spec willr(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec willr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec willr(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def willr(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def willr(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df([:willr, options, dataframe, time_period])
   def willr(high, low, close, time_period, options), do: run([:willr, options, high, low, close, time_period])
@@ -12781,7 +12781,7 @@ df
   """
   @doc type: :momentum_indicators
   @spec willr!(dataframe :: Explorer.DataFrame.t(), nil, nil, time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec willr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec willr!(high :: Explorer.Series.t() | Nx.Tensor.t(), low :: Explorer.Series.t() | Nx.Tensor.t(), close :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def willr!(high_or_dataframe, low \\ nil, close \\ nil, time_period \\ 14, options \\ [])
   def willr!(dataframe, nil, nil, time_period, options) when is_dataframe(dataframe), do: run_df!([:willr, options, dataframe, time_period])
   def willr!(high, low, close, time_period, options), do: run!([:willr, options, high, low, close, time_period])
@@ -12822,28 +12822,28 @@ df
       iex> series = Explorer.Series.from_list([3.0, 4.0, 5.0], dtype: {:f, 64})
       iex> ExTalib.wma(series, 2)
       {:ok,
-        [
+        {
           #Explorer.Series<
             Polars[3]
             f64 [NaN, 3.6666666666666665, 4.666666666666667]
           >
-        ]}
+        }}
 
   ## Example Using Tensors:
       iex> tensor = Nx.tensor([3.0, 4.0, 5.0], type: :f64)
       iex> ExTalib.wma(tensor, 2)
       {:ok,
-        [
+        {
           #Nx.Tensor<
             f64[3]
             [NaN, 3.6666666666666665, 4.666666666666667]
           >
-        ]}
+        }}
 
   """
   @doc type: :overlap_studies
   @spec wma(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, Explorer.DataFrame.t()} | {:error, [String.t()]}
-  @spec wma(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, [Explorer.Series.t() | Nx.Tensor.t()]} | {:error, [String.t()]}
+  @spec wma(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {:ok, {Explorer.Series.t() | Nx.Tensor.t()}} | {:error, [String.t()]}
   def wma(values_or_dataframe, time_period \\ 30, options \\ [])
   def wma(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df([:wma, options, dataframe, time_period])
   def wma(values, time_period, options), do: run([:wma, options, values, time_period])
@@ -12858,7 +12858,7 @@ df
   """
   @doc type: :overlap_studies
   @spec wma!(dataframe :: Explorer.DataFrame.t(), time_period :: integer(), options :: Keyword.t()) :: Explorer.DataFrame.t()
-  @spec wma!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: [Explorer.Series.t() | Nx.Tensor.t()]
+  @spec wma!(values :: Explorer.Series.t() | Nx.Tensor.t(), time_period :: integer(), options :: Keyword.t()) :: {Explorer.Series.t() | Nx.Tensor.t()}
   def wma!(values_or_dataframe, time_period \\ 30, options \\ [])
   def wma!(dataframe, time_period, options) when is_dataframe(dataframe), do: run_df!([:wma, options, dataframe, time_period])
   def wma!(values, time_period, options), do: run!([:wma, options, values, time_period])

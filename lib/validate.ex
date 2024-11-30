@@ -1,5 +1,5 @@
 defmodule ExTalib.Validate do
-
+  @moduledoc false
   import ExTalib.Constants
   import ExTalib.Macros
   alias ExTalib.Validations, as: V

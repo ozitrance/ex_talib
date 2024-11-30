@@ -11,7 +11,9 @@ defmodule ExTalib.MixProject do
       compilers: [:elixir_make | Mix.compilers()],
       make_makefile: "Makefile",
       description: description(),
+      dialyzer: [ignore_warnings: "dialyzer.ex_talib"],
       package: package()
+
 ]
   end
 
@@ -25,20 +27,20 @@ defmodule ExTalib.MixProject do
     [
       ############# REQUIRED ###############
       {:ex_const, "~> 0.3.0"},
-      {:ex_doc, "~> 0.35.1", only: :dev, runtime: false},
       {:elixir_make, "~> 0.9.0", runtime: false},
 
 
 
 
 
-      ############# OPTIONAL ###############
-      # {:explorer, "~> 0.10.0"},
-      # {:nx, "~> 0.9.2"},
-
-
 
       # ############## DEV/TEMP ###############
+      {:ex_doc, "~> 0.35.1", only: :dev, runtime: false},
+      # {:explorer, "~> 0.10.0", only: :dev, runtime: false},
+      # {:nx, "~> 0.9.2", only: :dev, runtime: false},
+      # {:explorer, "~> 0.10.0"},
+      # {:scholar, "~> 0.3.1"},
+      # {:nx, "~> 0.9.2"},
       # {:jason, "~> 1.4.4"},
 
       ############# USE UNTIL PUBLISHED ###############

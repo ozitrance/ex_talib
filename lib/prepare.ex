@@ -1,5 +1,5 @@
 defmodule ExTalib.Prepare do
-
+  @moduledoc false
   import ExTalib.Constants
   import ExTalib.Macros
   alias ExTalib.Utils

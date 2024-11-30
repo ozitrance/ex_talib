@@ -11,7 +11,7 @@ defmodule ExTalib.MixProject do
       compilers: [:elixir_make | Mix.compilers()],
       make_makefile: "Makefile",
       description: description(),
-      dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"],
+      # dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"],
       package: package()
 
 ]
@@ -36,6 +36,7 @@ defmodule ExTalib.MixProject do
 
       # ############## DEV/TEMP ###############
       {:ex_doc, "~> 0.35.1", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       # {:explorer, "~> 0.10.0", only: :dev, runtime: false},
       # {:nx, "~> 0.9.2", only: :dev, runtime: false},
       # {:explorer, "~> 0.10.0"},

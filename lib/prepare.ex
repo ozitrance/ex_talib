@@ -1,5 +1,6 @@
 defmodule ExTalib.Prepare do
 
+  require ExTalib.Constants
   import ExTalib.Constants
   import ExTalib.Macros
   alias ExTalib.Utils

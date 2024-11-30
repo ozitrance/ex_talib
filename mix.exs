@@ -11,7 +11,7 @@ defmodule ExTalib.MixProject do
       compilers: [:elixir_make | Mix.compilers()],
       make_makefile: "Makefile",
       description: description(),
-      dialyzer: [ignore_warnings: "dialyzer.ex_talib"],
+      dialyzer: [ignore_warnings: "dialyzer.ignore-warnings"],
       package: package()
 
 ]

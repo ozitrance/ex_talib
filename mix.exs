@@ -33,8 +33,8 @@ defmodule ExTalib.MixProject do
 
 
       ############# OPTIONAL ###############
-      {:explorer, "~> 0.10.0"},
-      {:nx, "~> 0.9.2"},
+      # {:explorer, "~> 0.10.0"},
+      # {:nx, "~> 0.9.2"},
 
 
 

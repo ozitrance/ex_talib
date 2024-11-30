@@ -1,6 +1,6 @@
 # ExTalib
 
-Nif Implementation for TA-LIB.
+Nif Wrapper Implementation for TA-LIB.
 
 It will use system installed TA-LIB
 
@@ -12,12 +12,12 @@ apt-get install gcc build-essential wget
 wget https://github.com/TA-Lib/ta-lib/raw/refs/heads/main/dist/ta-lib-0.6.0-src.tar.gz
 tar -zxvf ta-lib-0.6.0-src.tar.gz
 rm ta-lib-0.6.0-src.tar.gz
-cd ta-lib
+cd ta-lib-git
 ./configure --prefix=/usr
 make
-make install
+sudo make install
 cd ../
-rm -rf ta-lib
+rm -rf ta-lib-git
 ```
 
 ## Install TA-LIB (Mac OS)
@@ -36,16 +36,17 @@ mix deps.get
 ```
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `talib_ex` to your list of dependencies in `mix.exs`:
+by adding `ex_talib` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:ex_talib, "~> 0.1.0"}
+    <!-- {:ex_talib, "~> 0.1.0"} -->
+    {:ex_talib,, git: "https://github.com/ozitrance/ex_talib"}
   ]
 end
 ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/talib_ex>.
+be found at <https://hexdocs.pm/ex_talib>.
